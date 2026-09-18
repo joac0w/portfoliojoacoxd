@@ -307,6 +307,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
 }
 .hero__word-txt{
   position:relative;z-index:1;
+  transform:translateX(.2em);          /* corrido a la derecha, pegado al logo */
   text-shadow:0 .1em .3em rgba(12,12,38,.12);
 }
 /* el logo se monta sobre la última letra y apoya en la línea de base */
