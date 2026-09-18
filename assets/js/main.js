@@ -34,7 +34,7 @@
     es: {
       'doc.title': 'Joaco — Diseño de miniaturas',
       'nav.aria': 'Navegación principal', 'nav.menu': 'Abrir menú',
-      'nav.works': 'Miniaturas', 'nav.reels': 'Reels', 'nav.clients': 'Clientes', 'nav.contact': 'Contacto',
+      'nav.works': 'Miniaturas', 'nav.reels': 'Reels', 'nav.theme': 'Cambiar tema', 'nav.clients': 'Clientes', 'nav.contact': 'Contacto',
       'cta.book': 'Contactame',
       'hero.tagline': '+6 años de <em>experiencia real</em>',
       'hero.sub': 'Miniaturas y edición de video desde una perspectiva real.',
@@ -47,23 +47,22 @@
       'reels.t1': 'edición', 'reels.t2': 'reels/shorts',
       'reels.play': 'Play', 'reels.missing': 'Falta el archivo.\nGuardalo en assets/reels/',
       'reels.sub': 'Cortes verticales pensados para que se miren hasta el final.',
+      'reels.upload': 'Subir video', 'reels.uploaded': 'Vista previa local',
       'clients.t1': 'mis', 'clients.t2': 'clientes',
-      'clients.sub': 'Canales que me confían sus miniaturas mes a mes.',
+      'clients.sub': 'Clientes que han confiado o siguen confiando en mi trabajo.',
       'rail.prev': 'Anterior', 'rail.next': 'Siguiente',
       'client.subs': 'suscriptores',
       'client.slot1': 'y más', 'client.slot1b': 'Sumá tu canal a la lista',
       'faq.t1': 'dudas', 'faq.t2': 'frecuentes',
       'faq.sub': 'Lo que casi siempre me preguntan antes de arrancar.',
-      'faq.q1': '¿Cuánto tardás en entregar?',
-      'faq.a1': 'Entre 24 y 48 horas por miniatura. Si tenés un lanzamiento con fecha, reservamos el lugar en la agenda y te confirmo el horario exacto de entrega.',
-      'faq.q2': '¿Cuántas revisiones incluye?',
-      'faq.a2': 'Ilimitadas dentro del concepto elegido. Si querés cambiar de idea por completo, lo tomamos como una pieza nueva y te paso el precio antes de arrancar.',
-      'faq.q3': '¿Trabajás con cualquier temática?',
-      'faq.a3': 'Sí. Gaming, autos, finanzas, viajes, entretenimiento o lo que tengas en la cabeza. Si el nicho es nuevo para mí, arranco investigando referencias antes de diseñar.',
-      'faq.q4': '¿Cómo son los precios?',
-      'faq.a4': 'Por pieza o por paquete mensual. El paquete mensual baja el precio por miniatura y te asegura prioridad en la cola. Agendá la reunión y te paso la lista completa.',
-      'faq.q5': '¿Me pasás los archivos editables?',
-      'faq.a5': 'Sí, PSD organizado por capas más los PNG exportados en 1280×720. Son tuyos, sin letra chica.',
+      'faq.q1': '¿Cuánto tiempo tardás en entregar?',
+      'faq.a1': '24 a 48 horas en miniaturas, casi siempre menos. 48 a 72 horas en formato reel o short, también suele ser menos. 4 a 5 días en formato largo.',
+      'faq.q2': '¿Por qué elegirme?',
+      'faq.a2': 'Cuento con +6 años de experiencia trabajando con creadores de contenido gigantes y pequeños. No es un trabajo de principiante: es el de alguien ya experimentado en el tema.',
+      'faq.q3': '¿Tu trabajo cuenta con revisiones?',
+      'faq.a3': 'Sí. Siempre y cuando las modificaciones sean sobre la misma base y sean cambios pequeños, no se cobran. Si son cambios grandes, se cobra un plus.',
+      'faq.q4': '¿Métodos y formas de pago?',
+      'faq.a4': 'PayPal de forma internacional en dólares: ese método suma 2 USD. Mercado Pago para pagar en pesos argentinos 🇦🇷. Binance o Bitso en USDT y similares.',
       'contact.sub': 'Escribime por donde te quede más cómodo.',
       'social.copied': 'copiado',
       'step.1': 'Proyecto', 'step.2': 'Día y hora', 'step.3': 'Tus datos',
@@ -100,7 +99,7 @@
     en: {
       'doc.title': 'Joaco — Thumbnail design',
       'nav.aria': 'Main navigation', 'nav.menu': 'Open menu',
-      'nav.works': 'Thumbnails', 'nav.reels': 'Reels', 'nav.clients': 'Clients', 'nav.contact': 'Contact',
+      'nav.works': 'Thumbnails', 'nav.reels': 'Reels', 'nav.theme': 'Switch theme', 'nav.clients': 'Clients', 'nav.contact': 'Contact',
       'cta.book': 'Contact me',
       'hero.tagline': '+6 years of <em>real experience</em>',
       'hero.sub': 'Thumbnails and video editing from a real perspective.',
@@ -113,23 +112,22 @@
       'reels.t1': 'reels/shorts', 'reels.t2': 'editing',
       'reels.play': 'Play', 'reels.missing': 'File missing.\nDrop it in assets/reels/',
       'reels.sub': 'Vertical cuts built to be watched to the end.',
+      'reels.upload': 'Upload video', 'reels.uploaded': 'Local preview',
       'clients.t1': 'my', 'clients.t2': 'clients',
-      'clients.sub': 'Channels that trust me with their thumbnails month after month.',
+      'clients.sub': 'Clients who trusted my work, and the ones who still do.',
       'rail.prev': 'Previous', 'rail.next': 'Next',
       'client.subs': 'subscribers',
       'client.slot1': 'and more', 'client.slot1b': 'Add your channel to the list',
       'faq.t1': 'frequent', 'faq.t2': 'questions',
       'faq.sub': 'What people almost always ask before we start.',
       'faq.q1': 'How long does delivery take?',
-      'faq.a1': 'Between 24 and 48 hours per thumbnail. If you have a launch date, we book the slot and I confirm the exact delivery time.',
-      'faq.q2': 'How many revisions are included?',
-      'faq.a2': 'Unlimited within the chosen concept. If you want to change the idea completely, we treat it as a new piece and I quote it before starting.',
-      'faq.q3': 'Do you work with any niche?',
-      'faq.a3': 'Yes. Gaming, cars, finance, travel, entertainment or whatever you have in mind. If the niche is new to me, I start by researching references before designing.',
-      'faq.q4': 'How does pricing work?',
-      'faq.a4': 'Per piece or per monthly package. The monthly package lowers the price per thumbnail and gives you priority in the queue. Book the call and I send you the full list.',
-      'faq.q5': 'Do I get the editable files?',
-      'faq.a5': 'Yes, a layered PSD plus the PNGs exported at 1280×720. They are yours, no small print.',
+      'faq.a1': '24 to 48 hours for thumbnails, almost always less. 48 to 72 hours for reels or shorts, usually less too. 4 to 5 days for long-form.',
+      'faq.q2': 'Why pick me?',
+      'faq.a2': 'I have +6 years of experience working with creators big and small. This is not a beginner\'s work: it is the work of someone who already knows the craft.',
+      'faq.q3': 'Does your work include revisions?',
+      'faq.a3': 'Yes. As long as the changes stay on the same concept and are small, they are free. Big changes carry an extra fee.',
+      'faq.q4': 'Payment methods?',
+      'faq.a4': 'PayPal worldwide in dollars: that method adds 2 USD. Mercado Pago for Argentine pesos 🇦🇷. Binance or Bitso in USDT and similar.',
       'contact.sub': 'Write me wherever suits you best.',
       'social.copied': 'copied',
       'step.1': 'Project', 'step.2': 'Date & time', 'step.3': 'Your details',
@@ -222,6 +220,24 @@
     { slot: 1 }
   ];
 
+
+  /* ---------------- Tema claro / oscuro ---------------- */
+  var themeBtn = document.getElementById('themeBtn');
+  function applyTheme(mode) {
+    if (mode === 'light') document.documentElement.dataset.theme = 'light';
+    else delete document.documentElement.dataset.theme;
+    try { localStorage.setItem('joaco-theme', mode); } catch (e) {}
+  }
+  (function () {
+    var saved = null;
+    try { saved = localStorage.getItem('joaco-theme'); } catch (e) {}
+    if (saved === 'light') applyTheme('light');
+  })();
+  if (themeBtn) {
+    themeBtn.addEventListener('click', function () {
+      applyTheme(document.documentElement.dataset.theme === 'light' ? 'dark' : 'light');
+    });
+  }
 
   /* ---------------- Portada: carga + idioma ---------------- */
   var gate = document.getElementById('gate');
@@ -450,6 +466,11 @@
         '</video>' +
         '<span class="reel__shade" aria-hidden="true"></span>' +
         '<button class="reel__play" type="button"><i>▶</i><span>' + t('reels.play') + '</span></button>' +
+        '<label class="reel__up" title="' + t('reels.upload') + '">' +
+        '<input type="file" accept="video/*" hidden />' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' +
+        '<path d="M12 16V4.8"/><path d="m7.6 9.2 4.4-4.4 4.4 4.4"/><path d="M4.4 15.2v2.6a2.2 2.2 0 0 0 2.2 2.2h10.8a2.2 2.2 0 0 0 2.2-2.2v-2.6"/>' +
+        '</svg></label>' +
         '<span class="reel__missing">' + t('reels.missing').replace(/\n/g, '<br>') + '</span>';
 
       var video = card.querySelector('video');
@@ -464,7 +485,28 @@
       video.addEventListener('pause', function () { card.classList.remove('is-playing'); });
       video.addEventListener('play', function () { card.classList.add('is-playing'); });
 
-      card.addEventListener('click', function () {
+      // subir un archivo desde la compu para verlo acá mismo
+      var up = card.querySelector('.reel__up input');
+      up.addEventListener('click', function (e) { e.stopPropagation(); });
+      up.addEventListener('change', function () {
+        var file = up.files && up.files[0];
+        if (!file) return;
+        if (card.dataset.url) URL.revokeObjectURL(card.dataset.url);
+        var url = URL.createObjectURL(file);
+        card.dataset.url = url;
+        card.classList.remove('has-error');
+        card.classList.add('has-local');
+        video.querySelectorAll('source').forEach(function (s) { s.remove(); });
+        video.src = url;
+        video.load();
+        setReel(i);
+        video.muted = false;
+        var pr = video.play();
+        if (pr && pr.catch) pr.catch(function () { video.muted = true; video.play(); });
+      });
+
+      card.addEventListener('click', function (e) {
+        if (e.target.closest('.reel__up')) return;         // el botón de subir no centra ni reproduce
         if (i !== reelActive) { setReel(i); return; }      // primero se centra
         if (card.classList.contains('has-error')) return;
         if (video.paused) {

@@ -52,9 +52,21 @@
     <a href="#contacto" class="pill" data-i18n="nav.contact">Contacto</a>
   </nav>
 
-  <button class="nav__burger" id="burger" data-i18n-aria="nav.menu" aria-label="Abrir menú" aria-expanded="false">
-    <span></span><span></span>
-  </button>
+  <div class="nav__right">
+    <button class="pill theme-btn" id="themeBtn" type="button" data-i18n-aria="nav.theme" aria-label="Cambiar tema">
+      <svg class="theme-btn__sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+        <circle cx="12" cy="12" r="4.2"/>
+        <path d="M12 2.6v2.2M12 19.2v2.2M4.2 12H2M22 12h-2.2M6.1 6.1 4.6 4.6M19.4 19.4l-1.5-1.5M17.9 6.1l1.5-1.5M4.6 19.4l1.5-1.5"/>
+      </svg>
+      <svg class="theme-btn__moon" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M20.2 14.6A8.4 8.4 0 0 1 9.4 3.8a8.6 8.6 0 1 0 10.8 10.8z"/>
+      </svg>
+    </button>
+
+    <button class="nav__burger" id="burger" data-i18n-aria="nav.menu" aria-label="Abrir menú" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+  </div>
 </header>
 
 <a href="#contacto" class="floating-cta">
@@ -169,7 +181,7 @@
 <section class="section clients" id="clientes">
   <div class="wrap">
     <h2 class="stitle"><span class="w" data-i18n="clients.t1">mis</span> <span class="w" data-i18n="clients.t2">clientes</span></h2>
-    <p class="ssub reveal" data-i18n="clients.sub">Canales que me confían sus miniaturas mes a mes.</p>
+    <p class="ssub reveal" data-i18n="clients.sub">Clientes que han confiado o siguen confiando en mi trabajo.</p>
   </div>
 
   <div class="rail reveal">
@@ -187,24 +199,20 @@
 
     <div class="acc" id="acc">
       <div class="acc__item reveal">
-        <button class="acc__head" aria-expanded="false"><span data-i18n="faq.q1">¿Cuánto tardás en entregar?</span><i></i></button>
-        <div class="acc__body"><p data-i18n="faq.a1">Entre 24 y 48 horas por miniatura. Si tenés un lanzamiento con fecha, reservamos el lugar en la agenda y te confirmo el horario exacto de entrega.</p></div>
+        <button class="acc__head" aria-expanded="false"><span data-i18n="faq.q1">¿Cuánto tiempo tardás en entregar?</span><i></i></button>
+        <div class="acc__body"><p data-i18n="faq.a1">24 a 48 horas en miniaturas, casi siempre menos. 48 a 72 horas en formato reel o short, también suele ser menos. 4 a 5 días en formato largo.</p></div>
       </div>
       <div class="acc__item reveal">
-        <button class="acc__head" aria-expanded="false"><span data-i18n="faq.q2">¿Cuántas revisiones incluye?</span><i></i></button>
-        <div class="acc__body"><p data-i18n="faq.a2">Ilimitadas dentro del concepto elegido. Si querés cambiar de idea por completo, lo tomamos como una pieza nueva y te paso el precio antes de arrancar.</p></div>
+        <button class="acc__head" aria-expanded="false"><span data-i18n="faq.q2">¿Por qué elegirme?</span><i></i></button>
+        <div class="acc__body"><p data-i18n="faq.a2">Cuento con +6 años de experiencia trabajando con creadores de contenido gigantes y pequeños. No es un trabajo de principiante: es el de alguien ya experimentado en el tema.</p></div>
       </div>
       <div class="acc__item reveal">
-        <button class="acc__head" aria-expanded="false"><span data-i18n="faq.q3">¿Trabajás con cualquier temática?</span><i></i></button>
-        <div class="acc__body"><p data-i18n="faq.a3">Sí. Gaming, autos, finanzas, viajes, entretenimiento o lo que tengas en la cabeza. Si el nicho es nuevo para mí, arranco investigando referencias antes de diseñar.</p></div>
+        <button class="acc__head" aria-expanded="false"><span data-i18n="faq.q3">¿Tu trabajo cuenta con revisiones?</span><i></i></button>
+        <div class="acc__body"><p data-i18n="faq.a3">Sí. Siempre y cuando las modificaciones sean sobre la misma base y sean cambios pequeños, no se cobran. Si son cambios grandes, se cobra un plus.</p></div>
       </div>
       <div class="acc__item reveal">
-        <button class="acc__head" aria-expanded="false"><span data-i18n="faq.q4">¿Cómo son los precios?</span><i></i></button>
-        <div class="acc__body"><p data-i18n="faq.a4">Por pieza o por paquete mensual. El paquete mensual baja el precio por miniatura y te asegura prioridad en la cola. Agendá la reunión y te paso la lista completa.</p></div>
-      </div>
-      <div class="acc__item reveal">
-        <button class="acc__head" aria-expanded="false"><span data-i18n="faq.q5">¿Me pasás los archivos editables?</span><i></i></button>
-        <div class="acc__body"><p data-i18n="faq.a5">Sí, PSD organizado por capas más los PNG exportados en 1280×720. Son tuyos, sin letra chica.</p></div>
+        <button class="acc__head" aria-expanded="false"><span data-i18n="faq.q4">¿Métodos y formas de pago?</span><i></i></button>
+        <div class="acc__body"><p data-i18n="faq.a4">PayPal de forma internacional en dólares: ese método suma 2 USD. Mercado Pago para pagar en pesos argentinos 🇦🇷. Binance o Bitso en USDT y similares.</p></div>
       </div>
     </div>
   </div>
