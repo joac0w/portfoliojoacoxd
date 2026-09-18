@@ -252,13 +252,18 @@ input,textarea{-webkit-user-select:text;user-select:text}
 }
 /* la pared: sube desde el marco de abajo */
 .hero__wall{
-  position:absolute;left:0;right:0;bottom:0;height:26%;z-index:1;
+  position:absolute;left:0;right:0;bottom:0;height:30%;z-index:1;
   background:
     linear-gradient(180deg,rgba(226,226,235,0) 0%,rgba(226,226,235,.7) 20%,#e2e2e9 58%,#dadae3 100%);
 }
-.hero__frame{
-  position:absolute;left:0;right:0;top:0;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(12,12,35,.16) 18%,rgba(12,12,35,.16) 82%,transparent);
+/* el blanco se apaga hacia el negro de la galería */
+.hero__fade{
+  position:absolute;left:0;right:0;bottom:0;height:19%;z-index:4;pointer-events:none;
+  background:linear-gradient(180deg,
+    rgba(228,228,236,0) 0%,
+    rgba(120,120,135,.28) 38%,
+    rgba(28,28,36,.82) 76%,
+    #050505 100%);
 }
 .hero__inner{position:relative;z-index:3;text-align:center;width:min(100%,1080px);will-change:transform}
 
@@ -273,23 +278,23 @@ input,textarea{-webkit-user-select:text;user-select:text}
 .hero__word-txt{display:block}
 /* el logo va más grande que el texto */
 .hero__mark{
-  width:auto;height:1.34em;
+  width:auto;height:1.52em;
   filter:drop-shadow(0 20px 28px rgba(10,10,30,.26));
   transform:translateY(2%) rotate(2deg);
 }
 .hero__tagline{
-  margin:clamp(22px,3.6vh,38px) 0 0;
+  margin:clamp(6px,1.2vh,16px) 0 0;
   font-size:clamp(20px,2.8vw,32px);font-weight:200;letter-spacing:-.02em;color:#17171c;
 }
 .hero__tagline em{font-weight:600;font-style:normal}
 .hero__sub{
-  margin:12px auto 0;max-width:46ch;
+  margin:9px auto 0;max-width:46ch;
   font-size:clamp(14px,1.5vw,17px);font-weight:300;color:#6a6a74;
 }
 
 /* ---------------- Herramientas (studio) ---------------- */
 .tools{
-  position:absolute;left:50%;bottom:26%;z-index:2;
+  position:absolute;left:50%;bottom:30%;z-index:2;
   transform:translate(-50%,50%);
   display:flex;align-items:center;gap:clamp(16px,4vw,74px);
   perspective:1200px;perspective-origin:50% 40%;
@@ -426,14 +431,49 @@ input,textarea{-webkit-user-select:text;user-select:text}
   will-change:transform;
 }
 .works__title .w{
-  display:inline-block;
+  display:inline-block;position:relative;
   opacity:0;transform:rotateX(52deg) translateY(.34em);filter:blur(12px);
   transition:opacity .9s var(--ease),transform 1s var(--ease),filter .9s var(--ease);
   transform-origin:50% 100%;
+  background:linear-gradient(105deg,#d9d9e2 0%,#d9d9e2 38%,#ffffff 47%,#ffffff 53%,#d9d9e2 62%,#d9d9e2 100%);
+  background-size:280% 100%;background-position:120% 0;
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent;
+  text-shadow:0 0 42px rgba(255,255,255,.28),0 0 100px rgba(255,255,255,.14);
+}
+.works__title.is-in .w{animation:shineText 7s var(--ease) infinite}
+.works__title.is-in .w:nth-child(5){animation-delay:.18s}
+.works__title.is-in .w:nth-child(6){animation-delay:.36s}
+@keyframes shineText{
+  0%,55%{background-position:120% 0}
+  85%,100%{background-position:-40% 0}
+}
+
+/* destellos */
+.works__title .spark{
+  position:absolute;width:clamp(18px,2.4vw,36px);aspect-ratio:1;
+  background:
+    radial-gradient(circle,rgba(255,255,255,.95) 0%,rgba(255,255,255,0) 62%),
+    conic-gradient(from 0deg,transparent 0deg,rgba(255,255,255,.9) 6deg,transparent 12deg,
+      transparent 84deg,rgba(255,255,255,.9) 90deg,transparent 96deg,
+      transparent 174deg,rgba(255,255,255,.9) 180deg,transparent 186deg,
+      transparent 264deg,rgba(255,255,255,.9) 270deg,transparent 276deg);
+  opacity:0;pointer-events:none;
+  animation:twinkle 3.6s ease-in-out infinite;
+}
+.works__title .s1{left:6%;top:6%;animation-delay:.2s}
+.works__title .s2{right:8%;top:22%;animation-delay:1.6s;width:clamp(12px,1.4vw,22px)}
+.works__title .s3{left:22%;bottom:2%;animation-delay:2.9s;width:clamp(10px,1.2vw,18px)}
+@keyframes twinkle{
+  0%,58%,100%{opacity:0;transform:scale(.35) rotate(0deg)}
+  68%{opacity:.95;transform:scale(1) rotate(26deg)}
+  78%{opacity:.4;transform:scale(.85) rotate(42deg)}
+  87%{opacity:.8;transform:scale(1.08) rotate(58deg)}
+  96%{opacity:0;transform:scale(.45) rotate(74deg)}
 }
 .works__title.is-in .w{opacity:1;transform:none;filter:blur(0)}
-.works__title.is-in .w:nth-child(2){transition-delay:.12s}
-.works__title.is-in .w:nth-child(3){transition-delay:.24s}
+.works__title.is-in .w:nth-child(5){transition-delay:.12s}
+.works__title.is-in .w:nth-child(6){transition-delay:.24s}
 
 /* Proyectos */
 .filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:clamp(26px,4vh,42px)}
@@ -481,23 +521,52 @@ input,textarea{-webkit-user-select:text;user-select:text}
 .tile__meta h3{margin:0;font-size:17px;font-weight:600;letter-spacing:-.01em}
 .tile__meta span{font-size:12px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase}
 
-/* Reseñas */
-.reviews__rows{display:grid;gap:clamp(12px,1.6vw,20px);margin-top:clamp(10px,2vh,26px)}
-.reviews__row{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
-.reviews__track{display:flex;gap:clamp(12px,1.6vw,20px);width:max-content;will-change:transform}
-.review{
-  width:min(84vw,420px);padding:26px 28px;border-radius:22px;
-  border:1px solid var(--line-soft);background:rgba(255,255,255,.035);
+/* Clientes */
+.rail{position:relative;padding:0 clamp(16px,4vw,64px)}
+.rail__track{
+  display:flex;gap:clamp(12px,1.6vw,20px);
+  overflow-x:auto;scroll-behavior:smooth;scroll-snap-type:x mandatory;
+  padding:6px 2px 18px;
+  scrollbar-width:none;-ms-overflow-style:none;
 }
-.review p{margin:0 0 20px;font-size:16px;color:#dcdce2}
-.review footer{display:flex;align-items:center;gap:12px}
-.review .av{
-  width:38px;height:38px;border-radius:50%;display:grid;place-items:center;
-  font-size:14px;font-weight:700;color:#050505;background:#e8e8ee;
+.rail__track::-webkit-scrollbar{display:none}
+
+.client{
+  flex:0 0 auto;scroll-snap-align:center;
+  display:flex;align-items:center;gap:clamp(14px,1.6vw,20px);
+  width:min(86vw,360px);padding:18px 24px 18px 18px;
+  border-radius:24px;background:#f4f4f6;color:#0a0a0c;
+  border:1px solid rgba(10,10,20,.06);
+  box-shadow:0 18px 40px rgba(0,0,0,.45);
+  transition:transform .45s var(--ease),box-shadow .45s var(--ease);
 }
-.review b{display:block;font-size:14px;font-weight:600}
-.review small{color:var(--muted);font-size:12px}
-.review .stars{margin-left:auto;font-size:12px;color:#ffd400;letter-spacing:2px}
+.client:hover{transform:translateY(-4px);box-shadow:0 26px 60px rgba(0,0,0,.55)}
+.client__pic{
+  flex:none;width:clamp(56px,6vw,68px);aspect-ratio:1;border-radius:50%;
+  display:grid;place-items:center;overflow:hidden;
+  background:linear-gradient(145deg,#111114,#33333c);
+  color:#fff;font-size:22px;font-weight:600;letter-spacing:-.02em;
+}
+.client__pic img{width:100%;height:100%;object-fit:cover}
+.client__txt{display:grid;gap:3px;min-width:0}
+.client__name{
+  font-size:clamp(18px,2vw,22px);font-weight:600;letter-spacing:-.025em;line-height:1.1;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.client__subs{font-size:13px;font-weight:300;color:#5f5f6a}
+.client__subs b{font-weight:600;color:#0a0a0c}
+
+.rail__arrow{
+  position:absolute;top:50%;z-index:3;transform:translateY(-60%);
+  width:46px;height:46px;border-radius:50%;display:grid;place-items:center;
+  border:1px solid var(--line);background:rgba(14,14,16,.72);backdrop-filter:blur(10px);
+  font-size:22px;color:var(--fg);
+  transition:background .3s ease,transform .3s var(--ease),opacity .3s ease;
+}
+.rail__arrow:hover{background:rgba(255,255,255,.16);transform:translateY(-60%) scale(1.06)}
+.rail__arrow:disabled{opacity:.25;cursor:default}
+.rail__arrow--prev{left:clamp(4px,1vw,18px)}
+.rail__arrow--next{right:clamp(4px,1vw,18px)}
 
 /* FAQ */
 .acc{display:grid;gap:12px}
@@ -830,6 +899,12 @@ input,textarea{-webkit-user-select:text;user-select:text}
   .funnel__steps{gap:12px;font-size:12px}
   .funnel__steps li span{display:none}
   .funnel__steps li.is-active span{display:inline}
+  .rail{padding:0 46px}
+  .client{width:min(72vw,320px);padding:14px 18px 14px 14px;gap:12px}
+  .client__pic{width:52px}
+  .rail__arrow{width:38px;height:38px;font-size:19px}
+  .rail__arrow--prev{left:0}
+  .rail__arrow--next{right:0}
   .tools{gap:10px}
   .hero{padding-bottom:clamp(200px,30vh,300px)}
   .hero__wall{height:26%}
@@ -868,7 +943,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
 
   <nav class="nav__links" id="navLinks" aria-label="Navegación principal">
     <a href="#proyectos" class="pill">Trabajos</a>
-    <a href="#resenas" class="pill">Reseñas</a>
+    <a href="#clientes" class="pill">Clientes</a>
     <a href="#contacto" class="pill">Contacto</a>
   </nav>
 
@@ -886,7 +961,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
 <!-- ============ HERO (fondo blanco + pared gris) ============ -->
 <section class="hero" id="inicio">
   <div class="hero__light" aria-hidden="true"></div>
-  <div class="hero__wall" aria-hidden="true"><span class="hero__frame"></span></div>
+  <div class="hero__wall" aria-hidden="true"></div>
 
   <div class="hero__inner" data-parallax="0.16">
     <h1 class="hero__word">
@@ -896,6 +971,8 @@ input,textarea{-webkit-user-select:text;user-select:text}
     <p class="hero__tagline">+6 años de <em>experiencia real</em></p>
     <p class="hero__sub">Miniaturas y edición de video desde una perspectiva real.</p>
   </div>
+
+  <div class="hero__fade" aria-hidden="true"></div>
 
   <!-- herramientas apoyadas contra la pared -->
   <div class="tools" id="tools" aria-label="Herramientas">
@@ -941,6 +1018,9 @@ input,textarea{-webkit-user-select:text;user-select:text}
 <section class="section works" id="proyectos">
   <div class="wrap">
     <h2 class="works__title" id="worksTitle">
+      <i class="spark s1" aria-hidden="true"></i>
+      <i class="spark s2" aria-hidden="true"></i>
+      <i class="spark s3" aria-hidden="true"></i>
       <span class="w">todas</span> <span class="w">mis</span> <span class="w">miniaturas</span>
     </h2>
 
@@ -956,18 +1036,19 @@ input,textarea{-webkit-user-select:text;user-select:text}
   </div>
 </section>
 
-<!-- ============ RESEÑAS ============ -->
-<section class="section reviews" id="resenas">
+<!-- ============ CLIENTES ============ -->
+<section class="section clients" id="clientes">
   <div class="wrap">
     <header class="sec-head reveal reveal--fade" data-parallax="0.045">
-      <span class="tag">01 — Reseñas</span>
-      <h2 class="sec-title">Lo que <em>dicen</em></h2>
+      <span class="tag">01 — Clientes</span>
+      <h2 class="sec-title">Mis <em>clientes</em></h2>
     </header>
   </div>
 
-  <div class="reviews__rows">
-    <div class="reviews__row"><div class="reviews__track" id="reviewTrackA"></div></div>
-    <div class="reviews__row"><div class="reviews__track" id="reviewTrackB"></div></div>
+  <div class="rail reveal">
+    <button class="rail__arrow rail__arrow--prev" id="railPrev" aria-label="Anterior">‹</button>
+    <div class="rail__track" id="clientRail"></div>
+    <button class="rail__arrow rail__arrow--next" id="railNext" aria-label="Siguiente">›</button>
   </div>
 </section>
 
@@ -1205,15 +1286,17 @@ input,textarea{-webkit-user-select:text;user-select:text}
   var fullOf = function (i) { return EMBED['f:' + MEDIA[i].s]; };
   var INDEXES = MEDIA.map(function (_, i) { return i; });
 
-  var REVIEWS = [
-    { q: 'Subimos el CTR de 4,1% a 9,3% en tres semanas. No cambiamos nada más que las miniaturas.', n: 'Martín Guzmán', r: 'Canal de finanzas · 240K subs' },
-    { q: 'Entiende el video sin que se lo expliques dos veces. Mandás el brief y vuelve algo mejor de lo que tenías en la cabeza.', n: 'Sofía Rinaldi', r: 'Productora de contenido' },
-    { q: 'Entrega siempre antes de la fecha. En dos años nunca tuve que correr a último momento.', n: 'Nico Ferreyra', r: 'Gaming · 1,1M subs' },
-    { q: 'Las variantes para testear son oro. Aprendí más de mi audiencia en un mes que en todo el año anterior.', n: 'Caro Méndez', r: 'Lifestyle · 85K subs' },
-    { q: 'Mi canal pasó de verse improvisado a verse como una marca. Eso cambió hasta el tipo de sponsor que me escribe.', n: 'Lucas Ibarra', r: 'Tech · 420K subs' },
-    { q: 'Trabajé con cuatro diseñadores antes. Este es el primero que mira las métricas después de entregar.', n: 'Flor Acosta', r: 'Educación · 60K subs' },
-    { q: 'Precio justo, cero vueltas, y responde el mismo día. Para mí eso ya vale la contratación.', n: 'Diego Salas', r: 'Podcast · 150K subs' },
-    { q: 'Le mandé un video sin idea de portada y volvió con dos conceptos que no se me habrían ocurrido nunca.', n: 'Vale Duarte', r: 'Viajes · 95K subs' }
+  // Clientes del carrusel.
+  // Los números son de ejemplo: cambialos por los reales, y si ponés una foto en
+  // assets/clients/<archivo>.webp, sumá su ruta en "img" y reemplaza a la inicial.
+  var CLIENTS = [
+    { n: 'Alan Villalva', s: '320K', img: '' },
+    { n: 'Goncho Banzas', s: '180K', img: '' },
+    { n: 'Bauti Agnone', s: '95K', img: '' },
+    { n: 'Dlorean', s: '240K', img: '' },
+    { n: 'El Crilón', s: '150K', img: '' },
+    { n: 'Sumá tu canal', s: 'Quedan lugares este mes', slot: true },
+    { n: 'Tu próximo video', s: 'Escribime y lo armamos', slot: true }
   ];
 
   var TICKER_WORDS = ['Miniaturas', 'Branding de canal', 'Packaging de video', 'Tests A/B', 'Retoque', 'Dirección de arte'];
@@ -1375,43 +1458,43 @@ input,textarea{-webkit-user-select:text;user-select:text}
   buildTicker();
   window.addEventListener('load', buildTicker);
 
-  /* ---------------- Reseñas en movimiento ---------------- */
-  function reviewCard(r) {
-    var el = document.createElement('article');
-    el.className = 'review';
-    el.innerHTML =
-      '<p>“' + r.q + '”</p>' +
-      '<footer>' +
-      '<span class="av">' + r.n.charAt(0) + '</span>' +
-      '<span><b>' + r.n + '</b><small>' + r.r + '</small></span>' +
-      '<span class="stars">★★★★★</span>' +
-      '</footer>';
-    return el;
-  }
+  // filas horizontales que mueve el bucle principal (hoy sólo la cinta)
+  var rows = [tickerRow];
 
-  var trackA = document.getElementById('reviewTrackA');
-  var trackB = document.getElementById('reviewTrackB');
-  [[trackA, REVIEWS.slice(0, 4)], [trackB, REVIEWS.slice(4)]].forEach(function (pair) {
-    for (var pass = 0; pass < 3; pass++) {
-      pair[1].forEach(function (r) { pair[0].appendChild(reviewCard(r)); });
-    }
+  /* ---------------- Carrusel de clientes ---------------- */
+  var rail = document.getElementById('clientRail');
+  var railPrev = document.getElementById('railPrev');
+  var railNext = document.getElementById('railNext');
+
+  CLIENTS.forEach(function (cl) {
+    var card = document.createElement('article');
+    card.className = 'client' + (cl.slot ? ' is-slot' : '');
+    var pic = cl.img
+      ? '<img src="' + cl.img + '" alt="' + cl.n + '" loading="lazy" decoding="async" />'
+      : (cl.slot ? '+' : cl.n.charAt(0));
+    card.innerHTML =
+      '<span class="client__pic">' + pic + '</span>' +
+      '<span class="client__txt">' +
+      '<span class="client__name">' + cl.n + '</span>' +
+      '<span class="client__subs">' + (cl.slot ? cl.s : '<b>' + cl.s + '</b> suscriptores') + '</span>' +
+      '</span>';
+    rail.appendChild(card);
   });
 
-  var rows = [
-    { el: trackA, dir: -1, speed: 34, offset: 0, loop: 0 },
-    { el: trackB, dir: 1, speed: 28, offset: 0, loop: 0 },
-    tickerRow
-  ];
-  function measureRows() {
-    rows.forEach(function (r) {
-      if (r === tickerRow) return;
-      r.loop = r.el.scrollWidth / 3;
-      if (r.dir > 0 && r.loop) r.offset = r.loop;
-    });
+  function railStep() {
+    var card = rail.querySelector('.client');
+    if (!card) return 320;
+    return card.getBoundingClientRect().width + 16;
   }
-  measureRows();
-  window.addEventListener('load', measureRows);
-  window.addEventListener('resize', measureRows);
+  function railState() {
+    railPrev.disabled = rail.scrollLeft < 8;
+    railNext.disabled = rail.scrollLeft > rail.scrollWidth - rail.clientWidth - 8;
+  }
+  railPrev.addEventListener('click', function () { rail.scrollBy({ left: -railStep(), behavior: 'smooth' }); });
+  railNext.addEventListener('click', function () { rail.scrollBy({ left: railStep(), behavior: 'smooth' }); });
+  rail.addEventListener('scroll', railState, { passive: true });
+  window.addEventListener('resize', railState);
+  railState();
 
   /* ---------------- Proyectos ---------------- */
   var grid = document.getElementById('projectGrid');
@@ -1647,7 +1730,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
       });
     });
   }, { threshold: 0.35 });
-  ['proyectos', 'resenas', 'contacto'].forEach(function (id) {
+  ['proyectos', 'clientes', 'contacto'].forEach(function (id) {
     var s = document.getElementById(id);
     if (s) navIO.observe(s);
   });

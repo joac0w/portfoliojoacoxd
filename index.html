@@ -38,7 +38,7 @@
 
   <nav class="nav__links" id="navLinks" aria-label="Navegación principal">
     <a href="#proyectos" class="pill">Trabajos</a>
-    <a href="#resenas" class="pill">Reseñas</a>
+    <a href="#clientes" class="pill">Clientes</a>
     <a href="#contacto" class="pill">Contacto</a>
   </nav>
 
@@ -56,7 +56,7 @@
 <!-- ============ HERO (fondo blanco + pared gris) ============ -->
 <section class="hero" id="inicio">
   <div class="hero__light" aria-hidden="true"></div>
-  <div class="hero__wall" aria-hidden="true"><span class="hero__frame"></span></div>
+  <div class="hero__wall" aria-hidden="true"></div>
 
   <div class="hero__inner" data-parallax="0.16">
     <h1 class="hero__word">
@@ -66,6 +66,8 @@
     <p class="hero__tagline">+6 años de <em>experiencia real</em></p>
     <p class="hero__sub">Miniaturas y edición de video desde una perspectiva real.</p>
   </div>
+
+  <div class="hero__fade" aria-hidden="true"></div>
 
   <!-- herramientas apoyadas contra la pared -->
   <div class="tools" id="tools" aria-label="Herramientas">
@@ -111,6 +113,9 @@
 <section class="section works" id="proyectos">
   <div class="wrap">
     <h2 class="works__title" id="worksTitle">
+      <i class="spark s1" aria-hidden="true"></i>
+      <i class="spark s2" aria-hidden="true"></i>
+      <i class="spark s3" aria-hidden="true"></i>
       <span class="w">todas</span> <span class="w">mis</span> <span class="w">miniaturas</span>
     </h2>
 
@@ -126,18 +131,19 @@
   </div>
 </section>
 
-<!-- ============ RESEÑAS ============ -->
-<section class="section reviews" id="resenas">
+<!-- ============ CLIENTES ============ -->
+<section class="section clients" id="clientes">
   <div class="wrap">
     <header class="sec-head reveal reveal--fade" data-parallax="0.045">
-      <span class="tag">01 — Reseñas</span>
-      <h2 class="sec-title">Lo que <em>dicen</em></h2>
+      <span class="tag">01 — Clientes</span>
+      <h2 class="sec-title">Mis <em>clientes</em></h2>
     </header>
   </div>
 
-  <div class="reviews__rows">
-    <div class="reviews__row"><div class="reviews__track" id="reviewTrackA"></div></div>
-    <div class="reviews__row"><div class="reviews__track" id="reviewTrackB"></div></div>
+  <div class="rail reveal">
+    <button class="rail__arrow rail__arrow--prev" id="railPrev" aria-label="Anterior">‹</button>
+    <div class="rail__track" id="clientRail"></div>
+    <button class="rail__arrow rail__arrow--next" id="railNext" aria-label="Siguiente">›</button>
   </div>
 </section>
 

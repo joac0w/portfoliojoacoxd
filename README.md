@@ -55,7 +55,8 @@ build-preview.py      Regenera preview.html desde index.html + assets/
    redondeados, sombra profunda y un halo tomado de la propia imagen. Flechas, teclado y Escape.
 4. **todas mis miniaturas** — el título entra en 3D y después acompaña al mouse. Debajo, las
    categorías (Faceless / Gaming, IRL, y las que vengan) y la grilla completa.
-5. **Reseñas** y **Preguntas frecuentes**.
+5. **Mis clientes** — carrusel de tarjetas blancas con la foto (o la inicial) del creador, su
+   nombre y sus suscriptores, con flechas a los costados. Y **Preguntas frecuentes**.
 6. **Contacto** — embudo de tres pasos: qué necesita, calendario para elegir día y horario, y
    sus datos. Al confirmar se arma el correo con todo el detalle.
 
@@ -79,7 +80,7 @@ ningún efecto glitch.
 | Miniaturas | poné el archivo en `assets/thumbs/` (720 px) y en `assets/full/` (1600 px) con el mismo nombre, y sumá la entrada al array `MEDIA` de `main.js` |
 | Títulos, canal y categoría de cada pieza | array `MEDIA` en `assets/js/main.js` (`t` título, `c` canal, `cat` categoría: `faceless` o `irl`) |
 | Categorías nuevas (Finanzas, IA…) | en `index.html` sacá el `disabled` y la clase `is-soon` del chip y ponele `data-filter="finanzas"`; después usá ese mismo valor en el `cat` de las piezas |
-| Reseñas | array `REVIEWS` en `assets/js/main.js` |
+| Clientes del carrusel | array `CLIENTS` en `assets/js/main.js` (`n` nombre, `s` suscriptores, `img` ruta de la foto) |
 | Preguntas del embudo | bloques `.opts` en `index.html` (el `data-group` es la clave que se guarda) |
 | Palabras de la cinta que gira | array `TICKER_WORDS` en `assets/js/main.js` |
 | Números de resultados | atributos `data-to` / `data-suffix` en `index.html` |
@@ -95,6 +96,12 @@ Los títulos y los filtros salen de lo que se ve en cada miniatura; cambialos en
 quieras ajustarlos.
 
 ## Dos cosas para tener en cuenta
+
+- **Los datos de los clientes son de ejemplo.** Los nombres salen de los archivos que pasaste y
+  los números de suscriptores están puestos para que la tarjeta se vea completa: cambialos en
+  `CLIENTS`. Las dos últimas tarjetas son lugares libres, pensadas como invitación.
+  Para poner la foto de cada creador, guardala en `assets/clients/` y apuntá `img` a esa ruta;
+  mientras no haya foto se muestra la inicial.
 
 - **El calendario no reserva de verdad.** Es el embudo: guarda lo que elige la persona y arma un
   correo con la fecha, el horario y el detalle del proyecto. Si querés que bloquee tu agenda de

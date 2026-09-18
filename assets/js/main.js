@@ -47,15 +47,17 @@
   var fullOf = function (i) { return 'assets/full/' + MEDIA[i].s + '.webp'; };
   var INDEXES = MEDIA.map(function (_, i) { return i; });
 
-  var REVIEWS = [
-    { q: 'Subimos el CTR de 4,1% a 9,3% en tres semanas. No cambiamos nada más que las miniaturas.', n: 'Martín Guzmán', r: 'Canal de finanzas · 240K subs' },
-    { q: 'Entiende el video sin que se lo expliques dos veces. Mandás el brief y vuelve algo mejor de lo que tenías en la cabeza.', n: 'Sofía Rinaldi', r: 'Productora de contenido' },
-    { q: 'Entrega siempre antes de la fecha. En dos años nunca tuve que correr a último momento.', n: 'Nico Ferreyra', r: 'Gaming · 1,1M subs' },
-    { q: 'Las variantes para testear son oro. Aprendí más de mi audiencia en un mes que en todo el año anterior.', n: 'Caro Méndez', r: 'Lifestyle · 85K subs' },
-    { q: 'Mi canal pasó de verse improvisado a verse como una marca. Eso cambió hasta el tipo de sponsor que me escribe.', n: 'Lucas Ibarra', r: 'Tech · 420K subs' },
-    { q: 'Trabajé con cuatro diseñadores antes. Este es el primero que mira las métricas después de entregar.', n: 'Flor Acosta', r: 'Educación · 60K subs' },
-    { q: 'Precio justo, cero vueltas, y responde el mismo día. Para mí eso ya vale la contratación.', n: 'Diego Salas', r: 'Podcast · 150K subs' },
-    { q: 'Le mandé un video sin idea de portada y volvió con dos conceptos que no se me habrían ocurrido nunca.', n: 'Vale Duarte', r: 'Viajes · 95K subs' }
+  // Clientes del carrusel.
+  // Los números son de ejemplo: cambialos por los reales, y si ponés una foto en
+  // assets/clients/<archivo>.webp, sumá su ruta en "img" y reemplaza a la inicial.
+  var CLIENTS = [
+    { n: 'Alan Villalva', s: '320K', img: '' },
+    { n: 'Goncho Banzas', s: '180K', img: '' },
+    { n: 'Bauti Agnone', s: '95K', img: '' },
+    { n: 'Dlorean', s: '240K', img: '' },
+    { n: 'El Crilón', s: '150K', img: '' },
+    { n: 'Sumá tu canal', s: 'Quedan lugares este mes', slot: true },
+    { n: 'Tu próximo video', s: 'Escribime y lo armamos', slot: true }
   ];
 
   var TICKER_WORDS = ['Miniaturas', 'Branding de canal', 'Packaging de video', 'Tests A/B', 'Retoque', 'Dirección de arte'];
@@ -217,43 +219,43 @@
   buildTicker();
   window.addEventListener('load', buildTicker);
 
-  /* ---------------- Reseñas en movimiento ---------------- */
-  function reviewCard(r) {
-    var el = document.createElement('article');
-    el.className = 'review';
-    el.innerHTML =
-      '<p>“' + r.q + '”</p>' +
-      '<footer>' +
-      '<span class="av">' + r.n.charAt(0) + '</span>' +
-      '<span><b>' + r.n + '</b><small>' + r.r + '</small></span>' +
-      '<span class="stars">★★★★★</span>' +
-      '</footer>';
-    return el;
-  }
+  // filas horizontales que mueve el bucle principal (hoy sólo la cinta)
+  var rows = [tickerRow];
 
-  var trackA = document.getElementById('reviewTrackA');
-  var trackB = document.getElementById('reviewTrackB');
-  [[trackA, REVIEWS.slice(0, 4)], [trackB, REVIEWS.slice(4)]].forEach(function (pair) {
-    for (var pass = 0; pass < 3; pass++) {
-      pair[1].forEach(function (r) { pair[0].appendChild(reviewCard(r)); });
-    }
+  /* ---------------- Carrusel de clientes ---------------- */
+  var rail = document.getElementById('clientRail');
+  var railPrev = document.getElementById('railPrev');
+  var railNext = document.getElementById('railNext');
+
+  CLIENTS.forEach(function (cl) {
+    var card = document.createElement('article');
+    card.className = 'client' + (cl.slot ? ' is-slot' : '');
+    var pic = cl.img
+      ? '<img src="' + cl.img + '" alt="' + cl.n + '" loading="lazy" decoding="async" />'
+      : (cl.slot ? '+' : cl.n.charAt(0));
+    card.innerHTML =
+      '<span class="client__pic">' + pic + '</span>' +
+      '<span class="client__txt">' +
+      '<span class="client__name">' + cl.n + '</span>' +
+      '<span class="client__subs">' + (cl.slot ? cl.s : '<b>' + cl.s + '</b> suscriptores') + '</span>' +
+      '</span>';
+    rail.appendChild(card);
   });
 
-  var rows = [
-    { el: trackA, dir: -1, speed: 34, offset: 0, loop: 0 },
-    { el: trackB, dir: 1, speed: 28, offset: 0, loop: 0 },
-    tickerRow
-  ];
-  function measureRows() {
-    rows.forEach(function (r) {
-      if (r === tickerRow) return;
-      r.loop = r.el.scrollWidth / 3;
-      if (r.dir > 0 && r.loop) r.offset = r.loop;
-    });
+  function railStep() {
+    var card = rail.querySelector('.client');
+    if (!card) return 320;
+    return card.getBoundingClientRect().width + 16;
   }
-  measureRows();
-  window.addEventListener('load', measureRows);
-  window.addEventListener('resize', measureRows);
+  function railState() {
+    railPrev.disabled = rail.scrollLeft < 8;
+    railNext.disabled = rail.scrollLeft > rail.scrollWidth - rail.clientWidth - 8;
+  }
+  railPrev.addEventListener('click', function () { rail.scrollBy({ left: -railStep(), behavior: 'smooth' }); });
+  railNext.addEventListener('click', function () { rail.scrollBy({ left: railStep(), behavior: 'smooth' }); });
+  rail.addEventListener('scroll', railState, { passive: true });
+  window.addEventListener('resize', railState);
+  railState();
 
   /* ---------------- Proyectos ---------------- */
   var grid = document.getElementById('projectGrid');
@@ -489,7 +491,7 @@
       });
     });
   }, { threshold: 0.35 });
-  ['proyectos', 'resenas', 'contacto'].forEach(function (id) {
+  ['proyectos', 'clientes', 'contacto'].forEach(function (id) {
     var s = document.getElementById(id);
     if (s) navIO.observe(s);
   });
