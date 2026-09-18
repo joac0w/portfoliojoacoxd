@@ -726,7 +726,7 @@
   var ctaEl = document.querySelector('.floating-cta');
   var toolsEl = document.getElementById('tools');
 
-  var worksTitle = document.getElementById('worksTitle');
+  var titles = [].slice.call(document.querySelectorAll('.stitle'));
   var mouse = { x: 0, y: 0, tx: 0, ty: 0 };
 
   if (!isTouch) {
@@ -740,15 +740,13 @@
     });
   }
 
-  // el título entra en 3D y después acompaña al mouse
-  if (worksTitle) {
-    var titleIO = new IntersectionObserver(function (en) {
-      en.forEach(function (x) {
-        if (x.isIntersecting) { worksTitle.classList.add('is-in'); titleIO.unobserve(x.target); }
-      });
-    }, { threshold: 0.4 });
-    titleIO.observe(worksTitle);
-  }
+  // los títulos entran en 3D y después acompañan al mouse
+  var titleIO = new IntersectionObserver(function (en) {
+    en.forEach(function (x) {
+      if (x.isIntersecting) { x.target.classList.add('is-in'); titleIO.unobserve(x.target); }
+    });
+  }, { threshold: 0.35 });
+  titles.forEach(function (t) { titleIO.observe(t); });
 
   function onScroll() {
     scrollY = window.scrollY;
@@ -810,15 +808,16 @@
       r2.el.style.transform = 'translate3d(' + (-x).toFixed(2) + 'px,0,0)';
     }
 
-    // Título de trabajos: inclinación 3D suave
-    if (worksTitle && !reduced && !isTouch) {
-      var tr = worksTitle.getBoundingClientRect();
-      if (tr.bottom > 0 && tr.top < innerHeight) {
-        mouse.x = lerp(mouse.x, mouse.tx, 0.06);
-        mouse.y = lerp(mouse.y, mouse.ty, 0.06);
+    // Títulos: inclinación 3D suave según el mouse y la posición en pantalla
+    if (!reduced && !isTouch) {
+      mouse.x = lerp(mouse.x, mouse.tx, 0.06);
+      mouse.y = lerp(mouse.y, mouse.ty, 0.06);
+      for (var ti = 0; ti < titles.length; ti++) {
+        var tr = titles[ti].getBoundingClientRect();
+        if (tr.bottom < 0 || tr.top > innerHeight) continue;
         var depth = clamp((innerHeight * 0.5 - (tr.top + tr.height / 2)) / innerHeight, -1, 1);
-        worksTitle.style.transform =
-          'rotateX(' + (mouse.y * 5 - depth * 5).toFixed(2) + 'deg) rotateY(' + (mouse.x * 6).toFixed(2) + 'deg)';
+        titles[ti].style.transform =
+          'rotateX(' + (mouse.y * 4 - depth * 5).toFixed(2) + 'deg) rotateY(' + (mouse.x * 5).toFixed(2) + 'deg)';
       }
     }
 

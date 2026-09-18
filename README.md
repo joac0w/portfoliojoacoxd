@@ -53,8 +53,9 @@ build-preview.py      Regenera preview.html desde index.html + assets/
 3. **Visor a pantalla completa** — destello al hacer clic, vuelo desde la posición de la
    miniatura con desenfoque de movimiento, y la pieza queda levitando en 3D con bordes
    redondeados, sombra profunda y un halo tomado de la propia imagen. Flechas, teclado y Escape.
-4. **todas mis miniaturas** — el título entra en 3D y después acompaña al mouse. Debajo, las
-   categorías (Faceless / Gaming, IRL, y las que vengan) y la grilla completa.
+4. **todas mis miniaturas** — cada sección muestra sólo su título, sin etiquetas ni bajadas:
+   entra rotando en 3D, tiene glow, un barrido de brillo y después acompaña al mouse. Debajo,
+   las categorías (Faceless / Gaming, IRL, y las que vengan) y la grilla completa.
 5. **Mis clientes** — carrusel de tarjetas blancas con la foto (o la inicial) del creador, su
    nombre y sus suscriptores, con flechas a los costados. Y **Preguntas frecuentes**.
 6. **Contacto** — embudo de tres pasos: qué necesita, calendario para elegir día y horario, y
