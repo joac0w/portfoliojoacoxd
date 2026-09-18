@@ -462,25 +462,6 @@
     io.observe(el);
   });
 
-  /* ---------------- Contadores ---------------- */
-  var counterIO = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      if (!e.isIntersecting) return;
-      var el = e.target;
-      counterIO.unobserve(el);
-      var to = parseFloat(el.dataset.to);
-      var suffix = el.dataset.suffix || '';
-      var start = performance.now();
-      (function tick(now) {
-        var p = clamp((now - start) / 1700, 0, 1);
-        var val = Math.round(to * (1 - Math.pow(1 - p, 3)));
-        el.textContent = (val >= 1000 ? val.toLocaleString('es-AR') : val) + suffix;
-        if (p < 1) requestAnimationFrame(tick);
-      })(start);
-    });
-  }, { threshold: 0.5 });
-  document.querySelectorAll('.counter').forEach(function (el) { counterIO.observe(el); });
-
   /* ---------------- Nav ---------------- */
   var nav = document.getElementById('nav');
   var burger = document.getElementById('burger');
@@ -508,7 +489,7 @@
       });
     });
   }, { threshold: 0.35 });
-  ['resultados', 'proyectos', 'resenas', 'contacto'].forEach(function (id) {
+  ['proyectos', 'proceso', 'resenas', 'contacto'].forEach(function (id) {
     var s = document.getElementById(id);
     if (s) navIO.observe(s);
   });
@@ -532,37 +513,196 @@
     });
   });
 
-  /* ---------------- Formulario ---------------- */
-  var form = document.getElementById('form');
-  var hint = document.getElementById('formHint');
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var ok = true;
-    ['nombre', 'email', 'mensaje'].forEach(function (name) {
-      var input = form.elements[name];
-      var valid = input.value.trim().length > 1 &&
-        (name !== 'email' || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value.trim()));
-      input.closest('.field').classList.toggle('is-error', !valid);
-      if (!valid) ok = false;
-    });
+  /* ---------------- Embudo de contacto ---------------- */
+  var funnel = document.getElementById('funnel');
+  var fBar = document.getElementById('funnelBar');
+  var fSteps = document.getElementById('funnelSteps').children;
+  var fPrev = document.getElementById('fPrev');
+  var fNext = document.getElementById('fNext');
+  var fHint = document.getElementById('funnelHint');
+  var panels = funnel.querySelectorAll('.panel');
 
-    if (!ok) {
-      hint.textContent = 'Revisá los campos marcados antes de enviar.';
-      hint.className = 'form__hint is-bad';
+  var pick = { servicio: [], volumen: '', nicho: '', fecha: null, hora: '' };
+  var step = 1;
+
+  var MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio',
+    'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+  var SLOTS = ['09:00', '10:00', '11:00', '12:00', '15:00', '16:00', '17:00', '18:00'];
+
+  // --- opciones (chips)
+  funnel.querySelectorAll('.opts').forEach(function (group) {
+    var key = group.dataset.group;
+    var multi = group.dataset.multi === '1';
+    group.querySelectorAll('.opt').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        if (multi) {
+          btn.classList.toggle('is-on');
+          var list = pick[key];
+          var v = btn.dataset.value;
+          var at = list.indexOf(v);
+          if (at >= 0) list.splice(at, 1); else list.push(v);
+        } else {
+          group.querySelectorAll('.opt').forEach(function (o) { o.classList.remove('is-on'); });
+          btn.classList.add('is-on');
+          pick[key] = btn.dataset.value;
+        }
+        fHint.textContent = '';
+      });
+    });
+  });
+
+  // --- calendario
+  var calGrid = document.getElementById('calGrid');
+  var calMonth = document.getElementById('calMonth');
+  var slotList = document.getElementById('slotList');
+  var slotTitle = document.getElementById('slotTitle');
+  var today = new Date(); today.setHours(0, 0, 0, 0);
+  var view = new Date(today.getFullYear(), today.getMonth(), 1);
+
+  function sameDay(a, b) {
+    return a && b && a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+  }
+
+  function renderCal() {
+    calMonth.textContent = MESES[view.getMonth()] + ' ' + view.getFullYear();
+    document.getElementById('calPrev').disabled =
+      view.getFullYear() === today.getFullYear() && view.getMonth() === today.getMonth();
+
+    calGrid.innerHTML = '';
+    var first = new Date(view.getFullYear(), view.getMonth(), 1);
+    var offset = (first.getDay() + 6) % 7;            // lunes primero
+    var days = new Date(view.getFullYear(), view.getMonth() + 1, 0).getDate();
+
+    for (var k = 0; k < offset; k++) {
+      var hole = document.createElement('span');
+      hole.className = 'cal__day is-empty';
+      calGrid.appendChild(hole);
+    }
+    for (var d = 1; d <= days; d++) {
+      var date = new Date(view.getFullYear(), view.getMonth(), d);
+      var weekend = date.getDay() === 0 || date.getDay() === 6;
+      var past = date < today;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'cal__day' + (sameDay(date, pick.fecha) ? ' is-sel' : '');
+      btn.textContent = d;
+      btn.disabled = weekend || past;
+      btn.dataset.d = date.toISOString();
+      calGrid.appendChild(btn);
+    }
+  }
+
+  function fechaLarga(d) {
+    var dow = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'][d.getDay()];
+    return dow + ' ' + d.getDate() + ' de ' + MESES[d.getMonth()];
+  }
+
+  function renderSlots() {
+    slotList.innerHTML = '';
+    if (!pick.fecha) {
+      slotTitle.textContent = 'Elegí un día para ver los horarios';
+      return;
+    }
+    slotTitle.textContent = 'Horarios del ' + fechaLarga(pick.fecha);
+    SLOTS.forEach(function (h) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'slot' + (pick.hora === h ? ' is-on' : '');
+      b.textContent = h;
+      b.addEventListener('click', function () {
+        pick.hora = h;
+        renderSlots();
+        fHint.textContent = '';
+      });
+      slotList.appendChild(b);
+    });
+  }
+
+  calGrid.addEventListener('click', function (e) {
+    var b = e.target.closest('.cal__day');
+    if (!b || b.disabled || !b.dataset.d) return;
+    pick.fecha = new Date(b.dataset.d);
+    pick.hora = '';
+    renderCal();
+    renderSlots();
+    fHint.textContent = '';
+  });
+  document.getElementById('calPrev').addEventListener('click', function () {
+    view.setMonth(view.getMonth() - 1); renderCal();
+  });
+  document.getElementById('calNext').addEventListener('click', function () {
+    view.setMonth(view.getMonth() + 1); renderCal();
+  });
+  renderCal();
+  renderSlots();
+
+  // --- pasos
+  function renderSummary() {
+    var box = document.getElementById('summary');
+    var rows = [
+      ['Proyecto', pick.servicio.join(', ') || '—'],
+      ['Volumen', pick.volumen || '—'],
+      ['Temática', pick.nicho || '—'],
+      ['Reunión', pick.fecha ? fechaLarga(pick.fecha) + ' · ' + pick.hora + ' hs' : '—']
+    ];
+    box.innerHTML = rows.map(function (r) {
+      return '<div><span>' + r[0] + '</span><b>' + r[1] + '</b></div>';
+    }).join('');
+  }
+
+  function goTo(n) {
+    step = n;
+    panels.forEach(function (pl) { pl.classList.toggle('is-active', +pl.dataset.step === step); });
+    for (var i = 0; i < fSteps.length; i++) {
+      fSteps[i].classList.toggle('is-active', i === step - 1);
+      fSteps[i].classList.toggle('is-done', i < step - 1);
+    }
+    fBar.style.width = (step / 3 * 100) + '%';
+    fPrev.disabled = step === 1;
+    fNext.textContent = step === 3 ? 'Confirmar reunión' : 'Siguiente';
+    fHint.textContent = '';
+    if (step === 3) renderSummary();
+  }
+
+  fPrev.addEventListener('click', function () { if (step > 1) goTo(step - 1); });
+
+  fNext.addEventListener('click', function () {
+    if (step === 1) {
+      if (!pick.servicio.length) { fHint.className = 'form__hint is-bad'; fHint.textContent = 'Elegí al menos una cosa en la que pueda ayudarte.'; return; }
+      return goTo(2);
+    }
+    if (step === 2) {
+      if (!pick.fecha || !pick.hora) { fHint.className = 'form__hint is-bad'; fHint.textContent = 'Elegí un día y un horario para la reunión.'; return; }
+      return goTo(3);
+    }
+
+    var nombre = document.getElementById('fName').value.trim();
+    var mail = document.getElementById('fMail').value.trim();
+    if (nombre.length < 2 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)) {
+      fHint.className = 'form__hint is-bad';
+      fHint.textContent = 'Necesito tu nombre y un email válido para confirmarte.';
       return;
     }
 
-    var body = 'Nombre: ' + form.elements.nombre.value +
-      '\nEmail: ' + form.elements.email.value +
-      '\nCanal: ' + form.elements.canal.value +
-      '\n\n' + form.elements.mensaje.value;
+    var body =
+      'Quiero agendar una reunión.\n\n' +
+      'Nombre: ' + nombre + '\n' +
+      'Email: ' + mail + '\n' +
+      'Canal: ' + (document.getElementById('fChannel').value.trim() || '—') + '\n' +
+      'Proyecto: ' + (pick.servicio.join(', ') || '—') + '\n' +
+      'Volumen: ' + (pick.volumen || '—') + '\n' +
+      'Temática: ' + (pick.nicho || '—') + '\n' +
+      'Reunión: ' + fechaLarga(pick.fecha) + ' a las ' + pick.hora + ' hs (GMT-3)\n\n' +
+      (document.getElementById('fMsg').value.trim() || '');
 
-    hint.textContent = 'Listo, se abre tu cliente de correo con el mensaje cargado.';
-    hint.className = 'form__hint is-ok';
+    fHint.className = 'form__hint is-ok';
+    fHint.textContent = 'Listo: se abre tu correo con la reunión del ' + fechaLarga(pick.fecha) + ' a las ' + pick.hora + ' hs.';
     window.location.href = 'mailto:equinox.dgrafico@gmail.com' +
-      '?subject=' + encodeURIComponent('Consulta de ' + form.elements.nombre.value) +
+      '?subject=' + encodeURIComponent('Reunión ' + fechaLarga(pick.fecha) + ' ' + pick.hora + ' — ' + nombre) +
       '&body=' + encodeURIComponent(body);
   });
+
+  goTo(1);
 
   document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -572,14 +712,32 @@
   });
   var stage = document.querySelector('.gallery__stage');
   var gallerySection = document.querySelector('.gallery');
+  var blurTargets = [].slice.call(document.querySelectorAll('.grid,.steps,.acc'));
+  var lastBlur = -1;
 
   var scrollY = window.scrollY;
   var smoothY = scrollY;
   var velocity = 0;
   var last = performance.now();
 
+  var heroEl = document.querySelector('.hero');
+  var ctaEl = document.querySelector('.floating-cta');
+  var toolsEl = document.getElementById('tools');
+
+  if (toolsEl && !isTouch) {
+    window.addEventListener('mousemove', function (e) {
+      toolsEl.style.setProperty('--mx', ((e.clientX / innerWidth - 0.5) * 2).toFixed(3));
+      toolsEl.style.setProperty('--my', ((0.5 - e.clientY / innerHeight) * 2).toFixed(3));
+    });
+  }
+
   function onScroll() {
     scrollY = window.scrollY;
+    var light = scrollY < (heroEl ? heroEl.offsetHeight - 100 : 0);
+    nav.classList.toggle('nav--light', light);
+    ctaEl.classList.toggle('floating-cta--light', light);
+    // en mobile el CTA tapa las herramientas del hero: aparece al scrollear
+    ctaEl.classList.toggle('is-away', light && isTouch);
     nav.classList.toggle('is-stuck', scrollY > 40);
     nav.classList.toggle('is-hidden', scrollY > lastY && scrollY > 400 && !navLinks.classList.contains('is-open'));
     lastY = scrollY;
@@ -631,6 +789,18 @@
       r2.offset += (r2.speed * dt + push) * r2.dir * (reduced ? 0 : 1);
       var x = ((r2.offset % r2.loop) + r2.loop) % r2.loop;
       r2.el.style.transform = 'translate3d(' + (-x).toFixed(2) + 'px,0,0)';
+    }
+
+    // Motion blur al scrollear (cuantizado para no repintar de más)
+    if (!reduced && !isTouch) {
+      var vb = clamp((Math.abs(velocity) - 2) * 0.22, 0, 3);
+      vb = Math.round(vb * 2) / 2;
+      if (vb !== lastBlur) {
+        lastBlur = vb;
+        for (var t = 0; t < blurTargets.length; t++) {
+          blurTargets[t].style.filter = vb > 0 ? 'blur(' + vb + 'px)' : '';
+        }
+      }
     }
 
     // Levitación con parallax 3D del visor
