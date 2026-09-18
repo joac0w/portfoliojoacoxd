@@ -39,6 +39,17 @@ for name in sorted(os.listdir(f"{ROOT}/assets/logos")):
         f"assets/logos/{name}",
         f"data:{mime};base64," + base64.b64encode(raw).decode())
 
+# fotos de clientes (si todavía no están, el círculo muestra la inicial)
+if os.path.isdir(f"{ROOT}/assets/clients"):
+    for name in sorted(os.listdir(f"{ROOT}/assets/clients")):
+        ext = os.path.splitext(name)[1].lower()
+        if ext not in MIME:
+            continue
+        raw = open(f"{ROOT}/assets/clients/{name}", "rb").read()
+        js = js.replace(
+            f"assets/clients/{name}",
+            f"data:{MIME[ext]};base64," + base64.b64encode(raw).decode())
+
 # inline de css y js
 html = html.replace('<link rel="stylesheet" href="assets/css/style.css" />',
                     "<style>\n" + css + "\n</style>")

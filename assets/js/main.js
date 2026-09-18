@@ -46,8 +46,7 @@
       'clients.t1': 'mis', 'clients.t2': 'clientes',
       'rail.prev': 'Anterior', 'rail.next': 'Siguiente',
       'client.subs': 'suscriptores',
-      'client.slot1': 'Sumá tu canal', 'client.slot1b': 'Quedan lugares este mes',
-      'client.slot2': 'Tu próximo video', 'client.slot2b': 'Escribime y lo armamos',
+      'client.slot1': 'y más', 'client.slot1b': 'Sumá tu canal a la lista',
       'faq.t1': 'dudas', 'faq.t2': 'frecuentes',
       'faq.q1': '¿Cuánto tardás en entregar?',
       'faq.a1': 'Entre 24 y 48 horas por miniatura. Si tenés un lanzamiento con fecha, reservamos el lugar en la agenda y te confirmo el horario exacto de entrega.',
@@ -106,8 +105,7 @@
       'clients.t1': 'my', 'clients.t2': 'clients',
       'rail.prev': 'Previous', 'rail.next': 'Next',
       'client.subs': 'subscribers',
-      'client.slot1': 'Add your channel', 'client.slot1b': 'Spots left this month',
-      'client.slot2': 'Your next video', 'client.slot2b': 'Write me and we build it',
+      'client.slot1': 'and more', 'client.slot1b': 'Add your channel to the list',
       'faq.t1': 'frequent', 'faq.t2': 'questions',
       'faq.q1': 'How long does delivery take?',
       'faq.a1': 'Between 24 and 48 hours per thumbnail. If you have a launch date, we book the slot and I confirm the exact delivery time.',
@@ -191,13 +189,14 @@
   // Los números son de ejemplo: cambialos por los reales, y si ponés una foto en
   // assets/clients/<archivo>.webp, sumá su ruta en "img" y reemplaza a la inicial.
   var CLIENTS = [
-    { n: 'Alan Villalva', s: '320K', img: '' },
-    { n: 'Goncho Banzas', s: '180K', img: '' },
-    { n: 'Bauti Agnone', s: '95K', img: '' },
-    { n: 'Dlorean', s: '240K', img: '' },
-    { n: 'El Crilón', s: '150K', img: '' },
-    { slot: 1 },
-    { slot: 2 }
+    { n: 'RaptorGamer', s: '15.7M', img: 'assets/clients/raptorgamer.jpg' },
+    { n: 'TheExal04', s: '3.49M', img: 'assets/clients/theexal04.jpg' },
+    { n: 'El Crilón', s: '284K', img: 'assets/clients/crilon.jpg' },
+    { n: 'Spar Retro', s: '60.6K', img: 'assets/clients/spar-retro.jpg' },
+    { n: 'KevsP.L', s: '30K', img: 'assets/clients/kevspl.jpg' },
+    { n: 'Alan Villalva', s: '17.9K', img: 'assets/clients/alan-villalva.jpg' },
+    { n: 'Rangowild', s: '17.7K', img: 'assets/clients/rangowild.jpg' },
+    { slot: 1 }
   ];
 
 
@@ -419,15 +418,24 @@
       var subs = cl.slot ? t('client.slot' + cl.slot + 'b') : '<b>' + cl.s + '</b> ' + t('client.subs');
       var card = document.createElement('article');
       card.className = 'client' + (cl.slot ? ' is-slot' : '');
-      var pic = cl.img
-        ? '<img src="' + cl.img + '" alt="' + name + '" loading="lazy" decoding="async" />'
-        : (cl.slot ? '+' : name.charAt(0));
       card.innerHTML =
-        '<span class="client__pic">' + pic + '</span>' +
+        '<span class="client__pic"></span>' +
         '<span class="client__txt">' +
         '<span class="client__name">' + name + '</span>' +
         '<span class="client__subs">' + subs + '</span>' +
         '</span>';
+
+      var pic = card.querySelector('.client__pic');
+      pic.textContent = cl.slot ? '+' : name.charAt(0);
+      if (cl.img) {
+        // si todavía no está la foto, queda la inicial
+        var im = new Image();
+        im.alt = name;
+        im.loading = 'lazy';
+        im.decoding = 'async';
+        im.addEventListener('load', function () { pic.textContent = ''; pic.appendChild(im); });
+        im.src = cl.img;
+      }
       rail.appendChild(card);
     });
   }
