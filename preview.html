@@ -642,11 +642,11 @@ input,textarea{-webkit-user-select:text;user-select:text}
 /* el FAQ vive en una columna angosta: entra en una línea */
 .faq .stitle{font-size:clamp(30px,5.6vw,76px)}
 
-.rail{position:relative;padding:0 clamp(52px,7vw,110px)}
+.rail{position:relative;padding:0}
 .rail__track{
   display:flex;gap:clamp(14px,1.8vw,24px);
   overflow-x:auto;scroll-behavior:smooth;scroll-snap-type:x mandatory;
-  padding:64px 2px 68px;
+  padding:64px clamp(52px,7vw,120px) 68px;
   perspective:900px;
   scrollbar-width:none;-ms-overflow-style:none;
 }
@@ -655,21 +655,21 @@ input,textarea{-webkit-user-select:text;user-select:text}
 /* desvanecido con blur a los costados */
 .rail::before,.rail::after{
   content:"";position:absolute;top:0;bottom:0;z-index:2;pointer-events:none;
-  width:clamp(64px,9vw,150px);
-  backdrop-filter:blur(7px);
+  width:clamp(96px,13vw,210px);
+  backdrop-filter:blur(8px);
   -webkit-backdrop-filter:blur(7px);
 }
 .rail::before{
   left:0;
-  background:linear-gradient(90deg,#050505 14%,rgba(5,5,5,.72) 52%,rgba(5,5,5,0) 100%);
-  -webkit-mask-image:linear-gradient(90deg,#000 42%,transparent 100%);
-  mask-image:linear-gradient(90deg,#000 42%,transparent 100%);
+  background:linear-gradient(90deg,#050505 10%,rgba(5,5,5,.78) 44%,rgba(5,5,5,0) 100%);
+  -webkit-mask-image:linear-gradient(90deg,#000 34%,transparent 100%);
+  mask-image:linear-gradient(90deg,#000 34%,transparent 100%);
 }
 .rail::after{
   right:0;
-  background:linear-gradient(270deg,#050505 14%,rgba(5,5,5,.72) 52%,rgba(5,5,5,0) 100%);
-  -webkit-mask-image:linear-gradient(270deg,#000 42%,transparent 100%);
-  mask-image:linear-gradient(270deg,#000 42%,transparent 100%);
+  background:linear-gradient(270deg,#050505 10%,rgba(5,5,5,.78) 44%,rgba(5,5,5,0) 100%);
+  -webkit-mask-image:linear-gradient(270deg,#000 34%,transparent 100%);
+  mask-image:linear-gradient(270deg,#000 34%,transparent 100%);
 }
 
 .client{
@@ -750,14 +750,16 @@ input,textarea{-webkit-user-select:text;user-select:text}
 .rail__arrow{
   position:absolute;top:50%;z-index:3;transform:translateY(-50%);
   width:48px;height:48px;border-radius:50%;display:grid;place-items:center;
-  border:1px solid var(--line);background:rgba(14,14,16,.66);backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.28);
+  background:rgba(10,10,14,.8);backdrop-filter:blur(14px);
+  box-shadow:0 12px 32px rgba(0,0,0,.6);
   font-size:22px;color:var(--fg);
-  transition:background .3s ease,transform .3s var(--ease),opacity .3s ease;
+  transition:background .3s ease,transform .3s var(--ease),opacity .3s ease,color .3s ease;
 }
-.rail__arrow:hover{background:rgba(255,255,255,.16);transform:translateY(-50%) scale(1.08)}
+.rail__arrow:hover{background:#fff;color:#0a0a0c;border-color:#fff;transform:translateY(-50%) scale(1.08)}
 .rail__arrow:disabled{opacity:.25;cursor:default}
-.rail__arrow--prev{left:clamp(6px,1.4vw,26px)}
-.rail__arrow--next{right:clamp(6px,1.4vw,26px)}
+.rail__arrow--prev{left:clamp(10px,2vw,38px)}
+.rail__arrow--next{right:clamp(10px,2vw,38px)}
 
 /* FAQ */
 .acc{display:grid;gap:12px}
@@ -1166,8 +1168,9 @@ input,textarea{-webkit-user-select:text;user-select:text}
   .cf__arrow{width:42px;height:42px;font-size:21px}
   .cf__arrow--prev{left:2px}
   .cf__arrow--next{right:2px}
-  .rail{padding:0 44px}
-  .rail::before,.rail::after{width:52px}
+  .rail{padding:0}
+  .rail__track{padding-left:40px;padding-right:40px}
+  .rail::before,.rail::after{width:72px}
   .client{width:min(60vw,208px)}
   .client__pic{width:74px}
   .rail__arrow{width:40px;height:40px;font-size:20px}
