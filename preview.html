@@ -679,67 +679,72 @@ input,textarea{-webkit-user-select:text;user-select:text}
   width:clamp(206px,23vw,268px);aspect-ratio:1/1.04;
   padding:clamp(20px,2.2vw,28px) 18px;
   border-radius:clamp(22px,2.2vw,30px);
-  background:linear-gradient(168deg,#f7f7f9 0%,#ececeF 58%,#e4e4ea 100%);
-  color:#0a0a0c;overflow:hidden;
-  border:1px solid rgba(255,255,255,.5);
+  background:#0c0c10;color:#fff;overflow:hidden;
+  border:1px solid rgba(255,255,255,.14);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.9),
-    0 18px 40px rgba(0,0,0,.45);
+    inset 0 1px 0 rgba(255,255,255,.18),
+    0 18px 40px rgba(0,0,0,.5);
   transform-style:preserve-3d;
-  transition:transform .4s var(--ease),box-shadow .4s var(--ease);
+  transition:transform .4s var(--ease),box-shadow .5s var(--ease),border-color .4s ease;
   will-change:transform;
 }
 .client:hover{
+  border-color:rgba(255,255,255,.26);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.9),
-    0 30px 70px rgba(0,0,0,.6),
-    0 0 46px rgba(255,255,255,.16);
+    inset 0 1px 0 rgba(255,255,255,.22),
+    0 30px 70px rgba(0,0,0,.62),
+    0 0 24px var(--glow,rgba(255,255,255,.18)),
+    0 0 82px var(--glow,rgba(255,255,255,.14));
 }
-/* brillo que sigue al cursor */
+
+/* la propia foto, muy difuminada, como fondo */
+.client__bg{
+  position:absolute;inset:0;pointer-events:none;
+  background-size:cover;background-position:center;
+  filter:blur(34px) saturate(1.9) brightness(.82);
+  transform:scale(1.5);
+  opacity:0;transition:opacity .8s var(--ease),transform .6s var(--ease);
+}
+.client.has-bg .client__bg{opacity:.95}
+.client:hover .client__bg{transform:scale(1.54)}
+.client__veil{
+  position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(85% 60% at 50% 12%,rgba(255,255,255,.14),transparent 62%),
+    linear-gradient(180deg,rgba(8,8,12,.14) 0%,rgba(8,8,12,.42) 58%,rgba(8,8,12,.72) 100%);
+}
+
+/* brillo suave que respira y sigue al cursor */
 .client__glow{
   position:absolute;inset:0;pointer-events:none;border-radius:inherit;
-  background:radial-gradient(42% 42% at var(--gx,50%) var(--gy,50%),rgba(255,255,255,.95),rgba(255,255,255,0) 70%);
-  opacity:0;transition:opacity .4s var(--ease);
-  mix-blend-mode:soft-light;
+  background:radial-gradient(46% 46% at var(--gx,30%) var(--gy,18%),rgba(255,255,255,.34),rgba(255,255,255,0) 72%);
+  opacity:.5;transition:opacity .5s var(--ease);
+  animation:clientBreathe 7s ease-in-out infinite;
+  mix-blend-mode:screen;
 }
-.client:hover .client__glow{opacity:1}
-/* resplandor que cruza al pasar el mouse, como en las miniaturas */
-.client__shine{
-  position:absolute;top:-30%;bottom:-30%;left:0;width:46%;z-index:2;
-  pointer-events:none;opacity:0;
-  transform:skewX(-16deg) translateX(-150%);
-  background:linear-gradient(90deg,
-    rgba(255,255,255,0) 0%,
-    rgba(28,28,44,.14) 30%,
-    rgba(255,255,255,1) 50%,
-    rgba(28,28,44,.1) 70%,
-    rgba(255,255,255,0) 100%);
-}
-.client:hover .client__shine{animation:clientShine .95s cubic-bezier(.42,.02,.4,.98)}
-@keyframes clientShine{
-  0%{opacity:0;transform:skewX(-16deg) translateX(-150%)}
-  14%{opacity:1}
-  86%{opacity:1}
-  100%{opacity:0;transform:skewX(-16deg) translateX(300%)}
+.client:hover .client__glow{opacity:1;animation:none}
+@keyframes clientBreathe{
+  0%,100%{opacity:.34}
+  50%{opacity:.62}
 }
 
 .client__pic{
-  position:relative;
+  position:relative;z-index:2;
   width:clamp(100px,11.4vw,134px);aspect-ratio:1;border-radius:50%;
   display:grid;place-items:center;overflow:hidden;
   background:linear-gradient(145deg,#111114,#33333c);
   color:#fff;font-size:38px;font-weight:600;letter-spacing:-.02em;
-  box-shadow:0 10px 26px rgba(10,10,30,.3),inset 0 0 0 3px rgba(255,255,255,.9);
+  box-shadow:0 12px 30px rgba(0,0,0,.45),inset 0 0 0 3px rgba(255,255,255,.92);
   transform:translateZ(26px);
 }
 .client__pic img{width:100%;height:100%;object-fit:cover;display:block}
-.client__txt{display:grid;gap:4px;justify-items:center;text-align:center;transform:translateZ(16px)}
+.client__txt{position:relative;z-index:2;display:grid;gap:4px;justify-items:center;text-align:center;transform:translateZ(16px)}
 .client__name{
   font-size:clamp(18px,1.8vw,23px);font-weight:600;letter-spacing:-.025em;line-height:1.15;
-  max-width:100%;
+  max-width:100%;color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.45);
 }
-.client__subs{font-size:clamp(13px,1.15vw,15.5px);font-weight:300;color:#5f5f6a}
-.client__subs b{font-weight:600;color:#0a0a0c}
+.client__subs{font-size:clamp(13px,1.15vw,15.5px);font-weight:300;color:rgba(255,255,255,.72)}
+.client__subs b{font-weight:600;color:#fff}
 .client.is-slot .client__pic{background:linear-gradient(145deg,#2a2a33,#15151a);font-size:44px;font-weight:300}
 
 .rail__arrow{
@@ -2077,6 +2082,23 @@ input,textarea{-webkit-user-select:text;user-select:text}
   var railPrev = document.getElementById('railPrev');
   var railNext = document.getElementById('railNext');
 
+  // color promedio de una foto, para teñir el resplandor de su tarjeta
+  function averageColor(img) {
+    try {
+      var cv = document.createElement('canvas');
+      cv.width = cv.height = 10;
+      var cx = cv.getContext('2d');
+      cx.drawImage(img, 0, 0, 10, 10);
+      var d = cx.getImageData(0, 0, 10, 10).data;
+      var r = 0, g = 0, b = 0, n = 0;
+      for (var i = 0; i < d.length; i += 4) { r += d[i]; g += d[i + 1]; b += d[i + 2]; n++; }
+      r /= n; g /= n; b /= n;
+      var max = Math.max(r, g, b) || 1;
+      var boost = Math.min(1.5, 190 / max);          // lo levanta sin quemarlo
+      return [r, g, b].map(function (v) { return Math.round(clamp(v * boost, 0, 255)); }).join(',');
+    } catch (e) { return null; }
+  }
+
   function renderClients() {
     rail.innerHTML = '';
     CLIENTS.forEach(function (cl) {
@@ -2085,13 +2107,14 @@ input,textarea{-webkit-user-select:text;user-select:text}
       var card = document.createElement('article');
       card.className = 'client' + (cl.slot ? ' is-slot' : '');
       card.innerHTML =
+        '<span class="client__bg" aria-hidden="true"></span>' +
+        '<span class="client__veil" aria-hidden="true"></span>' +
         '<span class="client__pic"></span>' +
         '<span class="client__txt">' +
         '<span class="client__name">' + name + '</span>' +
         '<span class="client__subs">' + subs + '</span>' +
         '</span>' +
-        '<span class="client__glow" aria-hidden="true"></span>' +
-        '<span class="client__shine" aria-hidden="true"></span>';
+        '<span class="client__glow" aria-hidden="true"></span>';
 
       var pic = card.querySelector('.client__pic');
       pic.textContent = cl.slot ? '+' : name.charAt(0);
@@ -2101,7 +2124,16 @@ input,textarea{-webkit-user-select:text;user-select:text}
         var im = new Image();
         im.alt = name;
         im.decoding = 'async';
-        im.addEventListener('load', function () { pic.textContent = ''; pic.appendChild(im); });
+        im.addEventListener('load', function () {
+          pic.textContent = '';
+          pic.appendChild(im);
+          // la misma foto, difuminada, como fondo de la tarjeta
+          card.querySelector('.client__bg').style.backgroundImage = 'url(' + cl.img + ')';
+          card.classList.add('has-bg');
+          // y su color promedio para el resplandor
+          var rgb = averageColor(im);
+          if (rgb) card.style.setProperty('--glow', 'rgba(' + rgb + ',.62)');
+        });
         im.src = cl.img;
       }
       // parallax 3D con brillo, y destello al hacer clic

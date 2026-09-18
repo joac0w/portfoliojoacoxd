@@ -531,6 +531,23 @@
   var railPrev = document.getElementById('railPrev');
   var railNext = document.getElementById('railNext');
 
+  // color promedio de una foto, para teñir el resplandor de su tarjeta
+  function averageColor(img) {
+    try {
+      var cv = document.createElement('canvas');
+      cv.width = cv.height = 10;
+      var cx = cv.getContext('2d');
+      cx.drawImage(img, 0, 0, 10, 10);
+      var d = cx.getImageData(0, 0, 10, 10).data;
+      var r = 0, g = 0, b = 0, n = 0;
+      for (var i = 0; i < d.length; i += 4) { r += d[i]; g += d[i + 1]; b += d[i + 2]; n++; }
+      r /= n; g /= n; b /= n;
+      var max = Math.max(r, g, b) || 1;
+      var boost = Math.min(1.5, 190 / max);          // lo levanta sin quemarlo
+      return [r, g, b].map(function (v) { return Math.round(clamp(v * boost, 0, 255)); }).join(',');
+    } catch (e) { return null; }
+  }
+
   function renderClients() {
     rail.innerHTML = '';
     CLIENTS.forEach(function (cl) {
@@ -539,13 +556,14 @@
       var card = document.createElement('article');
       card.className = 'client' + (cl.slot ? ' is-slot' : '');
       card.innerHTML =
+        '<span class="client__bg" aria-hidden="true"></span>' +
+        '<span class="client__veil" aria-hidden="true"></span>' +
         '<span class="client__pic"></span>' +
         '<span class="client__txt">' +
         '<span class="client__name">' + name + '</span>' +
         '<span class="client__subs">' + subs + '</span>' +
         '</span>' +
-        '<span class="client__glow" aria-hidden="true"></span>' +
-        '<span class="client__shine" aria-hidden="true"></span>';
+        '<span class="client__glow" aria-hidden="true"></span>';
 
       var pic = card.querySelector('.client__pic');
       pic.textContent = cl.slot ? '+' : name.charAt(0);
@@ -555,7 +573,16 @@
         var im = new Image();
         im.alt = name;
         im.decoding = 'async';
-        im.addEventListener('load', function () { pic.textContent = ''; pic.appendChild(im); });
+        im.addEventListener('load', function () {
+          pic.textContent = '';
+          pic.appendChild(im);
+          // la misma foto, difuminada, como fondo de la tarjeta
+          card.querySelector('.client__bg').style.backgroundImage = 'url(' + cl.img + ')';
+          card.classList.add('has-bg');
+          // y su color promedio para el resplandor
+          var rgb = averageColor(im);
+          if (rgb) card.style.setProperty('--glow', 'rgba(' + rgb + ',.62)');
+        });
         im.src = cl.img;
       }
       // parallax 3D con brillo, y destello al hacer clic
