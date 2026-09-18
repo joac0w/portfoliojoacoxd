@@ -41,7 +41,18 @@
     { s: 'alan-05', t: 'Dark Souls III', c: 'Alan Villalva', cat: 'faceless' },
     { s: 'alan-06', t: '5 detalles de Fallout 3', c: 'Alan Villalva', cat: 'faceless' },
     { s: 'alan-07', t: 'Los 82 de PlayStation 2', c: 'Alan Villalva', cat: 'faceless' },
-    { s: 'alan-08', t: 'GTA IV filtrado', c: 'Alan Villalva', cat: 'faceless' }
+    { s: 'alan-08', t: 'GTA IV filtrado', c: 'Alan Villalva', cat: 'faceless' },
+    { s: 'goncho-f1-2', t: 'Stake F1 Team', c: 'Goncho Banzas', cat: 'irl' },
+    { s: 'goncho-f1-3', t: 'Max Verstappen', c: 'Goncho Banzas', cat: 'irl' },
+    { s: 'goncho-f1-4', t: 'DNF', c: 'Goncho Banzas', cat: 'irl' },
+    { s: 'jotabe-river', t: 'River Plate en FC 26', c: 'Jotabe', cat: 'irl' },
+    { s: 'hansi-flick', t: 'Hansi Flick en FC 26', c: 'Fútbol', cat: 'irl' },
+    { s: 'jacob-elordi', t: 'La redención de Jacob Elordi', c: 'Cine', cat: 'irl' },
+    { s: 'simpsons', t: 'Un futuro muy loco', c: 'Series', cat: 'faceless' },
+    { s: 'fortnite', t: 'Hiedra botánica', c: 'Fortnite', cat: 'faceless' },
+    { s: 'kevs-01', t: 'Consecuencias de ser simp', c: 'Kevs', cat: 'faceless' },
+    { s: 'kevs-04', t: '¿Buen jefe?', c: 'Kevs', cat: 'faceless' },
+    { s: 'spar-16', t: 'Un 39 en Metacritic', c: 'Spar', cat: 'faceless' }
   ];
   var thumbOf = function (i) { return 'assets/thumbs/' + MEDIA[i].s + '.webp'; };
   var fullOf = function (i) { return 'assets/full/' + MEDIA[i].s + '.webp'; };
@@ -273,6 +284,65 @@
     grid.appendChild(tile);
   });
 
+  /* ---------------- Ver más ---------------- */
+  var gridWrap = document.getElementById('gridWrap');
+  var moreBtn = document.getElementById('moreBtn');
+  var expanded = false;
+
+  function collapsedHeight() {
+    var tiles = [].filter.call(grid.children, function (t) { return !t.classList.contains('is-hidden'); });
+    if (!tiles.length) return 0;
+    var gap = parseFloat(getComputedStyle(grid).rowGap) || 18;
+    var h = tiles[0].getBoundingClientRect().height;
+    var perRow = Math.max(1, Math.round(grid.getBoundingClientRect().width / (tiles[0].getBoundingClientRect().width + gap)));
+    // en una sola columna conviene mostrar más filas
+    var show = perRow >= 3 ? 2 : (perRow === 2 ? 3 : 4);
+    var rows = Math.ceil(tiles.length / perRow);
+    if (rows <= show) return 0;                         // no hace falta plegar
+    return h * show + gap * show + h * 0.62;            // deja asomar la fila siguiente
+  }
+
+  function applyCollapse(animate) {
+    var ch = collapsedHeight();
+    if (!ch) {                                          // entra todo: sin botón ni velo
+      gridWrap.style.maxHeight = '';
+      gridWrap.classList.add('is-open');
+      moreBtn.style.display = 'none';
+      return;
+    }
+    moreBtn.style.display = '';
+    if (expanded) {
+      gridWrap.classList.add('is-open');
+      gridWrap.style.maxHeight = animate ? grid.scrollHeight + 40 + 'px' : '';
+      if (animate) setTimeout(function () { if (expanded) gridWrap.style.maxHeight = ''; }, 900);
+    } else {
+      gridWrap.classList.remove('is-open');
+      if (animate) {
+        gridWrap.style.maxHeight = grid.scrollHeight + 40 + 'px';
+        void gridWrap.offsetWidth;
+      }
+      gridWrap.style.maxHeight = ch + 'px';
+    }
+  }
+
+  moreBtn.addEventListener('click', function () {
+    expanded = !expanded;
+    moreBtn.setAttribute('aria-expanded', String(expanded));
+    moreBtn.querySelector('.more__txt').textContent = expanded ? 'Ver menos' : 'Ver más';
+    applyCollapse(true);
+    if (!expanded) {
+      var top = document.getElementById('proyectos').getBoundingClientRect().top + window.scrollY - 90;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    }
+  });
+
+  applyCollapse(false);
+  window.addEventListener('load', function () { applyCollapse(false); });
+  window.addEventListener('resize', function () {
+    clearTimeout(window.__gz);
+    window.__gz = setTimeout(function () { applyCollapse(false); }, 200);
+  });
+
   var chips = document.querySelectorAll('.chip:not(.is-soon)');
   chips.forEach(function (chip) {
     chip.addEventListener('click', function () {
@@ -283,6 +353,7 @@
       document.querySelectorAll('.tile').forEach(function (t) {
         t.classList.toggle('is-hidden', !(f === 'todas' || t.dataset.cat === f));
       });
+      applyCollapse(false);
     });
   });
 

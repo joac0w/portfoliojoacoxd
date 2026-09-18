@@ -127,7 +127,14 @@
       <button class="chip is-soon" disabled>IA <i>pronto</i></button>
     </div>
 
-    <div class="grid" id="projectGrid"></div>
+    <div class="grid-wrap" id="gridWrap">
+      <div class="grid" id="projectGrid"></div>
+      <div class="grid__fade" aria-hidden="true"></div>
+    </div>
+    <button class="more" id="moreBtn" aria-expanded="false">
+      <span class="more__txt">Ver más</span>
+      <span class="more__ico" aria-hidden="true">↓</span>
+    </button>
   </div>
 </section>
 

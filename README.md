@@ -55,7 +55,8 @@ build-preview.py      Regenera preview.html desde index.html + assets/
    redondeados, sombra profunda y un halo tomado de la propia imagen. Flechas, teclado y Escape.
 4. **todas mis miniaturas** — cada sección muestra sólo su título, sin etiquetas ni bajadas:
    entra rotando en 3D, tiene glow, un barrido de brillo y después acompaña al mouse. Debajo,
-   las categorías (Faceless / Gaming, IRL, y las que vengan) y la grilla completa.
+   las categorías (Faceless / Gaming, IRL, y las que vengan) y la grilla, que arranca plegada:
+   la última fila se disuelve en un desenfoque y el botón **Ver más** despliega todo.
 5. **Mis clientes** — carrusel de tarjetas blancas con la foto (o la inicial) del creador, su
    nombre y sus suscriptores, con flechas a los costados. Y **Preguntas frecuentes**.
 6. **Contacto** — embudo de tres pasos: qué necesita, calendario para elegir día y horario, y
@@ -78,7 +79,8 @@ ningún efecto glitch.
 | Textos, títulos y FAQ | `index.html` |
 | Email de contacto | `index.html` (link `mailto:`) y `assets/js/main.js` (final del embudo) |
 | Redes (WhatsApp, Instagram, X) | `index.html`, sección `.contact__links` |
-| Miniaturas | poné el archivo en `assets/thumbs/` (720 px) y en `assets/full/` (1600 px) con el mismo nombre, y sumá la entrada al array `MEDIA` de `main.js` |
+| Miniaturas | poné el archivo en `assets/thumbs/` (720 px) y en `assets/full/` (1600 px) con el mismo nombre, y sumá la entrada al array `MEDIA` de `main.js`: aparece sola en la galería y en la grilla |
+| Cuántas filas se ven antes de "Ver más" | función `collapsedHeight` en `assets/js/main.js` |
 | Títulos, canal y categoría de cada pieza | array `MEDIA` en `assets/js/main.js` (`t` título, `c` canal, `cat` categoría: `faceless` o `irl`) |
 | Categorías nuevas (Finanzas, IA…) | en `index.html` sacá el `disabled` y la clase `is-soon` del chip y ponele `data-filter="finanzas"`; después usá ese mismo valor en el `cat` de las piezas |
 | Clientes del carrusel | array `CLIENTS` en `assets/js/main.js` (`n` nombre, `s` suscriptores, `img` ruta de la foto) |
