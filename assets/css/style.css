@@ -552,17 +552,25 @@ input,textarea{-webkit-user-select:text;user-select:text}
 }
 
 .grid-wrap{
+  --fade-h:clamp(150px,23vh,240px);
   position:relative;
   overflow:hidden;
   transition:max-height .85s var(--ease);
+  /* el contenido se desvanece de verdad: nunca queda un borde cortado */
+  -webkit-mask-image:linear-gradient(180deg,#000 calc(100% - var(--fade-h)),rgba(0,0,0,0) 100%);
+  mask-image:linear-gradient(180deg,#000 calc(100% - var(--fade-h)),rgba(0,0,0,0) 100%);
 }
+.grid-wrap.is-open{-webkit-mask-image:none;mask-image:none}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,1.6vw,22px)}
 
 /* desvanecido con blur mientras está plegado */
 .grid__fade{
-  position:absolute;left:-6px;right:-6px;bottom:0;height:clamp(140px,22vh,230px);
+  position:absolute;left:-6px;right:-6px;bottom:-36px;height:calc(var(--fade-h) + 36px);
   pointer-events:none;z-index:4;
-  background:linear-gradient(180deg,rgba(5,5,5,0) 0%,rgba(5,5,5,.5) 42%,rgba(5,5,5,.88) 74%,#050505 100%);
+  /* el desenfoque también entra de a poco, sin línea de corte */
+  -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,0) 0%,#000 46%);
+  mask-image:linear-gradient(180deg,rgba(0,0,0,0) 0%,#000 46%);
+  background:linear-gradient(180deg,rgba(5,5,5,0) 0%,rgba(5,5,5,.42) 36%,rgba(5,5,5,.8) 62%,#050505 84%,#050505 100%);
   backdrop-filter:blur(5px);
   -webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 52%);
   mask-image:linear-gradient(180deg,transparent 0%,#000 52%);
