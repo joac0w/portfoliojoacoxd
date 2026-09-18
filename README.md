@@ -33,6 +33,7 @@ index.html            Marcado de todas las secciones
 assets/css/style.css  Estilos, humo, glitch, galería 3D, responsive
 assets/js/main.js     Galería infinita, parallax, contadores, filtros, formulario
 assets/brand/         El logo (la cara) que acompaña al wordmark
+assets/reels/         Los videos verticales de la sección de reels
 assets/logos/*.svg    Íconos de Premiere, After Effects, Photoshop y CapCut
 assets/thumbs/*.webp  Miniaturas para la galería y la grilla (720 px de ancho)
 assets/full/*.webp    Las mismas piezas en 1600 px, para el visor a pantalla completa
@@ -62,9 +63,13 @@ build-preview.py      Regenera preview.html desde index.html + assets/
    un reflejo sigue al puntero. Debajo,
    las categorías (Faceless / Gaming, IRL, y las que vengan) y la grilla, que arranca plegada:
    la última fila se disuelve en un desenfoque y el botón **Ver más** despliega todo.
-5. **Mis clientes** — carrusel de tarjetas blancas con la foto (o la inicial) del creador, su
+5. **edición reels/shorts** — carrusel 3D de videos verticales: el del medio queda de frente
+   y los de los costados giran, se achican y se desenfocan. Se mueve con las flechas (o
+   deslizando en celular) y, al hacer clic en el del medio, el video se reproduce con sonido;
+   otro clic lo pausa. Los archivos van en `assets/reels/` (ver el README de esa carpeta).
+6. **Mis clientes** — carrusel de tarjetas blancas con la foto (o la inicial) del creador, su
    nombre y sus suscriptores, con flechas a los costados. Y **Preguntas frecuentes**.
-6. **Contacto** — embudo de tres pasos: qué necesita, calendario para elegir día y horario, y
+7. **Contacto** — embudo de tres pasos: qué necesita, calendario para elegir día y horario, y
    sus datos. Al confirmar se arma el correo con todo el detalle.
 
 Todo lo que entra en pantalla aparece con fade y desenfoque, y al scrollear rápido la grilla y
@@ -88,6 +93,7 @@ ningún efecto glitch.
 | Cuántas filas se ven antes de "Ver más" | función `collapsedHeight` en `assets/js/main.js` |
 | Títulos, canal y categoría de cada pieza | array `MEDIA` en `assets/js/main.js` (`t` título, `c` canal, `cat` categoría: `faceless` o `irl`) |
 | Categorías nuevas (Finanzas, IA…) | en `index.html` sacá el `disabled` y la clase `is-soon` del chip y ponele `data-filter="finanzas"`; después usá ese mismo valor en el `cat` de las piezas |
+| Reels | poné los videos en `assets/reels/` como `reel-01.mp4` … `reel-05.mp4`; la lista está en el array `REELS` de `main.js` |
 | Clientes del carrusel | array `CLIENTS` en `assets/js/main.js` (`n` nombre, `s` suscriptores, `img` ruta de la foto) |
 | Textos en los dos idiomas | objeto `T` al principio de `assets/js/main.js`: `T.es` y `T.en` con la misma clave. En el HTML, cada texto fijo lleva `data-i18n="clave"` (o `data-i18n-html`, `-ph` para placeholders y `-aria` para etiquetas de accesibilidad) |
 | Preguntas del embudo | bloques `.opts` en `index.html` (el `data-group` es la clave que se guarda) |

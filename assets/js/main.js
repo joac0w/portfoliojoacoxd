@@ -34,7 +34,7 @@
     es: {
       'doc.title': 'Joaco — Diseño de miniaturas',
       'nav.aria': 'Navegación principal', 'nav.menu': 'Abrir menú',
-      'nav.works': 'Trabajos', 'nav.clients': 'Clientes', 'nav.contact': 'Contacto',
+      'nav.works': 'Trabajos', 'nav.reels': 'Reels', 'nav.clients': 'Clientes', 'nav.contact': 'Contacto',
       'cta.book': 'Agendar reunión',
       'hero.tagline': '+6 años de <em>experiencia real</em>',
       'hero.sub': 'Miniaturas y edición de video desde una perspectiva real.',
@@ -43,6 +43,8 @@
       'filters.aria': 'Categorías',
       'chip.all': 'Todas', 'chip.finance': 'Finanzas', 'chip.ai': 'IA', 'chip.soon': 'pronto',
       'more.more': 'Ver más', 'more.less': 'Ver menos',
+      'reels.t1': 'edición', 'reels.t2': 'reels/shorts',
+      'reels.play': 'Play', 'reels.missing': 'Falta el archivo.\nGuardalo en assets/reels/',
       'clients.t1': 'mis', 'clients.t2': 'clientes',
       'rail.prev': 'Anterior', 'rail.next': 'Siguiente',
       'client.subs': 'suscriptores',
@@ -93,7 +95,7 @@
     en: {
       'doc.title': 'Joaco — Thumbnail design',
       'nav.aria': 'Main navigation', 'nav.menu': 'Open menu',
-      'nav.works': 'Work', 'nav.clients': 'Clients', 'nav.contact': 'Contact',
+      'nav.works': 'Work', 'nav.reels': 'Reels', 'nav.clients': 'Clients', 'nav.contact': 'Contact',
       'cta.book': 'Book a call',
       'hero.tagline': '+6 years of <em>real experience</em>',
       'hero.sub': 'Thumbnails and video editing from a real perspective.',
@@ -102,6 +104,8 @@
       'filters.aria': 'Categories',
       'chip.all': 'All', 'chip.finance': 'Finance', 'chip.ai': 'AI', 'chip.soon': 'soon',
       'more.more': 'See more', 'more.less': 'See less',
+      'reels.t1': 'reels/shorts', 'reels.t2': 'editing',
+      'reels.play': 'Play', 'reels.missing': 'File missing.\nDrop it in assets/reels/',
       'clients.t1': 'my', 'clients.t2': 'clients',
       'rail.prev': 'Previous', 'rail.next': 'Next',
       'client.subs': 'subscribers',
@@ -188,6 +192,15 @@
   // Clientes del carrusel.
   // Los números son de ejemplo: cambialos por los reales, y si ponés una foto en
   // assets/clients/<archivo>.webp, sumá su ruta en "img" y reemplaza a la inicial.
+  // Reels: los archivos van en assets/reels/ (ver el README de esa carpeta).
+  var REELS = [
+    { f: 'reel-01' },
+    { f: 'reel-02' },
+    { f: 'reel-03' },
+    { f: 'reel-04' },
+    { f: 'reel-05' }
+  ];
+
   var CLIENTS = [
     { n: 'RaptorGamer', s: '15.7M', img: 'assets/clients/raptorgamer.webp' },
     { n: 'TheExal04', s: '3.49M', img: 'assets/clients/theexal04.webp' },
@@ -249,6 +262,7 @@
     // lo que arma JavaScript
     buildTicker();
     buildGallery();
+    renderReels();
     renderClients();
     renderCal();
     renderSlots();
@@ -405,6 +419,112 @@
 
   // filas horizontales que mueve el bucle principal (hoy sólo la cinta)
   var rows = [tickerRow];
+
+  /* ---------------- Reels / shorts ---------------- */
+  var cfStage = document.getElementById('cfStage');
+  var cfPrev = document.getElementById('cfPrev');
+  var cfNext = document.getElementById('cfNext');
+  var reelCards = [];
+  var reelActive = 0;
+
+  function renderReels() {
+    cfStage.innerHTML = '';
+    reelCards = [];
+    reelActive = Math.min(reelActive, REELS.length - 1);
+
+    REELS.forEach(function (r, i) {
+      var card = document.createElement('article');
+      card.className = 'reel';
+      card.innerHTML =
+        '<video class="reel__v" playsinline preload="metadata"' +
+        (r.poster ? ' poster="' + r.poster + '"' : '') + '>' +
+        '<source src="assets/reels/' + r.f + '.mp4" type="video/mp4">' +
+        '<source src="assets/reels/' + r.f + '.webm" type="video/webm">' +
+        '</video>' +
+        '<span class="reel__shade" aria-hidden="true"></span>' +
+        '<button class="reel__play" type="button"><i>▶</i><span>' + t('reels.play') + '</span></button>' +
+        '<span class="reel__missing">' + t('reels.missing').replace(/\n/g, '<br>') + '</span>';
+
+      var video = card.querySelector('video');
+      var fails = 0;
+      card.querySelectorAll('source').forEach(function (src) {
+        src.addEventListener('error', function () {
+          fails++;
+          if (fails >= 2) card.classList.add('has-error');
+        });
+      });
+      video.addEventListener('ended', function () { card.classList.remove('is-playing'); });
+      video.addEventListener('pause', function () { card.classList.remove('is-playing'); });
+      video.addEventListener('play', function () { card.classList.add('is-playing'); });
+
+      card.addEventListener('click', function () {
+        if (i !== reelActive) { setReel(i); return; }      // primero se centra
+        if (card.classList.contains('has-error')) return;
+        if (video.paused) {
+          pauseReels();
+          video.muted = false;
+          var pr = video.play();
+          if (pr && pr.catch) pr.catch(function () { video.muted = true; video.play(); });
+        } else {
+          video.pause();
+        }
+      });
+
+      cfStage.appendChild(card);
+      reelCards.push({ el: card, v: video });
+    });
+    layoutReels();
+  }
+
+  function pauseReels() {
+    reelCards.forEach(function (c) { if (!c.v.paused) c.v.pause(); });
+  }
+
+  function layoutReels() {
+    reelCards.forEach(function (c, i) {
+      var d = i - reelActive;
+      var abs = Math.abs(d);
+      c.el.style.transform =
+        'translate(-50%,-50%) translateX(' + (d * 58).toFixed(1) + '%) translateZ(' +
+        (-abs * 190) + 'px) rotateY(' + (-d * 26) + 'deg) scale(' + (1 - abs * 0.05).toFixed(3) + ')';
+      c.el.style.opacity = abs > 2 ? 0 : (1 - abs * 0.22).toFixed(2);
+      c.el.style.filter = abs ? 'blur(' + Math.min(abs * 1.4, 3.5) + 'px)' : '';
+      c.el.style.zIndex = String(20 - abs);
+      c.el.style.pointerEvents = abs > 2 ? 'none' : 'auto';
+      c.el.classList.toggle('is-active', d === 0);
+    });
+    cfPrev.disabled = reelActive === 0;
+    cfNext.disabled = reelActive === reelCards.length - 1;
+  }
+
+  function setReel(i) {
+    reelActive = clamp(i, 0, reelCards.length - 1);
+    pauseReels();
+    layoutReels();
+  }
+
+  cfPrev.addEventListener('click', function () { setReel(reelActive - 1); });
+  cfNext.addEventListener('click', function () { setReel(reelActive + 1); });
+
+  // deslizar con el dedo
+  (function () {
+    var x0 = null;
+    var cf = document.getElementById('cf');
+    cf.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+    cf.addEventListener('touchend', function (e) {
+      if (x0 === null) return;
+      var dx = e.changedTouches[0].clientX - x0;
+      if (Math.abs(dx) > 40) setReel(reelActive + (dx < 0 ? 1 : -1));
+      x0 = null;
+    });
+  })();
+
+  // si la sección se va de pantalla, se frena el video
+  new IntersectionObserver(function (en) {
+    en.forEach(function (x) { if (!x.isIntersecting) pauseReels(); });
+  }, { threshold: 0.2 }).observe(document.getElementById('reels'));
+
+  renderReels();
 
   /* ---------------- Carrusel de clientes ---------------- */
   var rail = document.getElementById('clientRail');
@@ -766,7 +886,7 @@
       });
     });
   }, { threshold: 0.35 });
-  ['proyectos', 'clientes', 'contacto'].forEach(function (id) {
+  ['proyectos', 'reels', 'clientes', 'contacto'].forEach(function (id) {
     var s = document.getElementById(id);
     if (s) navIO.observe(s);
   });

@@ -50,6 +50,24 @@ if os.path.isdir(f"{ROOT}/assets/clients"):
             f"assets/clients/{name}",
             f"data:{MIME[ext]};base64," + base64.b64encode(raw).decode())
 
+# reels: se embeben si son livianos; si no, quedan como archivo aparte
+VIDEO_MIME = {".mp4": "video/mp4", ".webm": "video/webm"}
+if os.path.isdir(f"{ROOT}/assets/reels"):
+    presupuesto = 8 * 1024 * 1024
+    for name in sorted(os.listdir(f"{ROOT}/assets/reels")):
+        ext = os.path.splitext(name)[1].lower()
+        if ext not in VIDEO_MIME:
+            continue
+        peso = os.path.getsize(f"{ROOT}/assets/reels/{name}")
+        if peso > 3 * 1024 * 1024 or peso > presupuesto:
+            print(f"  (reel sin embeber por tamaño: {name})")
+            continue
+        presupuesto -= peso
+        raw = open(f"{ROOT}/assets/reels/{name}", "rb").read()
+        js = js.replace(
+            f"assets/reels/{name}",
+            f"data:{VIDEO_MIME[ext]};base64," + base64.b64encode(raw).decode())
+
 # inline de css y js
 html = html.replace('<link rel="stylesheet" href="assets/css/style.css" />',
                     "<style>\n" + css + "\n</style>")
