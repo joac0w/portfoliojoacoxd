@@ -804,9 +804,19 @@ input,textarea{-webkit-user-select:text;user-select:text}
   pointer-events:none;
 }
 .contact__in{position:relative;z-index:2;display:grid;justify-items:center;text-align:center;width:min(100%,1120px);margin-inline:auto}
-.contact__mark{width:clamp(78px,9vw,122px);height:auto;filter:drop-shadow(0 16px 26px rgba(10,10,30,.2))}
+.contact__mark{
+  width:clamp(84px,9.6vw,132px);height:auto;
+  filter:drop-shadow(0 16px 26px rgba(10,10,30,.2));
+  animation:markFloat 6.5s ease-in-out infinite;
+  will-change:transform;
+}
+@keyframes markFloat{
+  0%,100%{transform:translateY(0) rotate(-2.2deg) scale(1)}
+  35%{transform:translateY(-9px) rotate(1.4deg) scale(1.015)}
+  70%{transform:translateY(-3px) rotate(2.4deg) scale(1.005)}
+}
 .contact__title{
-  margin:clamp(8px,1.4vh,16px) 0 0;
+  margin:clamp(-30px,-2.6vh,-14px) 0 0;
   font-family:'Space Grotesk',var(--font);
   font-weight:700;font-size:clamp(44px,8vw,104px);line-height:.9;letter-spacing:-.055em;
   text-shadow:0 .1em .3em rgba(12,12,38,.12);
