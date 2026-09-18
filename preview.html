@@ -268,28 +268,38 @@ input,textarea{-webkit-user-select:text;user-select:text}
 .hero__inner{position:relative;z-index:3;text-align:center;width:min(100%,1080px);will-change:transform}
 
 .hero__word{
-  display:flex;align-items:center;justify-content:center;
-  gap:clamp(10px,1.8vw,26px);margin:0;
+  display:flex;align-items:baseline;justify-content:center;
+  gap:0;margin:0;
   font-family:'Space Grotesk',var(--font);
   font-weight:700;font-size:clamp(66px,14vw,200px);
-  line-height:.82;letter-spacing:-.055em;
-  text-shadow:0 22px 70px rgba(10,10,30,.16);
+  line-height:.86;letter-spacing:-.055em;
 }
-.hero__word-txt{display:block}
-/* el logo va más grande que el texto */
+/* eco blanco detrás del wordmark, como en la referencia */
+.hero__word-txt{
+  position:relative;z-index:1;
+  text-shadow:
+    -.035em -.03em 0 #ffffff,
+    -.07em -.06em 0 #fbfbfd,
+    -.105em -.09em 0 #f6f6f9,
+    -.115em -.1em .04em rgba(12,12,38,.10),
+    0 .12em .34em rgba(12,12,38,.14);
+}
+/* el logo se monta sobre la última letra y apoya en la línea de base */
 .hero__mark{
-  width:auto;height:1.52em;
-  filter:drop-shadow(0 20px 28px rgba(10,10,30,.26));
-  transform:translateY(2%) rotate(2deg);
+  position:relative;z-index:2;
+  width:auto;height:1.34em;
+  margin-left:-.17em;
+  transform:translateY(.16em) rotate(1.5deg);
+  filter:drop-shadow(0 16px 22px rgba(10,10,30,.22));
 }
 .hero__tagline{
-  margin:clamp(2px,.6vh,10px) 0 0;
-  font-size:clamp(19px,2.6vw,30px);font-weight:200;letter-spacing:-.02em;color:#17171c;
+  margin:.07em 0 0;
+  font-size:clamp(18px,2.55vw,36px);font-weight:300;letter-spacing:-.022em;color:#17171c;
 }
-.hero__tagline em{font-weight:600;font-style:normal}
+.hero__tagline em{font-weight:700;font-style:normal;letter-spacing:-.025em}
 .hero__sub{
-  margin:6px auto 0;max-width:46ch;
-  font-size:clamp(14px,1.5vw,17px);font-weight:300;color:#6a6a74;
+  margin:.55em auto 0;max-width:62ch;
+  font-size:clamp(12px,1.45vw,20px);font-weight:300;letter-spacing:.005em;color:#8a8a95;
 }
 
 /* ---------------- Herramientas (studio) ---------------- */
