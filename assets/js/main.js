@@ -1,6 +1,6 @@
 /* =========================================================
    Joaco XD — Portfolio
-   Galería infinita con parallax, glitch, reveals y contadores
+   Galería infinita, visor a pantalla completa y parallax
    ========================================================= */
 (function () {
   'use strict';
@@ -8,7 +8,9 @@
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var isTouch = window.matchMedia('(hover: none)').matches;
   var lerp = function (a, b, t) { return a + (b - a) * t; };
-  // PRNG con semilla: el orden de las miniaturas es distinto por columna pero estable
+  var clamp = function (v, a, b) { return Math.min(b, Math.max(a, v)); };
+
+  // PRNG con semilla: el orden de las miniaturas cambia por columna pero es estable
   var rng = function (seed) {
     return function () {
       seed |= 0; seed = seed + 0x6D2B79F5 | 0;
@@ -25,26 +27,25 @@
     }
     return a;
   };
-  var clamp = function (v, a, b) { return Math.min(b, Math.max(a, v)); };
 
-  /* ---------------- Datos ---------------- */
-  var THUMBS = [];
-  for (var i = 1; i <= 20; i++) THUMBS.push('assets/thumbs/' + (i < 10 ? '0' + i : i) + '.svg');
-
-  var PROJECTS = [
-    { t: 'De 0 a 10K sin publicidad', c: 'finanzas', i: 9 },
-    { t: 'Reto de 100 días', c: 'lifestyle', i: 7 },
-    { t: 'Shopify vs Amazon', c: 'finanzas', i: 4 },
-    { t: 'Herramientas de IA 2026', c: 'tech', i: 6 },
-    { t: 'El error que te hunde', c: 'gaming', i: 3 },
-    { t: 'Setup profesional', c: 'tech', i: 10 },
-    { t: '6M en un solo video', c: 'gaming', i: 12 },
-    { t: 'Antes y después', c: 'lifestyle', i: 17 },
-    { t: '100K suscriptores', c: 'lifestyle', i: 18 },
-    { t: '$431K en 30 días', c: 'finanzas', i: 0 },
-    { t: '¿Veo 3.1 es real?', c: 'tech', i: 13 },
-    { t: 'Top 5 secretos', c: 'gaming', i: 11 }
+  /* ---------------- Piezas ---------------- */
+  // s: archivo · t: título · c: canal · cat: filtro
+  var MEDIA = [
+    { s: 'goncho-f1', t: 'Pole position', c: 'Goncho Banzas', cat: 'motor' },
+    { s: 'pokemon-chatgpt', t: 'ChatGPT arma mi equipo', c: 'Pokémon Emerald', cat: 'gaming' },
+    { s: 'bauti-quien-es-quien', t: 'Quién es quién', c: 'Bauti Agnone', cat: 'entretenimiento' },
+    { s: 'dlorean-mercadona', t: 'DeLorean en Mercadona', c: 'Dlorean', cat: 'motor' },
+    { s: 'crilon-02', t: 'OXXO en CDMX', c: 'El Crilón', cat: 'entretenimiento' },
+    { s: 'alan-03', t: 'Tétrico', c: 'Alan Villalva', cat: 'gaming' },
+    { s: 'alan-04', t: 'Detalles de Manhunt', c: 'Alan Villalva', cat: 'gaming' },
+    { s: 'alan-05', t: 'Dark Souls III', c: 'Alan Villalva', cat: 'gaming' },
+    { s: 'alan-06', t: '5 detalles de Fallout 3', c: 'Alan Villalva', cat: 'gaming' },
+    { s: 'alan-07', t: 'Los 82 de PlayStation 2', c: 'Alan Villalva', cat: 'gaming' },
+    { s: 'alan-08', t: 'GTA IV filtrado', c: 'Alan Villalva', cat: 'gaming' }
   ];
+  var thumbOf = function (i) { return 'assets/thumbs/' + MEDIA[i].s + '.webp'; };
+  var fullOf = function (i) { return 'assets/full/' + MEDIA[i].s + '.webp'; };
+  var INDEXES = MEDIA.map(function (_, i) { return i; });
 
   var REVIEWS = [
     { q: 'Subimos el CTR de 4,1% a 9,3% en tres semanas. No cambiamos nada más que las miniaturas.', n: 'Martín Guzmán', r: 'Canal de finanzas · 240K subs' },
@@ -56,6 +57,8 @@
     { q: 'Precio justo, cero vueltas, y responde el mismo día. Para mí eso ya vale la contratación.', n: 'Diego Salas', r: 'Podcast · 150K subs' },
     { q: 'Le mandé un video sin idea de portada y volvió con dos conceptos que no se me habrían ocurrido nunca.', n: 'Vale Duarte', r: 'Viajes · 95K subs' }
   ];
+
+  var TICKER_WORDS = ['Miniaturas', 'Branding de canal', 'Packaging de video', 'Tests A/B', 'Retoque', 'Dirección de arte'];
 
   /* ---------------- Preloader ---------------- */
   var pre = document.getElementById('preloader');
@@ -130,22 +133,26 @@
       var inner = document.createElement('div');
       inner.className = 'gcol__inner';
 
-      var pool = shuffled(THUMBS, 1337 + c * 101);
-      var items = [];
-      for (var k = 0; k < perCol; k++) items.push(pool[k % pool.length]);
+      var pool = shuffled(INDEXES, 1337 + c * 101);
 
       // duplicado para el loop infinito
       for (var pass = 0; pass < 2; pass++) {
-        items.forEach(function (src) {
+        for (var k = 0; k < perCol; k++) {
+          var idx = pool[k % pool.length];
           var fig = document.createElement('div');
           fig.className = 'gthumb';
+          fig.dataset.i = idx;
+          fig.setAttribute('role', 'button');
+          fig.setAttribute('tabindex', '0');
+          fig.setAttribute('aria-label', 'Ver ' + MEDIA[idx].t + ' en grande');
           var img = document.createElement('img');
-          img.src = src;
-          img.alt = 'Miniatura de ejemplo';
+          img.src = thumbOf(idx);
+          img.alt = MEDIA[idx].t + ' — ' + MEDIA[idx].c;
           img.decoding = 'async';
+          img.draggable = false;
           fig.appendChild(img);
           inner.appendChild(fig);
-        });
+        }
       }
 
       col.appendChild(inner);
@@ -175,9 +182,40 @@
   buildGallery();
   window.addEventListener('resize', function () {
     clearTimeout(window.__rz);
-    window.__rz = setTimeout(function () { buildGallery(); }, 220);
+    window.__rz = setTimeout(function () { buildGallery(); buildTicker(); }, 220);
   });
   window.addEventListener('load', measureGallery);
+
+  /* ---------------- Ticker (nunca queda vacío) ---------------- */
+  var tickerTrack = document.getElementById('tickerTrack');
+  var tickerRow = { el: tickerTrack, dir: -1, speed: 42, offset: 0, loop: 0 };
+
+  function tickerUnit() {
+    var frag = document.createDocumentFragment();
+    TICKER_WORDS.forEach(function (w) {
+      var s = document.createElement('span');
+      s.textContent = w;
+      var i = document.createElement('i');
+      i.textContent = '✦';
+      frag.appendChild(s);
+      frag.appendChild(i);
+    });
+    return frag;
+  }
+
+  function buildTicker() {
+    tickerTrack.innerHTML = '';
+    tickerTrack.appendChild(tickerUnit());
+    var unitW = tickerTrack.scrollWidth || innerWidth;
+    // una "copia" tiene que ser más ancha que la pantalla; después van tres copias
+    var reps = Math.max(1, Math.ceil((innerWidth + 260) / unitW));
+    var total = reps * 3;
+    for (var k = 1; k < total; k++) tickerTrack.appendChild(tickerUnit());
+    tickerRow.loop = tickerTrack.scrollWidth / 3;
+    tickerRow.offset = 0;
+  }
+  buildTicker();
+  window.addEventListener('load', buildTicker);
 
   /* ---------------- Reseñas en movimiento ---------------- */
   function reviewCard(r) {
@@ -195,8 +233,7 @@
 
   var trackA = document.getElementById('reviewTrackA');
   var trackB = document.getElementById('reviewTrackB');
-  var half1 = REVIEWS.slice(0, 4), half2 = REVIEWS.slice(4);
-  [[trackA, half1], [trackB, half2]].forEach(function (pair) {
+  [[trackA, REVIEWS.slice(0, 4)], [trackB, REVIEWS.slice(4)]].forEach(function (pair) {
     for (var pass = 0; pass < 3; pass++) {
       pair[1].forEach(function (r) { pair[0].appendChild(reviewCard(r)); });
     }
@@ -204,10 +241,12 @@
 
   var rows = [
     { el: trackA, dir: -1, speed: 34, offset: 0, loop: 0 },
-    { el: trackB, dir: 1, speed: 28, offset: 0, loop: 0 }
+    { el: trackB, dir: 1, speed: 28, offset: 0, loop: 0 },
+    tickerRow
   ];
   function measureRows() {
     rows.forEach(function (r) {
+      if (r === tickerRow) return;
       r.loop = r.el.scrollWidth / 3;
       if (r.dir > 0 && r.loop) r.offset = r.loop;
     });
@@ -218,16 +257,17 @@
 
   /* ---------------- Proyectos ---------------- */
   var grid = document.getElementById('projectGrid');
-  PROJECTS.forEach(function (p) {
-    var src = THUMBS[p.i % THUMBS.length];
+  MEDIA.forEach(function (m, i) {
     var tile = document.createElement('article');
     tile.className = 'tile reveal';
-    tile.dataset.cat = p.c;
+    tile.dataset.cat = m.cat;
+    tile.dataset.i = i;
+    tile.setAttribute('role', 'button');
+    tile.setAttribute('tabindex', '0');
     tile.innerHTML =
-      '<img src="' + src + '" alt="' + p.t + '" loading="lazy" decoding="async" />' +
-      '<span class="tile__layer tile__layer--a" style="background-image:url(' + src + ')"></span>' +
-      '<span class="tile__layer tile__layer--b" style="background-image:url(' + src + ')"></span>' +
-      '<div class="tile__meta"><h3>' + p.t + '</h3><span>' + p.c + '</span></div>';
+      '<img src="' + thumbOf(i) + '" alt="' + m.t + ' — ' + m.c + '" loading="lazy" decoding="async" draggable="false" />' +
+      '<span class="tile__shine" aria-hidden="true"></span>' +
+      '<div class="tile__meta"><h3>' + m.t + '</h3><span>' + m.c + '</span></div>';
     grid.appendChild(tile);
   });
 
@@ -239,19 +279,181 @@
       chip.setAttribute('aria-selected', 'true');
       var f = chip.dataset.filter;
       document.querySelectorAll('.tile').forEach(function (t) {
-        var show = f === 'todos' || t.dataset.cat === f;
-        t.classList.toggle('is-hidden', !show);
+        t.classList.toggle('is-hidden', !(f === 'todos' || t.dataset.cat === f));
       });
     });
   });
 
+  /* ---------------- Visor a pantalla completa ---------------- */
+  var lb = document.getElementById('lightbox');
+  var lbFrame = document.getElementById('lbFrame');
+  var lbImg = document.getElementById('lbImg');
+  var lbCaption = document.getElementById('lbCaption');
+  var lbGlow = document.getElementById('lbGlow');
+  var flash = document.getElementById('flash');
+  var current = -1;
+  var sourceEl = null;
+  var tilt = { x: 0, y: 0, tx: 0, ty: 0, active: false };
+
+  function flashAt(x, y) {
+    flash.classList.remove('is-on');
+    flash.style.left = (x - 5) + 'px';
+    flash.style.top = (y - 5) + 'px';
+    void flash.offsetWidth; // reinicia la animación
+    flash.classList.add('is-on');
+  }
+
+  function rushBlur() {
+    lbFrame.classList.remove('is-rush');
+    void lbFrame.offsetWidth;
+    lbFrame.classList.add('is-rush');
+  }
+
+  function fillLb(i) {
+    var m = MEDIA[i];
+    lbImg.src = fullOf(i);
+    lbImg.alt = m.t + ' — ' + m.c;
+    lbCaption.innerHTML = '<b>' + m.t + '</b><i>' + m.c + '</i>';
+    lbGlow.style.backgroundImage = 'url(' + thumbOf(i) + ')';
+  }
+
+  function openLb(i, el, px, py) {
+    if (current === i && lb.classList.contains('is-open')) return;
+    current = i;
+    sourceEl = el || null;
+    fillLb(i);
+
+    var rect = el ? el.getBoundingClientRect() : null;
+    flashAt(px != null ? px : (rect ? rect.left + rect.width / 2 : innerWidth / 2),
+            py != null ? py : (rect ? rect.top + rect.height / 2 : innerHeight / 2));
+
+    var sbw = innerWidth - document.documentElement.clientWidth;
+    document.body.style.paddingRight = sbw > 0 ? sbw + 'px' : '';
+    document.body.classList.add('is-locked');
+
+    lb.classList.add('is-open');
+    lb.setAttribute('aria-hidden', 'false');
+    tilt.x = tilt.y = tilt.tx = tilt.ty = 0;
+    tilt.active = false;
+
+    // FLIP: arranca en la posición de la miniatura y vuela al centro
+    var to = lbFrame.getBoundingClientRect();
+    if (rect && to.width && !reduced) {
+      var sx = rect.width / to.width;
+      var sy = rect.height / to.height;
+      var dx = (rect.left + rect.width / 2) - (to.left + to.width / 2);
+      var dy = (rect.top + rect.height / 2) - (to.top + to.height / 2);
+      lbFrame.style.transition = 'none';
+      lbFrame.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(' + sx + ',' + sy + ')';
+      void lbFrame.offsetWidth;
+      lbFrame.style.transition = 'transform .74s cubic-bezier(.16,1,.3,1)';
+      lbFrame.style.transform = 'translate(0,0) scale(1)';
+      rushBlur();
+    } else {
+      lbFrame.style.transition = 'none';
+      lbFrame.style.transform = 'scale(.92)';
+      void lbFrame.offsetWidth;
+      lbFrame.style.transition = 'transform .5s var(--ease)';
+      lbFrame.style.transform = 'scale(1)';
+    }
+    setTimeout(function () { tilt.active = true; }, 760);
+    document.getElementById('lbClose').focus({ preventScroll: true });
+  }
+
+  function closeLb() {
+    if (!lb.classList.contains('is-open')) return;
+    tilt.active = false;
+    var rect = sourceEl ? sourceEl.getBoundingClientRect() : null;
+    var to = lbFrame.getBoundingClientRect();
+    var visible = rect && rect.width > 0 && rect.bottom > 0 && rect.top < innerHeight;
+
+    if (visible && !reduced) {
+      var sx = rect.width / to.width;
+      var sy = rect.height / to.height;
+      var dx = (rect.left + rect.width / 2) - (to.left + to.width / 2);
+      var dy = (rect.top + rect.height / 2) - (to.top + to.height / 2);
+      lbFrame.style.transition = 'transform .6s cubic-bezier(.4,0,.2,1)';
+      lbFrame.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(' + sx + ',' + sy + ')';
+      rushBlur();
+    } else {
+      lbFrame.style.transition = 'transform .45s var(--ease)';
+      lbFrame.style.transform = 'scale(.9)';
+    }
+
+    lb.classList.remove('is-open');
+    lb.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('is-locked');
+    document.body.style.paddingRight = '';
+    current = -1;
+  }
+
+  function stepLb(dir) {
+    if (current < 0) return;
+    var next = (current + dir + MEDIA.length) % MEDIA.length;
+    current = next;
+    tilt.active = false;
+    tilt.x = tilt.y = tilt.tx = tilt.ty = 0;
+    sourceEl = document.querySelector('.tile[data-i="' + next + '"]') || sourceEl;
+    lbFrame.style.transition = 'transform .28s var(--ease)';
+    lbFrame.style.transform = 'translateX(' + (dir * -40) + 'px) scale(.97)';
+    rushBlur();
+    setTimeout(function () {
+      fillLb(next);
+      lbFrame.style.transition = 'none';
+      lbFrame.style.transform = 'translateX(' + (dir * 40) + 'px) scale(.97)';
+      void lbFrame.offsetWidth;
+      lbFrame.style.transition = 'transform .45s var(--ease)';
+      lbFrame.style.transform = 'translateX(0) scale(1)';
+      setTimeout(function () { tilt.active = true; }, 460);
+    }, 240);
+  }
+
+  function onThumbActivate(e) {
+    var el = e.target.closest ? e.target.closest('.gthumb,.tile') : null;
+    // Las columnas viven en una capa 3D animada: a veces el click cae en el
+    // contenedor, así que buscamos la pieza por coordenadas como respaldo.
+    if (!el && e.clientX != null && document.elementsFromPoint) {
+      var stack = document.elementsFromPoint(e.clientX, e.clientY);
+      for (var s = 0; s < stack.length; s++) {
+        var hit = stack[s].closest && stack[s].closest('.gthumb,.tile');
+        if (hit) { el = hit; break; }
+      }
+    }
+    if (!el || !lb) return;
+    var i = parseInt(el.dataset.i, 10);
+    if (isNaN(i)) return;
+    e.preventDefault();
+    openLb(i, el, e.clientX, e.clientY);
+  }
+  document.addEventListener('click', onThumbActivate);
+  document.addEventListener('keydown', function (e) {
+    if ((e.key === 'Enter' || e.key === ' ') && document.activeElement &&
+        document.activeElement.matches('.gthumb,.tile')) {
+      onThumbActivate({ target: document.activeElement, preventDefault: function () { e.preventDefault(); } });
+    }
+    if (!lb.classList.contains('is-open')) return;
+    if (e.key === 'Escape') closeLb();
+    if (e.key === 'ArrowRight') stepLb(1);
+    if (e.key === 'ArrowLeft') stepLb(-1);
+  });
+
+  document.getElementById('lbClose').addEventListener('click', closeLb);
+  document.getElementById('lbNext').addEventListener('click', function () { stepLb(1); });
+  document.getElementById('lbPrev').addEventListener('click', function () { stepLb(-1); });
+  lb.querySelector('[data-close]').addEventListener('click', closeLb);
+
+  // parallax 3D: la pieza levita y sigue el mouse
+  lb.addEventListener('mousemove', function (e) {
+    if (!tilt.active) return;
+    tilt.tx = ((e.clientY / innerHeight) - 0.5) * -12;
+    tilt.ty = ((e.clientX / innerWidth) - 0.5) * 16;
+  });
+  lb.addEventListener('mouseleave', function () { tilt.tx = 0; tilt.ty = 0; });
+
   /* ---------------- Reveal ---------------- */
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
-      if (e.isIntersecting) {
-        e.target.classList.add('is-in');
-        io.unobserve(e.target);
-      }
+      if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
     });
   }, { threshold: 0.16, rootMargin: '0px 0px -8% 0px' });
 
@@ -269,11 +471,9 @@
       var to = parseFloat(el.dataset.to);
       var suffix = el.dataset.suffix || '';
       var start = performance.now();
-      var dur = 1700;
       (function tick(now) {
-        var p = clamp((now - start) / dur, 0, 1);
-        var eased = 1 - Math.pow(1 - p, 3);
-        var val = Math.round(to * eased);
+        var p = clamp((now - start) / 1700, 0, 1);
+        var val = Math.round(to * (1 - Math.pow(1 - p, 3)));
         el.textContent = (val >= 1000 ? val.toLocaleString('es-AR') : val) + suffix;
         if (p < 1) requestAnimationFrame(tick);
       })(start);
@@ -300,10 +500,6 @@
     }
   });
 
-  var sections = ['resultados', 'proyectos', 'resenas', 'contacto'].map(function (id) {
-    return document.getElementById(id);
-  }).filter(Boolean);
-
   var navIO = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
       if (!e.isIntersecting) return;
@@ -312,7 +508,10 @@
       });
     });
   }, { threshold: 0.35 });
-  sections.forEach(function (s) { navIO.observe(s); });
+  ['resultados', 'proyectos', 'resenas', 'contacto'].forEach(function (id) {
+    var s = document.getElementById(id);
+    if (s) navIO.observe(s);
+  });
 
   /* ---------------- Acordeón ---------------- */
   document.querySelectorAll('.acc__item').forEach(function (item) {
@@ -424,13 +623,22 @@
       it.el.style.transform = 'translate3d(0,' + it.cur.toFixed(2) + 'px,0)';
     }
 
-    // Reseñas
+    // Filas horizontales: reseñas + ticker (siempre con contenido en pantalla)
     for (var k = 0; k < rows.length; k++) {
       var r2 = rows[k];
       if (!r2.loop) continue;
-      r2.offset += (r2.speed * dt + velocity * 0.9) * r2.dir * (reduced ? 0 : 1);
+      var push = r2 === tickerRow ? velocity * 0.5 : velocity * 0.9;
+      r2.offset += (r2.speed * dt + push) * r2.dir * (reduced ? 0 : 1);
       var x = ((r2.offset % r2.loop) + r2.loop) % r2.loop;
       r2.el.style.transform = 'translate3d(' + (-x).toFixed(2) + 'px,0,0)';
+    }
+
+    // Levitación con parallax 3D del visor
+    if (tilt.active) {
+      tilt.x = lerp(tilt.x, tilt.tx, 0.08);
+      tilt.y = lerp(tilt.y, tilt.ty, 0.08);
+      lbFrame.style.transition = '';
+      lbFrame.style.transform = 'rotateX(' + tilt.x.toFixed(2) + 'deg) rotateY(' + tilt.y.toFixed(2) + 'deg)';
     }
 
     requestAnimationFrame(frame);

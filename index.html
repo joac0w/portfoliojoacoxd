@@ -20,7 +20,7 @@
 <!-- ============ PRELOADER ============ -->
 <div class="preloader" id="preloader">
   <div class="preloader__inner">
-    <div class="preloader__word glitch" data-text="JOACO XD">JOACO XD</div>
+    <div class="preloader__word">JOACO XD</div>
     <div class="preloader__bar"><span id="preBar"></span></div>
     <div class="preloader__num"><span id="preNum">0</span>%</div>
   </div>
@@ -32,13 +32,13 @@
 
 <!-- ============ NAV ============ -->
 <header class="nav" id="nav">
-  <a href="#inicio" class="nav__logo pill glitch-hover" data-text="JOACO XD">JOACO XD</a>
+  <a href="#inicio" class="nav__logo pill">JOACO XD</a>
 
   <nav class="nav__links" id="navLinks" aria-label="Navegación principal">
-    <a href="#resultados" class="pill glitch-hover" data-text="Resultados">Resultados</a>
-    <a href="#proyectos" class="pill glitch-hover" data-text="Proyectos">Proyectos</a>
-    <a href="#resenas" class="pill glitch-hover" data-text="Reseñas">Reseñas</a>
-    <a href="#contacto" class="pill glitch-hover" data-text="Contacto">Contacto</a>
+    <a href="#resultados" class="pill">Resultados</a>
+    <a href="#proyectos" class="pill">Proyectos</a>
+    <a href="#resenas" class="pill">Reseñas</a>
+    <a href="#contacto" class="pill">Contacto</a>
   </nav>
 
   <button class="nav__burger" id="burger" aria-label="Abrir menú" aria-expanded="false">
@@ -46,7 +46,7 @@
   </button>
 </header>
 
-<a href="#contacto" class="floating-cta glitch-hover" data-text="Contactame">
+<a href="#contacto" class="floating-cta">
   <span class="dot"></span><span class="floating-cta__txt">Contactame</span>
 </a>
 
@@ -65,9 +65,7 @@
   <div class="grain" aria-hidden="true"></div>
 
   <div class="hero__inner" data-parallax="0.25">
-    <h1 class="hero__title glitch" data-text="Diseño que sí necesitás">
-      Diseño que <em>sí</em><br />necesitás
-    </h1>
+    <h1 class="hero__title">Diseño que <em>sí</em><br />necesitás</h1>
     <p class="hero__sub">"Convertí tus ideas en miniaturas potentes que no se pueden ignorar."</p>
 
     <div class="hero__scroll">
@@ -87,16 +85,12 @@
   </div>
   <div class="gallery__fade gallery__fade--top" aria-hidden="true"></div>
   <div class="gallery__fade gallery__fade--bottom" aria-hidden="true"></div>
+  <p class="gallery__hint">Tocá cualquier miniatura para verla en grande</p>
 </section>
 
 <!-- ============ MARQUEE ============ -->
 <div class="ticker" aria-hidden="true">
-  <div class="ticker__track">
-    <span>Miniaturas</span><i>✦</i><span>Branding de canal</span><i>✦</i><span>Packaging de video</span><i>✦</i>
-    <span>Tests A/B</span><i>✦</i><span>Retoque</span><i>✦</i><span>Dirección de arte</span><i>✦</i>
-    <span>Miniaturas</span><i>✦</i><span>Branding de canal</span><i>✦</i><span>Packaging de video</span><i>✦</i>
-    <span>Tests A/B</span><i>✦</i><span>Retoque</span><i>✦</i><span>Dirección de arte</span><i>✦</i>
-  </div>
+  <div class="ticker__track" id="tickerTrack"></div>
 </div>
 
 <!-- ============ RESULTADOS ============ -->
@@ -104,7 +98,7 @@
   <div class="wrap">
     <header class="sec-head reveal reveal--fade" data-parallax="0.045">
       <span class="tag">01 — Resultados</span>
-      <h2 class="sec-title glitch-hover" data-text="Números que hablan">Números que <em>hablan</em></h2>
+      <h2 class="sec-title">Números que <em>hablan</em></h2>
       <p class="sec-sub">No diseño lindo por diseñar lindo. Diseño para que te hagan clic.</p>
     </header>
 
@@ -138,7 +132,7 @@
   <div class="wrap">
     <header class="sec-head reveal reveal--fade" data-parallax="0.045">
       <span class="tag">02 — Servicios</span>
-      <h2 class="sec-title glitch-hover" data-text="Lo que hago">Lo que <em>hago</em></h2>
+      <h2 class="sec-title">Lo que <em>hago</em></h2>
     </header>
 
     <div class="cards">
@@ -169,16 +163,15 @@
   <div class="wrap">
     <header class="sec-head reveal reveal--fade" data-parallax="0.045">
       <span class="tag">03 — Proyectos</span>
-      <h2 class="sec-title glitch-hover" data-text="Trabajos recientes">Trabajos <em>recientes</em></h2>
-      <p class="sec-sub">Pasá el mouse por cada pieza para verla en movimiento.</p>
+      <h2 class="sec-title">Trabajos <em>recientes</em></h2>
+      <p class="sec-sub">Hacé clic en cualquier pieza para abrirla a pantalla completa.</p>
     </header>
 
     <div class="filters reveal" role="tablist" aria-label="Filtros de proyectos">
       <button class="chip is-active" data-filter="todos" role="tab" aria-selected="true">Todos</button>
-      <button class="chip" data-filter="finanzas" role="tab" aria-selected="false">Finanzas</button>
       <button class="chip" data-filter="gaming" role="tab" aria-selected="false">Gaming</button>
-      <button class="chip" data-filter="tech" role="tab" aria-selected="false">Tech</button>
-      <button class="chip" data-filter="lifestyle" role="tab" aria-selected="false">Lifestyle</button>
+      <button class="chip" data-filter="entretenimiento" role="tab" aria-selected="false">Entretenimiento</button>
+      <button class="chip" data-filter="motor" role="tab" aria-selected="false">Autos y motor</button>
     </div>
 
     <div class="grid" id="projectGrid"></div>
@@ -190,7 +183,7 @@
   <div class="wrap">
     <header class="sec-head reveal reveal--fade" data-parallax="0.045">
       <span class="tag">04 — Proceso</span>
-      <h2 class="sec-title glitch-hover" data-text="Cómo trabajamos">Cómo <em>trabajamos</em></h2>
+      <h2 class="sec-title">Cómo <em>trabajamos</em></h2>
     </header>
     <ol class="steps">
       <li class="step reveal"><b>01</b><h3>Brief</h3><p>Me contás el video, el público y qué querés que sienta la persona al verlo.</p></li>
@@ -206,17 +199,13 @@
   <div class="wrap">
     <header class="sec-head reveal reveal--fade" data-parallax="0.045">
       <span class="tag">05 — Reseñas</span>
-      <h2 class="sec-title glitch-hover" data-text="Lo que dicen">Lo que <em>dicen</em></h2>
+      <h2 class="sec-title">Lo que <em>dicen</em></h2>
     </header>
   </div>
 
   <div class="reviews__rows">
-    <div class="reviews__row" data-dir="1">
-      <div class="reviews__track" id="reviewTrackA"></div>
-    </div>
-    <div class="reviews__row" data-dir="-1">
-      <div class="reviews__track" id="reviewTrackB"></div>
-    </div>
+    <div class="reviews__row"><div class="reviews__track" id="reviewTrackA"></div></div>
+    <div class="reviews__row"><div class="reviews__track" id="reviewTrackB"></div></div>
   </div>
 </section>
 
@@ -225,7 +214,7 @@
   <div class="wrap wrap--narrow">
     <header class="sec-head reveal reveal--fade" data-parallax="0.045">
       <span class="tag">06 — Preguntas</span>
-      <h2 class="sec-title glitch-hover" data-text="Dudas frecuentes">Dudas <em>frecuentes</em></h2>
+      <h2 class="sec-title">Dudas <em>frecuentes</em></h2>
     </header>
 
     <div class="acc" id="acc">
@@ -264,7 +253,7 @@
   <div class="wrap">
     <header class="sec-head sec-head--center reveal reveal--fade" data-parallax="0.045">
       <span class="tag">07 — Contacto</span>
-      <h2 class="contact__title glitch" data-text="Hagamos que te vean">Hagamos que <em>te vean</em></h2>
+      <h2 class="contact__title">Hagamos que <em>te vean</em></h2>
       <p class="sec-sub">Contame de tu canal y te respondo el mismo día con ideas concretas.</p>
     </header>
 
@@ -285,17 +274,17 @@
       </label>
       <label class="field">
         <span>Contame el proyecto</span>
-        <textarea name="mensaje" rows="5" placeholder="Tipo de videos, cuántas miniaturas por mes, fecha de entrega..." required></textarea>
+        <textarea name="mensaje" rows="5" placeholder="Tipo de videos, cuántas miniaturas por mes, fecha de entrega..."></textarea>
       </label>
-      <button type="submit" class="btn glitch-hover" data-text="Enviar mensaje">Enviar mensaje</button>
+      <button type="submit" class="btn">Enviar mensaje</button>
       <p class="form__hint" id="formHint" role="status"></p>
     </form>
 
     <div class="contact__links reveal">
-      <a href="mailto:equinox.dgrafico@gmail.com" class="glitch-hover" data-text="equinox.dgrafico@gmail.com">equinox.dgrafico@gmail.com</a>
-      <a href="https://wa.me/" target="_blank" rel="noopener" class="glitch-hover" data-text="WhatsApp">WhatsApp</a>
-      <a href="https://instagram.com/" target="_blank" rel="noopener" class="glitch-hover" data-text="Instagram">Instagram</a>
-      <a href="https://x.com/" target="_blank" rel="noopener" class="glitch-hover" data-text="X / Twitter">X / Twitter</a>
+      <a href="mailto:equinox.dgrafico@gmail.com">equinox.dgrafico@gmail.com</a>
+      <a href="https://wa.me/" target="_blank" rel="noopener">WhatsApp</a>
+      <a href="https://instagram.com/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://x.com/" target="_blank" rel="noopener">X / Twitter</a>
     </div>
   </div>
 </section>
@@ -304,11 +293,28 @@
 
 <footer class="footer">
   <div class="wrap footer__in">
-    <span class="footer__logo glitch-hover" data-text="JOACO XD">JOACO XD</span>
+    <span class="footer__logo">JOACO XD</span>
     <span>© <span id="year">2026</span> — Diseño de miniaturas. Hecho en Argentina.</span>
-    <a href="#inicio" class="footer__top glitch-hover" data-text="Volver arriba">Volver arriba ↑</a>
+    <a href="#inicio" class="footer__top">Volver arriba ↑</a>
   </div>
 </footer>
+
+<!-- ============ VISOR A PANTALLA COMPLETA ============ -->
+<div class="lb" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Miniatura ampliada">
+  <div class="lb__backdrop" data-close></div>
+  <div class="lb__scene">
+    <span class="lb__glow" id="lbGlow" aria-hidden="true"></span>
+    <figure class="lb__frame" id="lbFrame">
+      <img id="lbImg" alt="" />
+      <span class="lb__sheen" aria-hidden="true"></span>
+    </figure>
+  </div>
+  <figcaption class="lb__caption" id="lbCaption"></figcaption>
+  <button class="lb__btn lb__btn--close" id="lbClose" aria-label="Cerrar">✕</button>
+  <button class="lb__btn lb__btn--prev" id="lbPrev" aria-label="Anterior">‹</button>
+  <button class="lb__btn lb__btn--next" id="lbNext" aria-label="Siguiente">›</button>
+</div>
+<div class="flash" id="flash" aria-hidden="true"></div>
 
 <script src="assets/js/main.js"></script>
 </body>
