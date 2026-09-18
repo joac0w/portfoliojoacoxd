@@ -189,13 +189,13 @@
   // Los números son de ejemplo: cambialos por los reales, y si ponés una foto en
   // assets/clients/<archivo>.webp, sumá su ruta en "img" y reemplaza a la inicial.
   var CLIENTS = [
-    { n: 'RaptorGamer', s: '15.7M', img: 'assets/clients/raptorgamer.jpg' },
-    { n: 'TheExal04', s: '3.49M', img: 'assets/clients/theexal04.jpg' },
-    { n: 'El Crilón', s: '284K', img: 'assets/clients/crilon.jpg' },
-    { n: 'Spar Retro', s: '60.6K', img: 'assets/clients/spar-retro.jpg' },
-    { n: 'KevsP.L', s: '30K', img: 'assets/clients/kevspl.jpg' },
-    { n: 'Alan Villalva', s: '17.9K', img: 'assets/clients/alan-villalva.jpg' },
-    { n: 'Rangowild', s: '17.7K', img: 'assets/clients/rangowild.jpg' },
+    { n: 'RaptorGamer', s: '15.7M', img: 'assets/clients/raptorgamer.webp' },
+    { n: 'TheExal04', s: '3.49M', img: 'assets/clients/theexal04.webp' },
+    { n: 'El Crilon', s: '284K', img: 'assets/clients/crilon.webp' },
+    { n: 'Spar Retro', s: '60.6K', img: 'assets/clients/spar-retro.webp' },
+    { n: 'KevsP.L', s: '30K', img: 'assets/clients/kevspl.webp' },
+    { n: 'Alan Villalva', s: '17.9K', img: 'assets/clients/alan-villalva.webp' },
+    { n: 'Rangowild', s: '17.7K', img: 'assets/clients/rangowild.webp' },
     { slot: 1 }
   ];
 
@@ -423,19 +423,41 @@
         '<span class="client__txt">' +
         '<span class="client__name">' + name + '</span>' +
         '<span class="client__subs">' + subs + '</span>' +
-        '</span>';
+        '</span>' +
+        '<span class="client__glow" aria-hidden="true"></span>' +
+        '<span class="client__sweep" aria-hidden="true"></span>';
 
       var pic = card.querySelector('.client__pic');
       pic.textContent = cl.slot ? '+' : name.charAt(0);
       if (cl.img) {
         // si todavía no está la foto, queda la inicial
+        // sin loading="lazy": una imagen fuera del documento no llegaría a cargar
         var im = new Image();
         im.alt = name;
-        im.loading = 'lazy';
         im.decoding = 'async';
         im.addEventListener('load', function () { pic.textContent = ''; pic.appendChild(im); });
         im.src = cl.img;
       }
+      // parallax 3D con brillo, y destello al hacer clic
+      if (!isTouch) {
+        card.addEventListener('mousemove', function (e) {
+          var r = card.getBoundingClientRect();
+          var px = (e.clientX - r.left) / r.width;
+          var py = (e.clientY - r.top) / r.height;
+          card.style.setProperty('--gx', (px * 100).toFixed(1) + '%');
+          card.style.setProperty('--gy', (py * 100).toFixed(1) + '%');
+          card.style.transform =
+            'perspective(820px) rotateX(' + ((0.5 - py) * 11).toFixed(2) +
+            'deg) rotateY(' + ((px - 0.5) * 13).toFixed(2) + 'deg) translateY(-6px) scale(1.035)';
+        });
+        card.addEventListener('mouseleave', function () { card.style.transform = ''; });
+      }
+      card.addEventListener('click', function () {
+        card.classList.remove('is-sweep');
+        void card.offsetWidth;
+        card.classList.add('is-sweep');
+      });
+
       rail.appendChild(card);
     });
   }
