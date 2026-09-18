@@ -997,7 +997,20 @@
       if (x.isIntersecting) { x.target.classList.add('is-in'); titleIO.unobserve(x.target); }
     });
   }, { threshold: 0.35 });
-  titles.forEach(function (t) { titleIO.observe(t); });
+  titles.forEach(function (el) {
+    titleIO.observe(el);
+    el._rx = 0; el._ry = 0; el._sk = 0; el._sc = 1;
+    if (isTouch) return;
+    el.addEventListener('mousemove', function (e) {
+      var r = el.getBoundingClientRect();
+      el._px = (e.clientX - r.left) / r.width;
+      el._py = (e.clientY - r.top) / r.height;
+      el._on = true;
+      el.style.setProperty('--gx', (el._px * 100).toFixed(1) + '%');
+      el.style.setProperty('--gy', (el._py * 100).toFixed(1) + '%');
+    });
+    el.addEventListener('mouseleave', function () { el._on = false; });
+  });
 
   function onScroll() {
     scrollY = window.scrollY;
@@ -1064,11 +1077,29 @@
       mouse.x = lerp(mouse.x, mouse.tx, 0.06);
       mouse.y = lerp(mouse.y, mouse.ty, 0.06);
       for (var ti = 0; ti < titles.length; ti++) {
-        var tr = titles[ti].getBoundingClientRect();
+        var el = titles[ti];
+        var tr = el.getBoundingClientRect();
         if (tr.bottom < 0 || tr.top > innerHeight) continue;
         var depth = clamp((innerHeight * 0.5 - (tr.top + tr.height / 2)) / innerHeight, -1, 1);
-        titles[ti].style.transform =
-          'rotateX(' + (mouse.y * 4 - depth * 5).toFixed(2) + 'deg) rotateY(' + (mouse.x * 5).toFixed(2) + 'deg)';
+        var rx, ry, sk, sc;
+        if (el._on) {                                   // el cursor está encima
+          rx = (0.5 - el._py) * 15;
+          ry = (el._px - 0.5) * 20;
+          sk = (el._px - 0.5) * -2.2;                   // deformación leve
+          sc = 1.03;
+        } else {                                        // deriva suave
+          rx = mouse.y * 4 - depth * 5;
+          ry = mouse.x * 5;
+          sk = 0;
+          sc = 1;
+        }
+        el._rx = lerp(el._rx, rx, 0.11);
+        el._ry = lerp(el._ry, ry, 0.11);
+        el._sk = lerp(el._sk, sk, 0.11);
+        el._sc = lerp(el._sc, sc, 0.11);
+        el.style.transform =
+          'perspective(1000px) rotateX(' + el._rx.toFixed(2) + 'deg) rotateY(' + el._ry.toFixed(2) +
+          'deg) skewX(' + el._sk.toFixed(2) + 'deg) scale(' + el._sc.toFixed(3) + ')';
       }
     }
 

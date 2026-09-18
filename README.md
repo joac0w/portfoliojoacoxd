@@ -56,8 +56,10 @@ build-preview.py      Regenera preview.html desde index.html + assets/
 3. **Visor a pantalla completa** — destello al hacer clic, vuelo desde la posición de la
    miniatura con desenfoque de movimiento, y la pieza queda levitando en 3D con bordes
    redondeados, sombra profunda y un halo tomado de la propia imagen. Flechas, teclado y Escape.
-4. **todas mis miniaturas** — cada sección muestra sólo su título, sin etiquetas ni bajadas:
-   entra rotando en 3D, tiene glow, un barrido de brillo y después acompaña al mouse. Debajo,
+4. **todas mis miniaturas** — cada sección muestra sólo su título, sin etiquetas ni bajadas,
+   dentro de una placa de vidrio redondeada: entra rotando en 3D, tiene glow y un barrido de
+   brillo, y al pasar el cursor por encima se inclina en 3D con una deformación leve mientras
+   un reflejo sigue al puntero. Debajo,
    las categorías (Faceless / Gaming, IRL, y las que vengan) y la grilla, que arranca plegada:
    la última fila se disuelve en un desenfoque y el botón **Ver más** despliega todo.
 5. **Mis clientes** — carrusel de tarjetas blancas con la foto (o la inicial) del creador, su

@@ -463,13 +463,52 @@ input,textarea{-webkit-user-select:text;user-select:text}
 .works{padding-top:clamp(70px,10vh,120px)}
 .stitle{
   position:relative;
+  width:fit-content;max-width:100%;
   margin:0 auto clamp(34px,6vh,64px);
+  padding:clamp(14px,1.8vw,26px) clamp(22px,3vw,46px) clamp(18px,2.2vw,32px);
+  border-radius:clamp(24px,2.6vw,40px);
   font-family:'Space Grotesk',var(--font);
-  font-weight:600;font-size:clamp(36px,7.6vw,110px);
-  line-height:.96;letter-spacing:-.055em;text-align:center;
+  font-weight:600;font-size:clamp(34px,7vw,104px);
+  line-height:.98;letter-spacing:-.055em;text-align:center;
   perspective:900px;
+  transform-style:preserve-3d;
   will-change:transform;
+
+  /* vidrio líquido */
+  border:1px solid rgba(255,255,255,.16);
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.13) 0%,rgba(255,255,255,.05) 46%,rgba(255,255,255,.085) 100%);
+  backdrop-filter:blur(22px) saturate(1.7);
+  -webkit-backdrop-filter:blur(22px) saturate(1.7);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.34),
+    inset 0 -1px 0 rgba(255,255,255,.08),
+    inset 0 -26px 50px rgba(255,255,255,.045),
+    0 28px 60px rgba(0,0,0,.5);
+  transition:box-shadow .5s var(--ease),border-color .5s var(--ease);
 }
+/* luz ambiente detrás del vidrio */
+.stitle::before{
+  content:"";position:absolute;inset:-34% -12%;z-index:-1;pointer-events:none;
+  background:radial-gradient(52% 62% at 50% 46%,rgba(255,255,255,.11),transparent 72%);
+  filter:blur(26px);
+}
+.stitle:hover{
+  border-color:rgba(255,255,255,.3);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.44),
+    inset 0 -1px 0 rgba(255,255,255,.1),
+    inset 0 -26px 50px rgba(255,255,255,.07),
+    0 38px 80px rgba(0,0,0,.6);
+}
+/* reflejo especular que sigue al cursor */
+.stitle::after{
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:radial-gradient(38% 60% at var(--gx,50%) var(--gy,0%),rgba(255,255,255,.22),transparent 70%);
+  opacity:0;transition:opacity .45s var(--ease);
+}
+.stitle:hover::after{opacity:1}
+
 .stitle .w{
   display:inline-block;position:relative;
   opacity:0;transform:rotateX(52deg) translateY(.34em);filter:blur(12px);
@@ -590,6 +629,8 @@ input,textarea{-webkit-user-select:text;user-select:text}
 
 /* Clientes */
 .clients .stitle,.faq .stitle,.contact .stitle{margin-bottom:clamp(30px,5vh,56px)}
+/* el FAQ vive en una columna angosta: entra en una línea */
+.faq .stitle{font-size:clamp(30px,5.6vw,76px)}
 .rail{position:relative;padding:0 clamp(16px,4vw,64px)}
 .rail__track{
   display:flex;gap:clamp(12px,1.6vw,20px);
@@ -2331,7 +2372,20 @@ input,textarea{-webkit-user-select:text;user-select:text}
       if (x.isIntersecting) { x.target.classList.add('is-in'); titleIO.unobserve(x.target); }
     });
   }, { threshold: 0.35 });
-  titles.forEach(function (t) { titleIO.observe(t); });
+  titles.forEach(function (el) {
+    titleIO.observe(el);
+    el._rx = 0; el._ry = 0; el._sk = 0; el._sc = 1;
+    if (isTouch) return;
+    el.addEventListener('mousemove', function (e) {
+      var r = el.getBoundingClientRect();
+      el._px = (e.clientX - r.left) / r.width;
+      el._py = (e.clientY - r.top) / r.height;
+      el._on = true;
+      el.style.setProperty('--gx', (el._px * 100).toFixed(1) + '%');
+      el.style.setProperty('--gy', (el._py * 100).toFixed(1) + '%');
+    });
+    el.addEventListener('mouseleave', function () { el._on = false; });
+  });
 
   function onScroll() {
     scrollY = window.scrollY;
@@ -2398,11 +2452,29 @@ input,textarea{-webkit-user-select:text;user-select:text}
       mouse.x = lerp(mouse.x, mouse.tx, 0.06);
       mouse.y = lerp(mouse.y, mouse.ty, 0.06);
       for (var ti = 0; ti < titles.length; ti++) {
-        var tr = titles[ti].getBoundingClientRect();
+        var el = titles[ti];
+        var tr = el.getBoundingClientRect();
         if (tr.bottom < 0 || tr.top > innerHeight) continue;
         var depth = clamp((innerHeight * 0.5 - (tr.top + tr.height / 2)) / innerHeight, -1, 1);
-        titles[ti].style.transform =
-          'rotateX(' + (mouse.y * 4 - depth * 5).toFixed(2) + 'deg) rotateY(' + (mouse.x * 5).toFixed(2) + 'deg)';
+        var rx, ry, sk, sc;
+        if (el._on) {                                   // el cursor está encima
+          rx = (0.5 - el._py) * 15;
+          ry = (el._px - 0.5) * 20;
+          sk = (el._px - 0.5) * -2.2;                   // deformación leve
+          sc = 1.03;
+        } else {                                        // deriva suave
+          rx = mouse.y * 4 - depth * 5;
+          ry = mouse.x * 5;
+          sk = 0;
+          sc = 1;
+        }
+        el._rx = lerp(el._rx, rx, 0.11);
+        el._ry = lerp(el._ry, ry, 0.11);
+        el._sk = lerp(el._sk, sk, 0.11);
+        el._sc = lerp(el._sc, sc, 0.11);
+        el.style.transform =
+          'perspective(1000px) rotateX(' + el._rx.toFixed(2) + 'deg) rotateY(' + el._ry.toFixed(2) +
+          'deg) skewX(' + el._sk.toFixed(2) + 'deg) scale(' + el._sc.toFixed(3) + ')';
       }
     }
 
