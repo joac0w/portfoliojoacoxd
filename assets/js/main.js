@@ -31,17 +31,17 @@
   /* ---------------- Piezas ---------------- */
   // s: archivo · t: título · c: canal · cat: filtro
   var MEDIA = [
-    { s: 'goncho-f1', t: 'Pole position', c: 'Goncho Banzas', cat: 'motor' },
-    { s: 'pokemon-chatgpt', t: 'ChatGPT arma mi equipo', c: 'Pokémon Emerald', cat: 'gaming' },
-    { s: 'bauti-quien-es-quien', t: 'Quién es quién', c: 'Bauti Agnone', cat: 'entretenimiento' },
-    { s: 'dlorean-mercadona', t: 'DeLorean en Mercadona', c: 'Dlorean', cat: 'motor' },
-    { s: 'crilon-02', t: 'OXXO en CDMX', c: 'El Crilón', cat: 'entretenimiento' },
-    { s: 'alan-03', t: 'Tétrico', c: 'Alan Villalva', cat: 'gaming' },
-    { s: 'alan-04', t: 'Detalles de Manhunt', c: 'Alan Villalva', cat: 'gaming' },
-    { s: 'alan-05', t: 'Dark Souls III', c: 'Alan Villalva', cat: 'gaming' },
-    { s: 'alan-06', t: '5 detalles de Fallout 3', c: 'Alan Villalva', cat: 'gaming' },
-    { s: 'alan-07', t: 'Los 82 de PlayStation 2', c: 'Alan Villalva', cat: 'gaming' },
-    { s: 'alan-08', t: 'GTA IV filtrado', c: 'Alan Villalva', cat: 'gaming' }
+    { s: 'goncho-f1', t: 'Pole position', c: 'Goncho Banzas', cat: 'irl' },
+    { s: 'pokemon-chatgpt', t: 'ChatGPT arma mi equipo', c: 'Pokémon Emerald', cat: 'faceless' },
+    { s: 'bauti-quien-es-quien', t: 'Quién es quién', c: 'Bauti Agnone', cat: 'irl' },
+    { s: 'dlorean-mercadona', t: 'DeLorean en Mercadona', c: 'Dlorean', cat: 'irl' },
+    { s: 'crilon-02', t: 'OXXO en CDMX', c: 'El Crilón', cat: 'irl' },
+    { s: 'alan-03', t: 'Tétrico', c: 'Alan Villalva', cat: 'faceless' },
+    { s: 'alan-04', t: 'Detalles de Manhunt', c: 'Alan Villalva', cat: 'faceless' },
+    { s: 'alan-05', t: 'Dark Souls III', c: 'Alan Villalva', cat: 'faceless' },
+    { s: 'alan-06', t: '5 detalles de Fallout 3', c: 'Alan Villalva', cat: 'faceless' },
+    { s: 'alan-07', t: 'Los 82 de PlayStation 2', c: 'Alan Villalva', cat: 'faceless' },
+    { s: 'alan-08', t: 'GTA IV filtrado', c: 'Alan Villalva', cat: 'faceless' }
   ];
   var thumbOf = function (i) { return 'assets/thumbs/' + MEDIA[i].s + '.webp'; };
   var fullOf = function (i) { return 'assets/full/' + MEDIA[i].s + '.webp'; };
@@ -267,11 +267,11 @@
     tile.innerHTML =
       '<img src="' + thumbOf(i) + '" alt="' + m.t + ' — ' + m.c + '" loading="lazy" decoding="async" draggable="false" />' +
       '<span class="tile__shine" aria-hidden="true"></span>' +
-      '<div class="tile__meta"><h3>' + m.t + '</h3><span>' + m.c + '</span></div>';
+      '<div class="tile__meta"><h3>' + m.t + '</h3><span>' + (m.cat === 'irl' ? 'IRL' : 'Faceless') + ' · ' + m.c + '</span></div>';
     grid.appendChild(tile);
   });
 
-  var chips = document.querySelectorAll('.chip');
+  var chips = document.querySelectorAll('.chip:not(.is-soon)');
   chips.forEach(function (chip) {
     chip.addEventListener('click', function () {
       chips.forEach(function (c) { c.classList.remove('is-active'); c.setAttribute('aria-selected', 'false'); });
@@ -279,7 +279,7 @@
       chip.setAttribute('aria-selected', 'true');
       var f = chip.dataset.filter;
       document.querySelectorAll('.tile').forEach(function (t) {
-        t.classList.toggle('is-hidden', !(f === 'todos' || t.dataset.cat === f));
+        t.classList.toggle('is-hidden', !(f === 'todas' || t.dataset.cat === f));
       });
     });
   });
@@ -489,7 +489,7 @@
       });
     });
   }, { threshold: 0.35 });
-  ['proyectos', 'proceso', 'resenas', 'contacto'].forEach(function (id) {
+  ['proyectos', 'resenas', 'contacto'].forEach(function (id) {
     var s = document.getElementById(id);
     if (s) navIO.observe(s);
   });
@@ -712,7 +712,7 @@
   });
   var stage = document.querySelector('.gallery__stage');
   var gallerySection = document.querySelector('.gallery');
-  var blurTargets = [].slice.call(document.querySelectorAll('.grid,.steps,.acc'));
+  var blurTargets = [].slice.call(document.querySelectorAll('.grid,.acc'));
   var lastBlur = -1;
 
   var scrollY = window.scrollY;
@@ -724,11 +724,28 @@
   var ctaEl = document.querySelector('.floating-cta');
   var toolsEl = document.getElementById('tools');
 
-  if (toolsEl && !isTouch) {
+  var worksTitle = document.getElementById('worksTitle');
+  var mouse = { x: 0, y: 0, tx: 0, ty: 0 };
+
+  if (!isTouch) {
     window.addEventListener('mousemove', function (e) {
-      toolsEl.style.setProperty('--mx', ((e.clientX / innerWidth - 0.5) * 2).toFixed(3));
-      toolsEl.style.setProperty('--my', ((0.5 - e.clientY / innerHeight) * 2).toFixed(3));
+      mouse.tx = (e.clientX / innerWidth - 0.5) * 2;
+      mouse.ty = (0.5 - e.clientY / innerHeight) * 2;
+      if (toolsEl) {
+        toolsEl.style.setProperty('--mx', mouse.tx.toFixed(3));
+        toolsEl.style.setProperty('--my', mouse.ty.toFixed(3));
+      }
     });
+  }
+
+  // el título entra en 3D y después acompaña al mouse
+  if (worksTitle) {
+    var titleIO = new IntersectionObserver(function (en) {
+      en.forEach(function (x) {
+        if (x.isIntersecting) { worksTitle.classList.add('is-in'); titleIO.unobserve(x.target); }
+      });
+    }, { threshold: 0.4 });
+    titleIO.observe(worksTitle);
   }
 
   function onScroll() {
@@ -789,6 +806,18 @@
       r2.offset += (r2.speed * dt + push) * r2.dir * (reduced ? 0 : 1);
       var x = ((r2.offset % r2.loop) + r2.loop) % r2.loop;
       r2.el.style.transform = 'translate3d(' + (-x).toFixed(2) + 'px,0,0)';
+    }
+
+    // Título de trabajos: inclinación 3D suave
+    if (worksTitle && !reduced && !isTouch) {
+      var tr = worksTitle.getBoundingClientRect();
+      if (tr.bottom > 0 && tr.top < innerHeight) {
+        mouse.x = lerp(mouse.x, mouse.tx, 0.06);
+        mouse.y = lerp(mouse.y, mouse.ty, 0.06);
+        var depth = clamp((innerHeight * 0.5 - (tr.top + tr.height / 2)) / innerHeight, -1, 1);
+        worksTitle.style.transform =
+          'rotateX(' + (mouse.y * 5 - depth * 5).toFixed(2) + 'deg) rotateY(' + (mouse.x * 6).toFixed(2) + 'deg)';
+      }
     }
 
     // Motion blur al scrollear (cuantizado para no repintar de más)

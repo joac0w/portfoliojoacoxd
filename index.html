@@ -38,7 +38,6 @@
 
   <nav class="nav__links" id="navLinks" aria-label="Navegación principal">
     <a href="#proyectos" class="pill">Trabajos</a>
-    <a href="#proceso" class="pill">Proceso</a>
     <a href="#resenas" class="pill">Reseñas</a>
     <a href="#contacto" class="pill">Contacto</a>
   </nav>
@@ -54,25 +53,42 @@
 
 <main>
 
-<!-- ============ HERO (fondo blanco) ============ -->
+<!-- ============ HERO (fondo blanco + pared gris) ============ -->
 <section class="hero" id="inicio">
   <div class="hero__light" aria-hidden="true"></div>
+  <div class="hero__wall" aria-hidden="true"><span class="hero__frame"></span></div>
 
   <div class="hero__inner" data-parallax="0.16">
     <h1 class="hero__word">
       <span class="hero__word-txt">joaco</span>
       <img class="hero__mark" src="assets/brand/joaco-logo.webp" alt="Logo de Joaco" />
     </h1>
-    <p class="hero__tagline">Diseño que <em>sí</em> necesitás</p>
-    <p class="hero__sub">Miniaturas, branding de canal y packaging de video. El nicho y la temática los elegís vos.</p>
+    <p class="hero__tagline">+6 años de <em>experiencia real</em></p>
+    <p class="hero__sub">Miniaturas y edición de video desde una perspectiva real.</p>
   </div>
 
-  <!-- herramientas: quedan cortadas al ras del marco inferior -->
+  <!-- herramientas apoyadas contra la pared -->
   <div class="tools" id="tools" aria-label="Herramientas">
-    <figure class="tool" style="--i:0"><span class="tool__bloom" style="--c:#EA77FF"></span><img src="assets/logos/premiere.svg" alt="Adobe Premiere Pro" /></figure>
-    <figure class="tool" style="--i:1"><span class="tool__bloom" style="--c:#9999FF"></span><img src="assets/logos/aftereffects.svg" alt="Adobe After Effects" /></figure>
-    <figure class="tool" style="--i:2"><span class="tool__bloom" style="--c:#31A8FF"></span><img src="assets/logos/photoshop.svg" alt="Adobe Photoshop" /></figure>
-    <figure class="tool" style="--i:3"><span class="tool__bloom" style="--c:#dcdcdc"></span><img src="assets/logos/capcut.svg" alt="CapCut" /></figure>
+    <figure class="tool" style="--i:0;--c:#6d4bff">
+      <span class="tool__bloom"></span>
+      <img src="assets/logos/premiere.webp" alt="Adobe Premiere Pro" />
+      <span class="tool__shadow"></span>
+    </figure>
+    <figure class="tool" style="--i:1;--c:#8b46ff">
+      <span class="tool__bloom"></span>
+      <img src="assets/logos/aftereffects.webp" alt="Adobe After Effects" />
+      <span class="tool__shadow"></span>
+    </figure>
+    <figure class="tool" style="--i:2;--c:#1f8bff">
+      <span class="tool__bloom"></span>
+      <img src="assets/logos/photoshop.webp" alt="Adobe Photoshop" />
+      <span class="tool__shadow"></span>
+    </figure>
+    <figure class="tool" style="--i:3;--c:#9aa0b4">
+      <span class="tool__bloom"></span>
+      <img src="assets/logos/capcut.webp" alt="CapCut" />
+      <span class="tool__shadow"></span>
+    </figure>
   </div>
 </section>
 
@@ -92,38 +108,21 @@
 </div>
 
 <!-- ============ TRABAJOS ============ -->
-<section class="section projects" id="proyectos">
+<section class="section works" id="proyectos">
   <div class="wrap">
-    <header class="sec-head reveal reveal--fade" data-parallax="0.045">
-      <span class="tag">01 — Trabajos</span>
-      <h2 class="sec-title">Esto es lo que <em>hacemos</em></h2>
-      <p class="sec-sub">Diseño profesional para el nicho o la temática que quieras. Hacé clic en cualquier pieza para verla a pantalla completa.</p>
-    </header>
+    <h2 class="works__title" id="worksTitle">
+      <span class="w">todas</span> <span class="w">mis</span> <span class="w">miniaturas</span>
+    </h2>
 
-    <div class="filters reveal" role="tablist" aria-label="Filtros de trabajos">
-      <button class="chip is-active" data-filter="todos" role="tab" aria-selected="true">Todos</button>
-      <button class="chip" data-filter="gaming" role="tab" aria-selected="false">Gaming</button>
-      <button class="chip" data-filter="entretenimiento" role="tab" aria-selected="false">Entretenimiento</button>
-      <button class="chip" data-filter="motor" role="tab" aria-selected="false">Autos y motor</button>
+    <div class="filters reveal" role="tablist" aria-label="Categorías">
+      <button class="chip is-active" data-filter="todas" role="tab" aria-selected="true">Todas</button>
+      <button class="chip" data-filter="faceless" role="tab" aria-selected="false">Faceless / Gaming</button>
+      <button class="chip" data-filter="irl" role="tab" aria-selected="false">IRL</button>
+      <button class="chip is-soon" disabled>Finanzas <i>pronto</i></button>
+      <button class="chip is-soon" disabled>IA <i>pronto</i></button>
     </div>
 
     <div class="grid" id="projectGrid"></div>
-  </div>
-</section>
-
-<!-- ============ PROCESO ============ -->
-<section class="section process" id="proceso">
-  <div class="wrap">
-    <header class="sec-head reveal reveal--fade" data-parallax="0.045">
-      <span class="tag">02 — Proceso</span>
-      <h2 class="sec-title">Cómo <em>trabajamos</em></h2>
-    </header>
-    <ol class="steps">
-      <li class="step reveal"><b>01</b><h3>Brief</h3><p>Me contás el video, el público y qué querés que sienta la persona al verlo.</p></li>
-      <li class="step reveal"><b>02</b><h3>Concepto</h3><p>Armo dos ideas distintas con bocetos rápidos. Elegís la que mejor cuenta la historia.</p></li>
-      <li class="step reveal"><b>03</b><h3>Diseño</h3><p>Producción final: recorte, luces, color, tipografía y un pase de contraste para 120 px.</p></li>
-      <li class="step reveal"><b>04</b><h3>Testeo</h3><p>Entrego variantes para A/B y ajustamos según lo que diga el CTR real.</p></li>
-    </ol>
   </div>
 </section>
 
@@ -131,7 +130,7 @@
 <section class="section reviews" id="resenas">
   <div class="wrap">
     <header class="sec-head reveal reveal--fade" data-parallax="0.045">
-      <span class="tag">03 — Reseñas</span>
+      <span class="tag">01 — Reseñas</span>
       <h2 class="sec-title">Lo que <em>dicen</em></h2>
     </header>
   </div>
@@ -146,7 +145,7 @@
 <section class="section faq" id="faq">
   <div class="wrap wrap--narrow">
     <header class="sec-head reveal reveal--fade" data-parallax="0.045">
-      <span class="tag">04 — Preguntas</span>
+      <span class="tag">02 — Preguntas</span>
       <h2 class="sec-title">Dudas <em>frecuentes</em></h2>
     </header>
 
@@ -185,7 +184,7 @@
 
   <div class="wrap">
     <header class="sec-head sec-head--center reveal reveal--fade" data-parallax="0.045">
-      <span class="tag">05 — Contacto</span>
+      <span class="tag">03 — Contacto</span>
       <h2 class="contact__title">Agendemos <em>15 minutos</em></h2>
       <p class="sec-sub">Tres pasos: contame qué necesitás, elegí día y horario, y dejame por dónde escribirte.</p>
     </header>

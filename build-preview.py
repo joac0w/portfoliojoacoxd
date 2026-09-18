@@ -31,11 +31,13 @@ js = js.replace(old, new)
 
 # logo e iconos de herramientas -> data URIs
 html = html.replace("assets/brand/joaco-logo.webp", data_uri(f"{ROOT}/assets/brand/joaco-logo.webp"))
+MIME = {".svg": "image/svg+xml", ".webp": "image/webp", ".png": "image/png", ".jpg": "image/jpeg"}
 for name in sorted(os.listdir(f"{ROOT}/assets/logos")):
-    svg = open(f"{ROOT}/assets/logos/{name}", "rb").read()
+    raw = open(f"{ROOT}/assets/logos/{name}", "rb").read()
+    mime = MIME.get(os.path.splitext(name)[1].lower(), "application/octet-stream")
     html = html.replace(
         f"assets/logos/{name}",
-        "data:image/svg+xml;base64," + base64.b64encode(svg).decode())
+        f"data:{mime};base64," + base64.b64encode(raw).decode())
 
 # inline de css y js
 html = html.replace('<link rel="stylesheet" href="assets/css/style.css" />',

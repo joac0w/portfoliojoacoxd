@@ -42,23 +42,25 @@ build-preview.py      Regenera preview.html desde index.html + assets/
 
 ## Secciones
 
-1. **Header blanco** — el wordmark *joaco* con el logo al lado, y abajo los íconos de Premiere,
-   After Effects, Photoshop y CapCut: quedan cortados justo por el marco inferior del header,
-   con rotación 3D, sombra proyectada sobre el blanco y un halo del color de cada app. Siguen
-   al mouse y flotan solos.
+1. **Header blanco** — el wordmark *joaco* con el logo al lado (más grande que el texto), el
+   claim *+6 años de experiencia real* y, abajo, una pared gris que sube desde el marco
+   inferior. Los íconos de Premiere, After Effects, Photoshop y CapCut quedan apoyados contra
+   esa pared, cruzados por la línea del marco a media altura, con rotación 3D que sigue al
+   mouse, sombra de estudio proyectada y un halo del color de cada app.
 2. **Galería** — 5 columnas (4 en tablet, 3 en mobile) que se mueven solas en direcciones
    alternadas; el scroll las empuja y cambia la inclinación 3D del conjunto. Cada miniatura se
    puede clickear.
 3. **Visor a pantalla completa** — destello al hacer clic, vuelo desde la posición de la
    miniatura con desenfoque de movimiento, y la pieza queda levitando en 3D con bordes
    redondeados, sombra profunda y un halo tomado de la propia imagen. Flechas, teclado y Escape.
-4. **Trabajos** — la parte central del sitio: filtros por temática y la grilla completa.
-5. **Proceso**, **Reseñas** y **Preguntas frecuentes**.
+4. **todas mis miniaturas** — el título entra en 3D y después acompaña al mouse. Debajo, las
+   categorías (Faceless / Gaming, IRL, y las que vengan) y la grilla completa.
+5. **Reseñas** y **Preguntas frecuentes**.
 6. **Contacto** — embudo de tres pasos: qué necesita, calendario para elegir día y horario, y
    sus datos. Al confirmar se arma el correo con todo el detalle.
 
-Todo lo que entra en pantalla aparece con fade y desenfoque, y al scrollear rápido la grilla,
-los pasos y las preguntas toman un desenfoque de movimiento que se disuelve al frenar.
+Todo lo que entra en pantalla aparece con fade y desenfoque, y al scrollear rápido la grilla y
+las preguntas toman un desenfoque de movimiento que se disuelve al frenar.
 
 El texto de la página no se puede seleccionar (salvo dentro de los campos del embudo) y no hay
 ningún efecto glitch.
@@ -75,7 +77,8 @@ ningún efecto glitch.
 | Email de contacto | `index.html` (link `mailto:`) y `assets/js/main.js` (final del embudo) |
 | Redes (WhatsApp, Instagram, X) | `index.html`, sección `.contact__links` |
 | Miniaturas | poné el archivo en `assets/thumbs/` (720 px) y en `assets/full/` (1600 px) con el mismo nombre, y sumá la entrada al array `MEDIA` de `main.js` |
-| Títulos, canal y filtros de cada pieza | array `MEDIA` en `assets/js/main.js` (`t` título, `c` canal, `cat` filtro) |
+| Títulos, canal y categoría de cada pieza | array `MEDIA` en `assets/js/main.js` (`t` título, `c` canal, `cat` categoría: `faceless` o `irl`) |
+| Categorías nuevas (Finanzas, IA…) | en `index.html` sacá el `disabled` y la clase `is-soon` del chip y ponele `data-filter="finanzas"`; después usá ese mismo valor en el `cat` de las piezas |
 | Reseñas | array `REVIEWS` en `assets/js/main.js` |
 | Preguntas del embudo | bloques `.opts` en `index.html` (el `data-group` es la clave que se guarda) |
 | Palabras de la cinta que gira | array `TICKER_WORDS` en `assets/js/main.js` |
@@ -97,8 +100,8 @@ quieras ajustarlos.
   correo con la fecha, el horario y el detalle del proyecto. Si querés que bloquee tu agenda de
   verdad, el paso siguiente es embeber Cal.com o Calendly en el paso 2, o mandar los datos a un
   formulario tipo Formspree.
-- **Los íconos de las apps son una versión propia**, hecha para que el header se vea completo.
-  Si querés los oficiales, bajalos y pisá los archivos de `assets/logos/` con el mismo nombre.
+- **Los íconos de las apps** están recortados del archivo 3D que pasaste, uno por app, con fondo
+  transparente. Para cambiarlos, pisá los `.webp` de `assets/logos/` con el mismo nombre.
 - **La tipografía del wordmark es Space Grotesk**, que es lo más parecido a Clash Display que hay
   en Google Fonts. Si querés la Clash Display real, sumá el link de Fontshare en el `<head>` y
   cambiá `'Space Grotesk'` por `'Clash Display'` en `style.css`.

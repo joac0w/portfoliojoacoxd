@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240" role="img" aria-label="Adobe Premiere Pro">
-<defs><clipPath id="c"><rect width="240" height="240" rx="52"/></clipPath></defs>
-<g clip-path="url(#c)">
-  <rect width="240" height="240" fill="#2A0634"/>
-  <rect x="18" y="18" width="204" height="204" rx="36" fill="none" stroke="#EA77FF" stroke-opacity=".28" stroke-width="3"/>
-  <text x="120" y="158" text-anchor="middle" font-family="Arial Black, Helvetica, sans-serif" font-weight="900"
-        font-size="104" fill="#EA77FF" letter-spacing="-4">Pr</text>
-</g>
-</svg>
