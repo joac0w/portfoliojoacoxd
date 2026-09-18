@@ -425,7 +425,7 @@
         '<span class="client__subs">' + subs + '</span>' +
         '</span>' +
         '<span class="client__glow" aria-hidden="true"></span>' +
-        '<span class="client__sweep" aria-hidden="true"></span>';
+        '<span class="client__shine" aria-hidden="true"></span>';
 
       var pic = card.querySelector('.client__pic');
       pic.textContent = cl.slot ? '+' : name.charAt(0);
@@ -452,12 +452,6 @@
         });
         card.addEventListener('mouseleave', function () { card.style.transform = ''; });
       }
-      card.addEventListener('click', function () {
-        card.classList.remove('is-sweep');
-        void card.offsetWidth;
-        card.classList.add('is-sweep');
-      });
-
       rail.appendChild(card);
     });
   }
