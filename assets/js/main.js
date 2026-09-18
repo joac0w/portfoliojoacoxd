@@ -432,12 +432,12 @@
   var cfPrev = document.getElementById('cfPrev');
   var cfNext = document.getElementById('cfNext');
   var reelCards = [];
-  var reelActive = 0;
+  var reelActive = Math.floor(REELS.length / 2);   // arranca en el del medio
 
   function renderReels() {
     cfStage.innerHTML = '';
     reelCards = [];
-    reelActive = Math.min(reelActive, REELS.length - 1);
+    reelActive = clamp(reelActive, 0, REELS.length - 1);
 
     REELS.forEach(function (r, i) {
       var card = document.createElement('article');
