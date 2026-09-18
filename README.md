@@ -7,7 +7,11 @@ HTML, CSS y JavaScript plano.
 
 ## Cómo verlo
 
-Abrí `index.html` en el navegador, o levantá un servidor local:
+Lo más rápido: abrí **`preview.html`** haciendo doble clic. Es el mismo sitio pero en un
+solo archivo (CSS, JS y miniaturas embebidas), así que funciona sin servidor y sin internet
+—salvo la tipografía, que cae a una de sistema si no hay red.
+
+Para trabajar sobre el código, usá `index.html` con un servidor local:
 
 ```bash
 python3 -m http.server 8000
@@ -16,6 +20,12 @@ python3 -m http.server 8000
 
 Se publica tal cual en GitHub Pages, Netlify, Vercel o cualquier hosting estático.
 
+Después de tocar el HTML, el CSS, el JS o las miniaturas, regenerá el archivo único con:
+
+```bash
+python3 build-preview.py
+```
+
 ## Estructura
 
 ```
@@ -23,6 +33,8 @@ index.html            Marcado de todas las secciones
 assets/css/style.css  Estilos, humo, glitch, galería 3D, responsive
 assets/js/main.js     Galería infinita, parallax, contadores, filtros, formulario
 assets/thumbs/*.svg   20 miniaturas de ejemplo (placeholders generados)
+preview.html          Build de un solo archivo, para abrir sin servidor
+build-preview.py      Regenera preview.html desde index.html + assets/
 ```
 
 ## Secciones
