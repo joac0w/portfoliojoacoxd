@@ -17,12 +17,21 @@
 </head>
 <body>
 
-<!-- ============ PRELOADER ============ -->
-<div class="preloader" id="preloader">
-  <div class="preloader__inner">
-    <div class="preloader__word">joaco</div>
-    <div class="preloader__bar"><span id="preBar"></span></div>
-    <div class="preloader__num"><span id="preNum">0</span>%</div>
+<!-- ============ PORTADA / IDIOMA ============ -->
+<div class="gate" id="gate">
+  <div class="gate__inner">
+    <img class="gate__mark" src="assets/brand/joaco-logo.webp" alt="" />
+    <div class="gate__word">joaco</div>
+    <div class="gate__bar"><span id="preBar"></span></div>
+    <div class="gate__num"><span id="preNum">0</span>%</div>
+
+    <div class="gate__choice" id="gateChoice">
+      <p class="gate__hint">Elegí un idioma <i>·</i> Choose a language</p>
+      <div class="gate__opts">
+        <button class="gate__btn" data-lang="es"><b>Español</b><span>Entrar al sitio</span></button>
+        <button class="gate__btn" data-lang="en"><b>English</b><span>Enter the site</span></button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -36,19 +45,19 @@
     <img src="assets/brand/joaco-logo.webp" alt="" class="nav__mark" /> joaco
   </a>
 
-  <nav class="nav__links" id="navLinks" aria-label="Navegación principal">
-    <a href="#proyectos" class="pill">Trabajos</a>
-    <a href="#clientes" class="pill">Clientes</a>
-    <a href="#contacto" class="pill">Contacto</a>
+  <nav class="nav__links" id="navLinks" data-i18n-aria="nav.aria" aria-label="Navegación principal">
+    <a href="#proyectos" class="pill" data-i18n="nav.works">Trabajos</a>
+    <a href="#clientes" class="pill" data-i18n="nav.clients">Clientes</a>
+    <a href="#contacto" class="pill" data-i18n="nav.contact">Contacto</a>
   </nav>
 
-  <button class="nav__burger" id="burger" aria-label="Abrir menú" aria-expanded="false">
+  <button class="nav__burger" id="burger" data-i18n-aria="nav.menu" aria-label="Abrir menú" aria-expanded="false">
     <span></span><span></span>
   </button>
 </header>
 
 <a href="#contacto" class="floating-cta">
-  <span class="dot"></span><span class="floating-cta__txt">Agendar reunión</span>
+  <span class="dot"></span><span class="floating-cta__txt" data-i18n="cta.book">Agendar reunión</span>
 </a>
 
 <main>
@@ -63,8 +72,8 @@
       <span class="hero__word-txt">joaco</span>
       <img class="hero__mark" src="assets/brand/joaco-logo.webp" alt="Logo de Joaco" />
     </h1>
-    <p class="hero__tagline">+6 años de <em>experiencia real</em></p>
-    <p class="hero__sub">Miniaturas y edición de video desde una perspectiva real.</p>
+    <p class="hero__tagline" data-i18n-html="hero.tagline">+6 años de <em>experiencia real</em></p>
+    <p class="hero__sub" data-i18n="hero.sub">Miniaturas y edición de video desde una perspectiva real.</p>
   </div>
 
   <div class="hero__fade" aria-hidden="true"></div>
@@ -95,13 +104,13 @@
 </section>
 
 <!-- ============ GALERÍA EN MOVIMIENTO ============ -->
-<section class="gallery" id="galeria" aria-label="Miniaturas">
+<section class="gallery" id="galeria" data-i18n-aria="gallery.aria" aria-label="Miniaturas">
   <div class="gallery__stage">
     <div class="gallery__cols" id="galleryCols"></div>
   </div>
   <div class="gallery__fade gallery__fade--top" aria-hidden="true"></div>
   <div class="gallery__fade gallery__fade--bottom" aria-hidden="true"></div>
-  <p class="gallery__hint">Tocá cualquier miniatura para verla en grande</p>
+  <p class="gallery__hint" data-i18n="gallery.hint">Tocá cualquier miniatura para verla en grande</p>
 </section>
 
 <!-- ============ MARQUEE ============ -->
@@ -116,15 +125,15 @@
       <i class="spark s1" aria-hidden="true"></i>
       <i class="spark s2" aria-hidden="true"></i>
       <i class="spark s3" aria-hidden="true"></i>
-      <span class="w">todas</span> <span class="w">mis</span> <span class="w">miniaturas</span>
+      <span class="w" data-i18n="works.t1">todas</span> <span class="w" data-i18n="works.t2">mis</span> <span class="w" data-i18n="works.t3">miniaturas</span>
     </h2>
 
-    <div class="filters reveal" role="tablist" aria-label="Categorías">
-      <button class="chip is-active" data-filter="todas" role="tab" aria-selected="true">Todas</button>
+    <div class="filters reveal" role="tablist" data-i18n-aria="filters.aria" aria-label="Categorías">
+      <button class="chip is-active" data-filter="todas" role="tab" aria-selected="true" data-i18n="chip.all">Todas</button>
       <button class="chip" data-filter="faceless" role="tab" aria-selected="false">Faceless / Gaming</button>
       <button class="chip" data-filter="irl" role="tab" aria-selected="false">IRL</button>
-      <button class="chip is-soon" disabled>Finanzas <i>pronto</i></button>
-      <button class="chip is-soon" disabled>IA <i>pronto</i></button>
+      <button class="chip is-soon" disabled><span data-i18n="chip.finance">Finanzas</span> <i data-i18n="chip.soon">pronto</i></button>
+      <button class="chip is-soon" disabled><span data-i18n="chip.ai">IA</span> <i data-i18n="chip.soon">pronto</i></button>
     </div>
 
     <div class="grid-wrap" id="gridWrap">
@@ -141,41 +150,41 @@
 <!-- ============ CLIENTES ============ -->
 <section class="section clients" id="clientes">
   <div class="wrap">
-    <h2 class="stitle"><span class="w">mis</span> <span class="w">clientes</span></h2>
+    <h2 class="stitle"><span class="w" data-i18n="clients.t1">mis</span> <span class="w" data-i18n="clients.t2">clientes</span></h2>
   </div>
 
   <div class="rail reveal">
-    <button class="rail__arrow rail__arrow--prev" id="railPrev" aria-label="Anterior">‹</button>
+    <button class="rail__arrow rail__arrow--prev" id="railPrev" data-i18n-aria="rail.prev" aria-label="Anterior">‹</button>
     <div class="rail__track" id="clientRail"></div>
-    <button class="rail__arrow rail__arrow--next" id="railNext" aria-label="Siguiente">›</button>
+    <button class="rail__arrow rail__arrow--next" id="railNext" data-i18n-aria="rail.next" aria-label="Siguiente">›</button>
   </div>
 </section>
 
 <!-- ============ FAQ ============ -->
 <section class="section faq" id="faq">
   <div class="wrap wrap--narrow">
-    <h2 class="stitle"><span class="w">dudas</span> <span class="w">frecuentes</span></h2>
+    <h2 class="stitle"><span class="w" data-i18n="faq.t1">dudas</span> <span class="w" data-i18n="faq.t2">frecuentes</span></h2>
 
     <div class="acc" id="acc">
       <div class="acc__item reveal">
-        <button class="acc__head" aria-expanded="false"><span>¿Cuánto tardás en entregar?</span><i></i></button>
-        <div class="acc__body"><p>Entre 24 y 48 horas por miniatura. Si tenés un lanzamiento con fecha, reservamos el lugar en la agenda y te confirmo el horario exacto de entrega.</p></div>
+        <button class="acc__head" aria-expanded="false"><span data-i18n="faq.q1">¿Cuánto tardás en entregar?</span><i></i></button>
+        <div class="acc__body"><p data-i18n="faq.a1">Entre 24 y 48 horas por miniatura. Si tenés un lanzamiento con fecha, reservamos el lugar en la agenda y te confirmo el horario exacto de entrega.</p></div>
       </div>
       <div class="acc__item reveal">
-        <button class="acc__head" aria-expanded="false"><span>¿Cuántas revisiones incluye?</span><i></i></button>
-        <div class="acc__body"><p>Ilimitadas dentro del concepto elegido. Si querés cambiar de idea por completo, lo tomamos como una pieza nueva y te paso el precio antes de arrancar.</p></div>
+        <button class="acc__head" aria-expanded="false"><span data-i18n="faq.q2">¿Cuántas revisiones incluye?</span><i></i></button>
+        <div class="acc__body"><p data-i18n="faq.a2">Ilimitadas dentro del concepto elegido. Si querés cambiar de idea por completo, lo tomamos como una pieza nueva y te paso el precio antes de arrancar.</p></div>
       </div>
       <div class="acc__item reveal">
-        <button class="acc__head" aria-expanded="false"><span>¿Trabajás con cualquier temática?</span><i></i></button>
-        <div class="acc__body"><p>Sí. Gaming, autos, finanzas, viajes, entretenimiento o lo que tengas en la cabeza. Si el nicho es nuevo para mí, arranco investigando referencias antes de diseñar.</p></div>
+        <button class="acc__head" aria-expanded="false"><span data-i18n="faq.q3">¿Trabajás con cualquier temática?</span><i></i></button>
+        <div class="acc__body"><p data-i18n="faq.a3">Sí. Gaming, autos, finanzas, viajes, entretenimiento o lo que tengas en la cabeza. Si el nicho es nuevo para mí, arranco investigando referencias antes de diseñar.</p></div>
       </div>
       <div class="acc__item reveal">
-        <button class="acc__head" aria-expanded="false"><span>¿Cómo son los precios?</span><i></i></button>
-        <div class="acc__body"><p>Por pieza o por paquete mensual. El paquete mensual baja el precio por miniatura y te asegura prioridad en la cola. Agendá la reunión y te paso la lista completa.</p></div>
+        <button class="acc__head" aria-expanded="false"><span data-i18n="faq.q4">¿Cómo son los precios?</span><i></i></button>
+        <div class="acc__body"><p data-i18n="faq.a4">Por pieza o por paquete mensual. El paquete mensual baja el precio por miniatura y te asegura prioridad en la cola. Agendá la reunión y te paso la lista completa.</p></div>
       </div>
       <div class="acc__item reveal">
-        <button class="acc__head" aria-expanded="false"><span>¿Me pasás los archivos editables?</span><i></i></button>
-        <div class="acc__body"><p>Sí, PSD organizado por capas más los PNG exportados en 1280×720. Son tuyos, sin letra chica.</p></div>
+        <button class="acc__head" aria-expanded="false"><span data-i18n="faq.q5">¿Me pasás los archivos editables?</span><i></i></button>
+        <div class="acc__body"><p data-i18n="faq.a5">Sí, PSD organizado por capas más los PNG exportados en 1280×720. Son tuyos, sin letra chica.</p></div>
       </div>
     </div>
   </div>
@@ -190,43 +199,43 @@
   </div>
 
   <div class="wrap">
-    <h2 class="stitle"><span class="w">agendemos</span> <span class="w">15 minutos</span></h2>
+    <h2 class="stitle"><span class="w" data-i18n="contact.t1">agendemos</span> <span class="w" data-i18n="contact.t2">15 minutos</span></h2>
 
     <div class="funnel reveal" id="funnel">
       <div class="funnel__top">
         <ol class="funnel__steps" id="funnelSteps">
-          <li class="is-active"><b>01</b><span>Proyecto</span></li>
-          <li><b>02</b><span>Día y hora</span></li>
-          <li><b>03</b><span>Tus datos</span></li>
+          <li class="is-active"><b>01</b><span data-i18n="step.1">Proyecto</span></li>
+          <li><b>02</b><span data-i18n="step.2">Día y hora</span></li>
+          <li><b>03</b><span data-i18n="step.3">Tus datos</span></li>
         </ol>
         <div class="funnel__bar"><span id="funnelBar"></span></div>
       </div>
 
       <!-- PASO 1 -->
       <section class="panel is-active" data-step="1">
-        <p class="panel__q">¿Con qué te doy una mano?</p>
+        <p class="panel__q" data-i18n="q.help">¿Con qué te doy una mano?</p>
         <div class="opts" data-group="servicio" data-multi="1">
-          <button class="opt" data-value="Miniaturas">Miniaturas</button>
-          <button class="opt" data-value="Branding de canal">Branding de canal</button>
-          <button class="opt" data-value="Packaging de video">Packaging de video</button>
-          <button class="opt" data-value="Otra cosa">Otra cosa</button>
+          <button class="opt" data-value="Miniaturas" data-i18n="o.thumbs">Miniaturas</button>
+          <button class="opt" data-value="Branding de canal" data-i18n="o.branding">Branding de canal</button>
+          <button class="opt" data-value="Packaging de video" data-i18n="o.packaging">Packaging de video</button>
+          <button class="opt" data-value="Otra cosa" data-i18n="o.other">Otra cosa</button>
         </div>
 
-        <p class="panel__q">¿Cuántas piezas por mes?</p>
+        <p class="panel__q" data-i18n="q.volume">¿Cuántas piezas por mes?</p>
         <div class="opts" data-group="volumen">
           <button class="opt" data-value="1 a 4">1 a 4</button>
           <button class="opt" data-value="5 a 10">5 a 10</button>
-          <button class="opt" data-value="Más de 10">Más de 10</button>
-          <button class="opt" data-value="Todavía no sé">Todavía no sé</button>
+          <button class="opt" data-value="Más de 10" data-i18n="o.more10">Más de 10</button>
+          <button class="opt" data-value="Todavía no sé" data-i18n="o.dunno">Todavía no sé</button>
         </div>
 
-        <p class="panel__q">¿De qué temática es el canal?</p>
+        <p class="panel__q" data-i18n="q.niche">¿De qué temática es el canal?</p>
         <div class="opts" data-group="nicho">
           <button class="opt" data-value="Gaming">Gaming</button>
-          <button class="opt" data-value="Entretenimiento">Entretenimiento</button>
-          <button class="opt" data-value="Autos y motor">Autos y motor</button>
-          <button class="opt" data-value="Finanzas">Finanzas</button>
-          <button class="opt" data-value="Otra">Otra</button>
+          <button class="opt" data-value="Entretenimiento" data-i18n="o.enter">Entretenimiento</button>
+          <button class="opt" data-value="Autos y motor" data-i18n="o.cars">Autos y motor</button>
+          <button class="opt" data-value="Finanzas" data-i18n="o.finance">Finanzas</button>
+          <button class="opt" data-value="Otra" data-i18n="o.otherf">Otra</button>
         </div>
       </section>
 
@@ -234,13 +243,13 @@
       <section class="panel" data-step="2">
         <div class="cal">
           <div class="cal__head">
-            <button class="cal__nav" id="calPrev" aria-label="Mes anterior">‹</button>
+            <button class="cal__nav" id="calPrev" data-i18n-aria="cal.prev" aria-label="Mes anterior">‹</button>
             <span class="cal__month" id="calMonth">—</span>
-            <button class="cal__nav" id="calNext" aria-label="Mes siguiente">›</button>
+            <button class="cal__nav" id="calNext" data-i18n-aria="cal.next" aria-label="Mes siguiente">›</button>
           </div>
           <div class="cal__dow" aria-hidden="true"><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span></div>
           <div class="cal__grid" id="calGrid"></div>
-          <p class="cal__note">Días hábiles, huso horario de Argentina (GMT−3).</p>
+          <p class="cal__note" data-i18n="cal.note">Días hábiles, huso horario de Argentina (GMT−3).</p>
         </div>
 
         <div class="slots">
@@ -252,18 +261,18 @@
       <!-- PASO 3 -->
       <section class="panel" data-step="3">
         <div class="form__row">
-          <label class="field"><span>Nombre</span><input type="text" id="fName" placeholder="Cómo te llamás" /></label>
-          <label class="field"><span>Email</span><input type="email" id="fMail" placeholder="vos@correo.com" /></label>
+          <label class="field"><span data-i18n="f.name">Nombre</span><input type="text" id="fName" data-i18n-ph="f.namePh" placeholder="Cómo te llamás" /></label>
+          <label class="field"><span data-i18n="f.mail">Email</span><input type="email" id="fMail" data-i18n-ph="f.mailPh" placeholder="vos@correo.com" /></label>
         </div>
-        <label class="field"><span>Canal o link</span><input type="text" id="fChannel" placeholder="youtube.com/@tucanal" /></label>
-        <label class="field"><span>Algo más que quieras contarme</span><textarea id="fMsg" rows="3" placeholder="Opcional"></textarea></label>
+        <label class="field"><span data-i18n="f.channel">Canal o link</span><input type="text" id="fChannel" data-i18n-ph="f.channelPh" placeholder="youtube.com/@tucanal" /></label>
+        <label class="field"><span data-i18n="f.more">Algo más que quieras contarme</span><textarea id="fMsg" rows="3" data-i18n-ph="f.morePh" placeholder="Opcional"></textarea></label>
 
         <div class="summary" id="summary"></div>
         <p class="form__hint" id="funnelHint" role="status"></p>
       </section>
 
       <div class="funnel__nav">
-        <button class="btn btn--ghost" id="fPrev" disabled>Atrás</button>
+        <button class="btn btn--ghost" id="fPrev" data-i18n="btn.back" disabled>Atrás</button>
         <button class="btn" id="fNext">Siguiente</button>
       </div>
     </div>
@@ -282,13 +291,13 @@
 <footer class="footer">
   <div class="wrap footer__in">
     <span class="footer__logo">joaco</span>
-    <span>© <span id="year">2026</span> — Diseño de miniaturas. Hecho en Argentina.</span>
-    <a href="#inicio" class="footer__top">Volver arriba ↑</a>
+    <span>© <span id="year">2026</span> <span data-i18n="footer.rights">— Diseño de miniaturas. Hecho en Argentina.</span></span>
+    <a href="#inicio" class="footer__top" data-i18n="footer.top">Volver arriba ↑</a>
   </div>
 </footer>
 
 <!-- ============ VISOR A PANTALLA COMPLETA ============ -->
-<div class="lb" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Miniatura ampliada">
+<div class="lb" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" data-i18n-aria="lb.aria" aria-label="Miniatura ampliada">
   <div class="lb__backdrop" data-close></div>
   <div class="lb__scene">
     <span class="lb__glow" id="lbGlow" aria-hidden="true"></span>
@@ -298,9 +307,9 @@
     </figure>
   </div>
   <figcaption class="lb__caption" id="lbCaption"></figcaption>
-  <button class="lb__btn lb__btn--close" id="lbClose" aria-label="Cerrar">✕</button>
-  <button class="lb__btn lb__btn--prev" id="lbPrev" aria-label="Anterior">‹</button>
-  <button class="lb__btn lb__btn--next" id="lbNext" aria-label="Siguiente">›</button>
+  <button class="lb__btn lb__btn--close" id="lbClose" data-i18n-aria="lb.close" aria-label="Cerrar">✕</button>
+  <button class="lb__btn lb__btn--prev" id="lbPrev" data-i18n-aria="lb.prev" aria-label="Anterior">‹</button>
+  <button class="lb__btn lb__btn--next" id="lbNext" data-i18n-aria="lb.next" aria-label="Siguiente">›</button>
 </div>
 <div class="flash" id="flash" aria-hidden="true"></div>
 

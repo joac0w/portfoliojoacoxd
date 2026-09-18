@@ -42,6 +42,9 @@ build-preview.py      Regenera preview.html desde index.html + assets/
 
 ## Secciones
 
+0. **Portada** — la pantalla de carga se queda hasta que la persona elige idioma: **Español**
+   entra al sitio tal cual, **English** entra con todo traducido (navegación, textos, preguntas,
+   embudo, calendario y hasta el correo que se arma al confirmar la reunión).
 1. **Header blanco** — el wordmark *joaco* con el logo al lado (más grande que el texto), el
    claim *+6 años de experiencia real* y, abajo, una pared gris que sube desde el marco
    inferior. Los íconos de Premiere, After Effects, Photoshop y CapCut quedan apoyados contra
@@ -84,6 +87,7 @@ ningún efecto glitch.
 | Títulos, canal y categoría de cada pieza | array `MEDIA` en `assets/js/main.js` (`t` título, `c` canal, `cat` categoría: `faceless` o `irl`) |
 | Categorías nuevas (Finanzas, IA…) | en `index.html` sacá el `disabled` y la clase `is-soon` del chip y ponele `data-filter="finanzas"`; después usá ese mismo valor en el `cat` de las piezas |
 | Clientes del carrusel | array `CLIENTS` en `assets/js/main.js` (`n` nombre, `s` suscriptores, `img` ruta de la foto) |
+| Textos en los dos idiomas | objeto `T` al principio de `assets/js/main.js`: `T.es` y `T.en` con la misma clave. En el HTML, cada texto fijo lleva `data-i18n="clave"` (o `data-i18n-html`, `-ph` para placeholders y `-aria` para etiquetas de accesibilidad) |
 | Preguntas del embudo | bloques `.opts` en `index.html` (el `data-group` es la clave que se guarda) |
 | Palabras de la cinta que gira | array `TICKER_WORDS` en `assets/js/main.js` |
 | Números de resultados | atributos `data-to` / `data-suffix` en `index.html` |
@@ -117,6 +121,11 @@ quieras ajustarlos.
   cambiá `'Space Grotesk'` por `'Clash Display'` en `style.css`.
 
 ## Detalles técnicos
+
+- Los idiomas no duplican la página: hay un diccionario (`T`) y `applyLang` pisa los textos
+  marcados con `data-i18n` y vuelve a armar lo que genera JavaScript (cinta, clientes,
+  calendario, embudo). Sumar un idioma nuevo es agregar otra clave en `T` y un botón más en la
+  portada.
 
 - El humo son dos capas de `feTurbulence` en SVG (como data URI) con `mix-blend-mode: screen`,
   rotando lento; el grano es otra capa de ruido.
