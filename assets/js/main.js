@@ -34,22 +34,26 @@
     es: {
       'doc.title': 'Joaco — Diseño de miniaturas',
       'nav.aria': 'Navegación principal', 'nav.menu': 'Abrir menú',
-      'nav.works': 'Trabajos', 'nav.reels': 'Reels', 'nav.clients': 'Clientes', 'nav.contact': 'Contacto',
-      'cta.book': 'Agendar reunión',
+      'nav.works': 'Miniaturas', 'nav.reels': 'Reels', 'nav.clients': 'Clientes', 'nav.contact': 'Contacto',
+      'cta.book': 'Contactame',
       'hero.tagline': '+6 años de <em>experiencia real</em>',
       'hero.sub': 'Miniaturas y edición de video desde una perspectiva real.',
       'gallery.aria': 'Miniaturas', 'gallery.hint': 'Tocá cualquier miniatura para verla en grande',
       'works.t1': 'todas', 'works.t2': 'mis', 'works.t3': 'miniaturas',
+      'works.sub': '+50 miniaturas para canales de todos los tamaños, con millones de vistas arriba.',
       'filters.aria': 'Categorías',
       'chip.all': 'Todas', 'chip.finance': 'Finanzas', 'chip.ai': 'IA', 'chip.soon': 'pronto',
       'more.more': 'Ver más', 'more.less': 'Ver menos',
       'reels.t1': 'edición', 'reels.t2': 'reels/shorts',
       'reels.play': 'Play', 'reels.missing': 'Falta el archivo.\nGuardalo en assets/reels/',
+      'reels.sub': 'Cortes verticales pensados para que se miren hasta el final.',
       'clients.t1': 'mis', 'clients.t2': 'clientes',
+      'clients.sub': 'Canales que me confían sus miniaturas mes a mes.',
       'rail.prev': 'Anterior', 'rail.next': 'Siguiente',
       'client.subs': 'suscriptores',
       'client.slot1': 'y más', 'client.slot1b': 'Sumá tu canal a la lista',
       'faq.t1': 'dudas', 'faq.t2': 'frecuentes',
+      'faq.sub': 'Lo que casi siempre me preguntan antes de arrancar.',
       'faq.q1': '¿Cuánto tardás en entregar?',
       'faq.a1': 'Entre 24 y 48 horas por miniatura. Si tenés un lanzamiento con fecha, reservamos el lugar en la agenda y te confirmo el horario exacto de entrega.',
       'faq.q2': '¿Cuántas revisiones incluye?',
@@ -60,7 +64,8 @@
       'faq.a4': 'Por pieza o por paquete mensual. El paquete mensual baja el precio por miniatura y te asegura prioridad en la cola. Agendá la reunión y te paso la lista completa.',
       'faq.q5': '¿Me pasás los archivos editables?',
       'faq.a5': 'Sí, PSD organizado por capas más los PNG exportados en 1280×720. Son tuyos, sin letra chica.',
-      'contact.t1': 'agendemos', 'contact.t2': '15 minutos',
+      'contact.sub': 'Escribime por donde te quede más cómodo.',
+      'social.copied': 'copiado',
       'step.1': 'Proyecto', 'step.2': 'Día y hora', 'step.3': 'Tus datos',
       'q.help': '¿Con qué te doy una mano?', 'q.volume': '¿Cuántas piezas por mes?', 'q.niche': '¿De qué temática es el canal?',
       'o.thumbs': 'Miniaturas', 'o.branding': 'Branding de canal', 'o.packaging': 'Packaging de video', 'o.other': 'Otra cosa',
@@ -95,22 +100,26 @@
     en: {
       'doc.title': 'Joaco — Thumbnail design',
       'nav.aria': 'Main navigation', 'nav.menu': 'Open menu',
-      'nav.works': 'Work', 'nav.reels': 'Reels', 'nav.clients': 'Clients', 'nav.contact': 'Contact',
-      'cta.book': 'Book a call',
+      'nav.works': 'Thumbnails', 'nav.reels': 'Reels', 'nav.clients': 'Clients', 'nav.contact': 'Contact',
+      'cta.book': 'Contact me',
       'hero.tagline': '+6 years of <em>real experience</em>',
       'hero.sub': 'Thumbnails and video editing from a real perspective.',
       'gallery.aria': 'Thumbnails', 'gallery.hint': 'Tap any thumbnail to see it full screen',
       'works.t1': 'all', 'works.t2': 'my', 'works.t3': 'thumbnails',
+      'works.sub': '+50 thumbnails for channels of every size, with millions of views behind them.',
       'filters.aria': 'Categories',
       'chip.all': 'All', 'chip.finance': 'Finance', 'chip.ai': 'AI', 'chip.soon': 'soon',
       'more.more': 'See more', 'more.less': 'See less',
       'reels.t1': 'reels/shorts', 'reels.t2': 'editing',
       'reels.play': 'Play', 'reels.missing': 'File missing.\nDrop it in assets/reels/',
+      'reels.sub': 'Vertical cuts built to be watched to the end.',
       'clients.t1': 'my', 'clients.t2': 'clients',
+      'clients.sub': 'Channels that trust me with their thumbnails month after month.',
       'rail.prev': 'Previous', 'rail.next': 'Next',
       'client.subs': 'subscribers',
       'client.slot1': 'and more', 'client.slot1b': 'Add your channel to the list',
       'faq.t1': 'frequent', 'faq.t2': 'questions',
+      'faq.sub': 'What people almost always ask before we start.',
       'faq.q1': 'How long does delivery take?',
       'faq.a1': 'Between 24 and 48 hours per thumbnail. If you have a launch date, we book the slot and I confirm the exact delivery time.',
       'faq.q2': 'How many revisions are included?',
@@ -121,7 +130,8 @@
       'faq.a4': 'Per piece or per monthly package. The monthly package lowers the price per thumbnail and gives you priority in the queue. Book the call and I send you the full list.',
       'faq.q5': 'Do I get the editable files?',
       'faq.a5': 'Yes, a layered PSD plus the PNGs exported at 1280×720. They are yours, no small print.',
-      'contact.t1': "let's book", 'contact.t2': '15 minutes',
+      'contact.sub': 'Write me wherever suits you best.',
+      'social.copied': 'copied',
       'step.1': 'Project', 'step.2': 'Date & time', 'step.3': 'Your details',
       'q.help': 'What can I help you with?', 'q.volume': 'How many pieces per month?', 'q.niche': "What's the channel about?",
       'o.thumbs': 'Thumbnails', 'o.branding': 'Channel branding', 'o.packaging': 'Video packaging', 'o.other': 'Something else',
@@ -264,10 +274,7 @@
     buildGallery();
     renderReels();
     renderClients();
-    renderCal();
-    renderSlots();
-    goTo(1);
-    moreBtn.querySelector('.more__txt').textContent = expanded ? t('more.less') : t('more.more');
+        moreBtn.querySelector('.more__txt').textContent = expanded ? t('more.less') : t('more.more');
     applyCollapse(false);
     railState();
   }
@@ -937,196 +944,35 @@
     });
   });
 
-  /* ---------------- Embudo de contacto ---------------- */
-  var funnel = document.getElementById('funnel');
-  var fBar = document.getElementById('funnelBar');
-  var fSteps = document.getElementById('funnelSteps').children;
-  var fPrev = document.getElementById('fPrev');
-  var fNext = document.getElementById('fNext');
-  var fHint = document.getElementById('funnelHint');
-  var panels = funnel.querySelectorAll('.panel');
+  // el botón flotante se esconde al llegar al contacto
+  (function () {
+    var cta = document.querySelector('.floating-cta');
+    var sec = document.getElementById('contacto');
+    if (!cta || !sec) return;
+    new IntersectionObserver(function (en) {
+      en.forEach(function (x) { cta.classList.toggle('is-away', x.isIntersecting); });
+    }, { threshold: 0.18 }).observe(sec);
+  })();
 
-  var pick = { servicio: [], volumen: '', nicho: '', fecha: null, hora: '' };
-  var step = 1;
-
-  var SLOTS = ['09:00', '10:00', '11:00', '12:00', '15:00', '16:00', '17:00', '18:00'];
-
-  // --- opciones (chips)
-  funnel.querySelectorAll('.opts').forEach(function (group) {
-    var key = group.dataset.group;
-    var multi = group.dataset.multi === '1';
-    group.querySelectorAll('.opt').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        if (multi) {
-          btn.classList.toggle('is-on');
-          var list = pick[key];
-          var v = btn.dataset.value;
-          var at = list.indexOf(v);
-          if (at >= 0) list.splice(at, 1); else list.push(v);
-        } else {
-          group.querySelectorAll('.opt').forEach(function (o) { o.classList.remove('is-on'); });
-          btn.classList.add('is-on');
-          pick[key] = btn.dataset.value;
-        }
-        fHint.textContent = '';
-      });
-    });
-  });
-
-  // --- calendario
-  var calGrid = document.getElementById('calGrid');
-  var calMonth = document.getElementById('calMonth');
-  var slotList = document.getElementById('slotList');
-  var slotTitle = document.getElementById('slotTitle');
-  var today = new Date(); today.setHours(0, 0, 0, 0);
-  var view = new Date(today.getFullYear(), today.getMonth(), 1);
-
-  function sameDay(a, b) {
-    return a && b && a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
-  }
-
-  function renderCal() {
-    calMonth.textContent = t('cal.months')[view.getMonth()] + ' ' + view.getFullYear();
-    document.getElementById('calPrev').disabled =
-      view.getFullYear() === today.getFullYear() && view.getMonth() === today.getMonth();
-
-    calGrid.innerHTML = '';
-    var first = new Date(view.getFullYear(), view.getMonth(), 1);
-    var offset = (first.getDay() + 6) % 7;            // lunes primero
-    var days = new Date(view.getFullYear(), view.getMonth() + 1, 0).getDate();
-
-    for (var k = 0; k < offset; k++) {
-      var hole = document.createElement('span');
-      hole.className = 'cal__day is-empty';
-      calGrid.appendChild(hole);
-    }
-    for (var d = 1; d <= days; d++) {
-      var date = new Date(view.getFullYear(), view.getMonth(), d);
-      var weekend = date.getDay() === 0 || date.getDay() === 6;
-      var past = date < today;
-      var btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'cal__day' + (sameDay(date, pick.fecha) ? ' is-sel' : '');
-      btn.textContent = d;
-      btn.disabled = weekend || past;
-      btn.dataset.d = date.toISOString();
-      calGrid.appendChild(btn);
-    }
-  }
-
-  function fechaLarga(d) {
-    var dow = t('cal.days')[d.getDay()];
-    return LANG === 'en'
-      ? dow + ', ' + t('cal.months')[d.getMonth()] + ' ' + d.getDate()
-      : dow + ' ' + d.getDate() + ' de ' + t('cal.months')[d.getMonth()];
-  }
-
-  function renderSlots() {
-    slotList.innerHTML = '';
-    if (!pick.fecha) {
-      slotTitle.textContent = t('cal.pick');
-      return;
-    }
-    slotTitle.textContent = t('cal.slots') + fechaLarga(pick.fecha);
-    SLOTS.forEach(function (h) {
-      var b = document.createElement('button');
-      b.type = 'button';
-      b.className = 'slot' + (pick.hora === h ? ' is-on' : '');
-      b.textContent = h;
-      b.addEventListener('click', function () {
-        pick.hora = h;
-        renderSlots();
-        fHint.textContent = '';
-      });
-      slotList.appendChild(b);
+  /* ---------------- Discord: copiar el usuario ---------------- */
+  var discordBtn = document.getElementById('discordBtn');
+  if (discordBtn) {
+    discordBtn.addEventListener('click', function () {
+      var txt = discordBtn.dataset.copy;
+      var done = function () {
+        discordBtn.classList.add('is-copied');
+        setTimeout(function () { discordBtn.classList.remove('is-copied'); }, 1600);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(txt).then(done, done);
+      } else {
+        var ta = document.createElement('textarea');
+        ta.value = txt; document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); } catch (e) {}
+        ta.remove(); done();
+      }
     });
   }
-
-  calGrid.addEventListener('click', function (e) {
-    var b = e.target.closest('.cal__day');
-    if (!b || b.disabled || !b.dataset.d) return;
-    pick.fecha = new Date(b.dataset.d);
-    pick.hora = '';
-    renderCal();
-    renderSlots();
-    fHint.textContent = '';
-  });
-  document.getElementById('calPrev').addEventListener('click', function () {
-    view.setMonth(view.getMonth() - 1); renderCal();
-  });
-  document.getElementById('calNext').addEventListener('click', function () {
-    view.setMonth(view.getMonth() + 1); renderCal();
-  });
-  renderCal();
-  renderSlots();
-
-  // --- pasos
-  function renderSummary() {
-    var box = document.getElementById('summary');
-    var rows = [
-      [t('sum.project'), pick.servicio.join(', ') || '—'],
-      [t('sum.volume'), pick.volumen || '—'],
-      [t('sum.niche'), pick.nicho || '—'],
-      [t('sum.meeting'), pick.fecha ? fechaLarga(pick.fecha) + ' · ' + pick.hora : '—']
-    ];
-    box.innerHTML = rows.map(function (r) {
-      return '<div><span>' + r[0] + '</span><b>' + r[1] + '</b></div>';
-    }).join('');
-  }
-
-  function goTo(n) {
-    step = n;
-    panels.forEach(function (pl) { pl.classList.toggle('is-active', +pl.dataset.step === step); });
-    for (var i = 0; i < fSteps.length; i++) {
-      fSteps[i].classList.toggle('is-active', i === step - 1);
-      fSteps[i].classList.toggle('is-done', i < step - 1);
-    }
-    fBar.style.width = (step / 3 * 100) + '%';
-    fPrev.disabled = step === 1;
-    fNext.textContent = step === 3 ? t('btn.confirm') : t('btn.next');
-    fHint.textContent = '';
-    if (step === 3) renderSummary();
-  }
-
-  fPrev.addEventListener('click', function () { if (step > 1) goTo(step - 1); });
-
-  fNext.addEventListener('click', function () {
-    if (step === 1) {
-      if (!pick.servicio.length) { fHint.className = 'form__hint is-bad'; fHint.textContent = t('err.services'); return; }
-      return goTo(2);
-    }
-    if (step === 2) {
-      if (!pick.fecha || !pick.hora) { fHint.className = 'form__hint is-bad'; fHint.textContent = t('err.when'); return; }
-      return goTo(3);
-    }
-
-    var nombre = document.getElementById('fName').value.trim();
-    var mail = document.getElementById('fMail').value.trim();
-    if (nombre.length < 2 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)) {
-      fHint.className = 'form__hint is-bad';
-      fHint.textContent = t('err.contact');
-      return;
-    }
-
-    var body =
-      t('mail.intro') + '\n\n' +
-      t('mail.name') + ': ' + nombre + '\n' +
-      t('mail.mail') + ': ' + mail + '\n' +
-      t('mail.channel') + ': ' + (document.getElementById('fChannel').value.trim() || '—') + '\n' +
-      t('mail.project') + ': ' + (pick.servicio.join(', ') || '—') + '\n' +
-      t('mail.volume') + ': ' + (pick.volumen || '—') + '\n' +
-      t('mail.niche') + ': ' + (pick.nicho || '—') + '\n' +
-      t('mail.meeting') + ': ' + fechaLarga(pick.fecha) + t('ok.mail2') + pick.hora + ' (GMT-3)\n\n' +
-      (document.getElementById('fMsg').value.trim() || '');
-
-    fHint.className = 'form__hint is-ok';
-    fHint.textContent = t('ok.mail') + fechaLarga(pick.fecha) + t('ok.mail2') + pick.hora + '.';
-    window.location.href = 'mailto:equinox.dgrafico@gmail.com' +
-      '?subject=' + encodeURIComponent(t('mail.subject') + fechaLarga(pick.fecha) + ' ' + pick.hora + ' — ' + nombre) +
-      '&body=' + encodeURIComponent(body);
-  });
-
-  goTo(1);
 
   document.getElementById('year').textContent = new Date().getFullYear();
 

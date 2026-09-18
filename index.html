@@ -46,7 +46,7 @@
   </a>
 
   <nav class="nav__links" id="navLinks" data-i18n-aria="nav.aria" aria-label="Navegación principal">
-    <a href="#proyectos" class="pill" data-i18n="nav.works">Trabajos</a>
+    <a href="#proyectos" class="pill" data-i18n="nav.works">Miniaturas</a>
     <a href="#reels" class="pill" data-i18n="nav.reels">Reels</a>
     <a href="#clientes" class="pill" data-i18n="nav.clients">Clientes</a>
     <a href="#contacto" class="pill" data-i18n="nav.contact">Contacto</a>
@@ -58,7 +58,7 @@
 </header>
 
 <a href="#contacto" class="floating-cta">
-  <span class="dot"></span><span class="floating-cta__txt" data-i18n="cta.book">Agendar reunión</span>
+  <span class="dot"></span><span class="floating-cta__txt" data-i18n="cta.book">Contactame</span>
 </a>
 
 <main>
@@ -128,6 +128,7 @@
       <i class="spark s3" aria-hidden="true"></i>
       <span class="w" data-i18n="works.t1">todas</span> <span class="w" data-i18n="works.t2">mis</span> <span class="w" data-i18n="works.t3">miniaturas</span>
     </h2>
+    <p class="ssub reveal" data-i18n="works.sub">+50 miniaturas para canales de todos los tamaños, con millones de vistas arriba.</p>
 
     <div class="filters reveal" role="tablist" data-i18n-aria="filters.aria" aria-label="Categorías">
       <button class="chip is-active" data-filter="todas" role="tab" aria-selected="true" data-i18n="chip.all">Todas</button>
@@ -154,6 +155,7 @@
     <h2 class="stitle">
       <span class="w" data-i18n="reels.t1">edición</span> <span class="w" data-i18n="reels.t2">reels/shorts</span>
     </h2>
+    <p class="ssub reveal" data-i18n="reels.sub">Cortes verticales pensados para que se miren hasta el final.</p>
   </div>
 
   <div class="cf" id="cf">
@@ -167,6 +169,7 @@
 <section class="section clients" id="clientes">
   <div class="wrap">
     <h2 class="stitle"><span class="w" data-i18n="clients.t1">mis</span> <span class="w" data-i18n="clients.t2">clientes</span></h2>
+    <p class="ssub reveal" data-i18n="clients.sub">Canales que me confían sus miniaturas mes a mes.</p>
   </div>
 
   <div class="rail reveal">
@@ -180,6 +183,7 @@
 <section class="section faq" id="faq">
   <div class="wrap wrap--narrow">
     <h2 class="stitle"><span class="w" data-i18n="faq.t1">dudas</span> <span class="w" data-i18n="faq.t2">frecuentes</span></h2>
+    <p class="ssub reveal" data-i18n="faq.sub">Lo que casi siempre me preguntan antes de arrancar.</p>
 
     <div class="acc" id="acc">
       <div class="acc__item reveal">
@@ -206,105 +210,69 @@
   </div>
 </section>
 
-<!-- ============ CONTACTO / EMBUDO ============ -->
-<section class="section contact" id="contacto">
-  <div class="smoke smoke--soft" aria-hidden="true">
-    <span class="smoke__wisp w2"></span>
-    <span class="smoke__blob s1"></span>
-    <span class="smoke__blob s2"></span>
-  </div>
+<!-- ============ CONTACTO ============ -->
+<section class="contact" id="contacto">
+  <div class="contact__fade" aria-hidden="true"></div>
 
-  <div class="wrap">
-    <h2 class="stitle"><span class="w" data-i18n="contact.t1">agendemos</span> <span class="w" data-i18n="contact.t2">15 minutos</span></h2>
+  <div class="contact__in">
+    <img class="contact__mark" src="assets/brand/joaco-logo.webp" alt="" />
+    <h2 class="contact__title">joaco</h2>
+    <p class="contact__sub" data-i18n="contact.sub">Escribime por donde te quede más cómodo.</p>
 
-    <div class="funnel reveal" id="funnel">
-      <div class="funnel__top">
-        <ol class="funnel__steps" id="funnelSteps">
-          <li class="is-active"><b>01</b><span data-i18n="step.1">Proyecto</span></li>
-          <li><b>02</b><span data-i18n="step.2">Día y hora</span></li>
-          <li><b>03</b><span data-i18n="step.3">Tus datos</span></li>
-        </ol>
-        <div class="funnel__bar"><span id="funnelBar"></span></div>
-      </div>
+    <div class="socials">
+      <a class="social" href="https://instagram.com/joacowdesign" target="_blank" rel="noopener">
+        <span class="social__ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+            <rect x="3" y="3" width="18" height="18" rx="5.2"/><circle cx="12" cy="12" r="4.1"/>
+            <circle cx="17.3" cy="6.7" r="1.15" fill="currentColor" stroke="none"/>
+          </svg>
+        </span>
+        <span class="social__txt"><b>Instagram</b><i>@joacowdesign</i></span>
+      </a>
 
-      <!-- PASO 1 -->
-      <section class="panel is-active" data-step="1">
-        <p class="panel__q" data-i18n="q.help">¿Con qué te doy una mano?</p>
-        <div class="opts" data-group="servicio" data-multi="1">
-          <button class="opt" data-value="Miniaturas" data-i18n="o.thumbs">Miniaturas</button>
-          <button class="opt" data-value="Branding de canal" data-i18n="o.branding">Branding de canal</button>
-          <button class="opt" data-value="Packaging de video" data-i18n="o.packaging">Packaging de video</button>
-          <button class="opt" data-value="Otra cosa" data-i18n="o.other">Otra cosa</button>
-        </div>
+      <a class="social" href="https://www.tiktok.com/@joacowdesign" target="_blank" rel="noopener">
+        <span class="social__ico">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M16.4 3h-2.7v12.4a2.55 2.55 0 1 1-2.1-2.5v-2.7a5.25 5.25 0 1 0 4.8 5.2V8.9a6.6 6.6 0 0 0 3.4 1.05V7.3A4 4 0 0 1 16.4 3z"/>
+          </svg>
+        </span>
+        <span class="social__txt"><b>TikTok</b><i>@joacowdesign</i></span>
+      </a>
 
-        <p class="panel__q" data-i18n="q.volume">¿Cuántas piezas por mes?</p>
-        <div class="opts" data-group="volumen">
-          <button class="opt" data-value="1 a 4">1 a 4</button>
-          <button class="opt" data-value="5 a 10">5 a 10</button>
-          <button class="opt" data-value="Más de 10" data-i18n="o.more10">Más de 10</button>
-          <button class="opt" data-value="Todavía no sé" data-i18n="o.dunno">Todavía no sé</button>
-        </div>
+      <a class="social" href="https://x.com/joacowdesign" target="_blank" rel="noopener">
+        <span class="social__ico">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.5 3h3.2l-7 8 8.2 10h-6.4l-5-6.1L4.7 21H1.5l7.5-8.6L1.1 3h6.6l4.5 5.6L17.5 3zm-1.1 16h1.8L7.5 4.9H5.6L16.4 19z"/>
+          </svg>
+        </span>
+        <span class="social__txt"><b>X</b><i>@joacowdesign</i></span>
+      </a>
 
-        <p class="panel__q" data-i18n="q.niche">¿De qué temática es el canal?</p>
-        <div class="opts" data-group="nicho">
-          <button class="opt" data-value="Gaming">Gaming</button>
-          <button class="opt" data-value="Entretenimiento" data-i18n="o.enter">Entretenimiento</button>
-          <button class="opt" data-value="Autos y motor" data-i18n="o.cars">Autos y motor</button>
-          <button class="opt" data-value="Finanzas" data-i18n="o.finance">Finanzas</button>
-          <button class="opt" data-value="Otra" data-i18n="o.otherf">Otra</button>
-        </div>
-      </section>
+      <button class="social" type="button" id="discordBtn" data-copy="@raknyjoaco">
+        <span class="social__ico">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19.3 5.6A15.6 15.6 0 0 0 15.4 4.4l-.25.5c1.28.33 2.5.83 3.6 1.5a11.4 11.4 0 0 0-9.5 0c1.1-.67 2.32-1.17 3.6-1.5L12.6 4.4A15.6 15.6 0 0 0 8.7 5.6C4.9 11.2 5.2 16.1 5.2 16.1a15.4 15.4 0 0 0 4.7 2.4l1-1.35c-.72-.27-1.4-.62-2.02-1.05l.5-.38a11.4 11.4 0 0 0 9.24 0l.5.38c-.62.43-1.3.78-2.02 1.05l1 1.35a15.4 15.4 0 0 0 4.7-2.4s.3-4.9-3.5-10.5zM9.4 14.2c-.92 0-1.68-.85-1.68-1.9s.74-1.9 1.68-1.9c.94 0 1.7.85 1.68 1.9 0 1.05-.74 1.9-1.68 1.9zm5.2 0c-.92 0-1.68-.85-1.68-1.9s.74-1.9 1.68-1.9c.94 0 1.7.85 1.68 1.9 0 1.05-.74 1.9-1.68 1.9z"/>
+          </svg>
+        </span>
+        <span class="social__txt"><b>Discord</b><i>@raknyjoaco</i></span>
+        <span class="social__copied" data-i18n="social.copied">copiado</span>
+      </button>
 
-      <!-- PASO 2 -->
-      <section class="panel" data-step="2">
-        <div class="cal">
-          <div class="cal__head">
-            <button class="cal__nav" id="calPrev" data-i18n-aria="cal.prev" aria-label="Mes anterior">‹</button>
-            <span class="cal__month" id="calMonth">—</span>
-            <button class="cal__nav" id="calNext" data-i18n-aria="cal.next" aria-label="Mes siguiente">›</button>
-          </div>
-          <div class="cal__dow" aria-hidden="true"><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span></div>
-          <div class="cal__grid" id="calGrid"></div>
-          <p class="cal__note" data-i18n="cal.note">Días hábiles, huso horario de Argentina (GMT−3).</p>
-        </div>
-
-        <div class="slots">
-          <p class="panel__q" id="slotTitle">Elegí un día para ver los horarios</p>
-          <div class="slots__list" id="slotList"></div>
-        </div>
-      </section>
-
-      <!-- PASO 3 -->
-      <section class="panel" data-step="3">
-        <div class="form__row">
-          <label class="field"><span data-i18n="f.name">Nombre</span><input type="text" id="fName" data-i18n-ph="f.namePh" placeholder="Cómo te llamás" /></label>
-          <label class="field"><span data-i18n="f.mail">Email</span><input type="email" id="fMail" data-i18n-ph="f.mailPh" placeholder="vos@correo.com" /></label>
-        </div>
-        <label class="field"><span data-i18n="f.channel">Canal o link</span><input type="text" id="fChannel" data-i18n-ph="f.channelPh" placeholder="youtube.com/@tucanal" /></label>
-        <label class="field"><span data-i18n="f.more">Algo más que quieras contarme</span><textarea id="fMsg" rows="3" data-i18n-ph="f.morePh" placeholder="Opcional"></textarea></label>
-
-        <div class="summary" id="summary"></div>
-        <p class="form__hint" id="funnelHint" role="status"></p>
-      </section>
-
-      <div class="funnel__nav">
-        <button class="btn btn--ghost" id="fPrev" data-i18n="btn.back" disabled>Atrás</button>
-        <button class="btn" id="fNext">Siguiente</button>
-      </div>
-    </div>
-
-    <div class="contact__links reveal">
-      <a href="mailto:equinox.dgrafico@gmail.com">equinox.dgrafico@gmail.com</a>
-      <a href="https://wa.me/" target="_blank" rel="noopener">WhatsApp</a>
-      <a href="https://instagram.com/" target="_blank" rel="noopener">Instagram</a>
-      <a href="https://x.com/" target="_blank" rel="noopener">X / Twitter</a>
+      <a class="social" href="mailto:joacowcontactos@gmail.com">
+        <span class="social__ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2.6" y="4.6" width="18.8" height="14.8" rx="3.2"/><path d="m3.6 7.4 8.4 5.9 8.4-5.9"/>
+          </svg>
+        </span>
+        <span class="social__txt"><b>Email</b><i>joacowcontactos@gmail.com</i></span>
+      </a>
     </div>
   </div>
 </section>
 
 </main>
 
-<footer class="footer">
+<footer class="footer footer--light">
   <div class="wrap footer__in">
     <span class="footer__logo">joaco</span>
     <span>© <span id="year">2026</span> <span data-i18n="footer.rights">— Diseño de miniaturas. Hecho en Argentina.</span></span>
