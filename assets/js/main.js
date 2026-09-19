@@ -48,6 +48,7 @@
       'reels.play': 'Play', 'reels.missing': 'Falta el archivo.\nGuardalo en assets/reels/',
       'reels.sub': 'Cortes verticales pensados para que se miren hasta el final.',
       'reels.upload': 'Subir video', 'reels.uploaded': 'Vista previa local',
+      'reels.vol': 'Volumen', 'reels.mute': 'Silenciar',
       'clients.t1': 'mis', 'clients.t2': 'clientes',
       'clients.sub': 'Clientes que han confiado o siguen confiando en mi trabajo.',
       'rail.prev': 'Anterior', 'rail.next': 'Siguiente',
@@ -113,6 +114,7 @@
       'reels.play': 'Play', 'reels.missing': 'File missing.\nDrop it in assets/reels/',
       'reels.sub': 'Vertical cuts built to be watched to the end.',
       'reels.upload': 'Upload video', 'reels.uploaded': 'Local preview',
+      'reels.vol': 'Volume', 'reels.mute': 'Mute',
       'clients.t1': 'my', 'clients.t2': 'clients',
       'clients.sub': 'Clients who trusted my work, and the ones who still do.',
       'rail.prev': 'Previous', 'rail.next': 'Next',
@@ -201,7 +203,17 @@
     { s: 'tibson-warner', t: 'Netflix compra Warner', c: 'Tibson', cat: 'irl' },
     { s: 'tierlist-aura', t: 'Tierlist de aura', c: 'Gaming', cat: 'irl' },
     { s: 'podcast-globales', t: 'Top globales', c: 'Podcast', cat: 'irl' },
-    { s: 'vector-resell', t: 'Resell de zapatillas', c: 'Vector', cat: 'irl' }
+    { s: 'vector-resell', t: 'Resell de zapatillas', c: 'Vector', cat: 'irl' },
+    { s: 'pokemon-lore', t: 'El lore de los legendarios', c: 'Pokémon', cat: 'faceless' },
+    { s: 'spar-pacman', t: 'Partida perfecta en Pac-Man', c: 'Spar', cat: 'faceless' },
+    { s: 'batman-juegos', t: 'Todos los juegos de Batman', c: 'Gaming', cat: 'faceless' },
+    { s: 'mrpato-re2', t: '¿Era el mejor?', c: 'MrPato', cat: 'faceless' },
+    { s: 'mrpato-gears', t: 'Gears of War 3', c: 'MrPato', cat: 'faceless' },
+    { s: 'posters-feos', t: 'Pósters feos', c: 'Cine', cat: 'faceless' },
+    { s: 'raptor-fnaf', t: 'Traje real de Freddy', c: 'RaptorGamer', cat: 'irl' },
+    { s: 'raptor-avispas', t: '5 picaduras de avispa', c: 'RaptorGamer', cat: 'irl' },
+    { s: 'benitosdr-river', t: 'Quedaron todos expuestos', c: 'Benito SDR', cat: 'irl' },
+    { s: 'renzo-river', t: 'Con los nuevos por penales', c: 'Renzo Pantich', cat: 'irl' }
   ];
   var thumbOf = function (i) { return 'assets/thumbs/' + MEDIA[i].s + '.webp'; };
   var fullOf = function (i) { return 'assets/full/' + MEDIA[i].s + '.webp'; };
@@ -445,7 +457,7 @@
 
   /* ---------------- Ticker (nunca queda vacío) ---------------- */
   var tickerTrack = document.getElementById('tickerTrack');
-  var tickerRow = { el: tickerTrack, dir: -1, speed: 42, offset: 0, loop: 0 };
+  var tickerRow = { el: tickerTrack, dir: -1, speed: 42, offset: 0, loop: 0, push: 0.5 };
 
   function tickerUnit() {
     var frag = document.createDocumentFragment();
@@ -505,9 +517,48 @@
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' +
         '<path d="M12 16V4.8"/><path d="m7.6 9.2 4.4-4.4 4.4 4.4"/><path d="M4.4 15.2v2.6a2.2 2.2 0 0 0 2.2 2.2h10.8a2.2 2.2 0 0 0 2.2-2.2v-2.6"/>' +
         '</svg></label>' +
+        '<div class="reel__vol">' +
+        '<button class="reel__vol-btn" type="button" aria-label="' + t('reels.mute') + '">' +
+        '<svg class="reel__vol-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' +
+        '<path d="M4 9.5h3.2L12 5.6v12.8L7.2 14.5H4z"/><path d="M16 9.4a3.6 3.6 0 0 1 0 5.2"/><path d="M18.4 7a7 7 0 0 1 0 10"/>' +
+        '</svg>' +
+        '<svg class="reel__vol-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' +
+        '<path d="M4 9.5h3.2L12 5.6v12.8L7.2 14.5H4z"/><path d="m16.2 9.8 4.4 4.4"/><path d="m20.6 9.8-4.4 4.4"/>' +
+        '</svg></button>' +
+        '<input class="reel__vol-range" type="range" min="0" max="100" step="1" value="100" aria-label="' + t('reels.vol') + '" />' +
+        '</div>' +
         '<span class="reel__missing">' + t('reels.missing').replace(/\n/g, '<br>') + '</span>';
 
       var video = card.querySelector('video');
+
+      // volumen: el botón silencia y el slider ajusta
+      var volBtn = card.querySelector('.reel__vol-btn');
+      var volRange = card.querySelector('.reel__vol-range');
+      video.volume = 1;
+      function syncVol() {
+        var level = video.muted ? 0 : video.volume;
+        volRange.value = String(Math.round(level * 100));
+        card.classList.toggle('is-muted', level === 0);
+      }
+      ['pointerdown', 'click'].forEach(function (ev) {
+        card.querySelector('.reel__vol').addEventListener(ev, function (e) { e.stopPropagation(); });
+      });
+      volRange.addEventListener('input', function () {
+        var level = Number(volRange.value) / 100;
+        video.volume = level;
+        video.muted = level === 0;
+      });
+      volBtn.addEventListener('click', function () {
+        if (video.muted || video.volume === 0) {
+          video.muted = false;
+          if (!video.volume) video.volume = 1;
+        } else {
+          video.muted = true;
+        }
+      });
+      video.addEventListener('volumechange', syncVol);
+      syncVol();
+
       var fails = 0;
       card.querySelectorAll('source').forEach(function (src) {
         src.addEventListener('error', function () {
@@ -540,7 +591,7 @@
       });
 
       card.addEventListener('click', function (e) {
-        if (e.target.closest('.reel__up')) return;         // el botón de subir no centra ni reproduce
+        if (e.target.closest('.reel__up,.reel__vol')) return;   // subir y volumen no centran ni reproducen
         if (i !== reelActive) { setReel(i); return; }      // primero se centra
         if (card.classList.contains('has-error')) return;
         if (video.paused) {
@@ -612,7 +663,7 @@
   /* ---------------- Carrusel de clientes ---------------- */
   var rail = document.getElementById('clientRail');
   // cinta continua: el bucle principal la desplaza y la repite sin cortes
-  var railRow = { el: rail, dir: -1, speed: 34, offset: 0, loop: 0 };
+  var railRow = { el: rail, dir: -1, speed: 34, offset: 0, loop: 0, push: 0, fling: 0, drag: false };
 
   // color promedio de una foto, para teñir el resplandor de su tarjeta
   function averageColor(img) {
@@ -708,6 +759,45 @@
   });
   rows.push(railRow);
 
+  // arrastre con el mouse: mueve la cinta y la suelta con impulso
+  (function () {
+    var id = null, lastX = 0, moved = 0;
+    rail.addEventListener('pointerdown', function (e) {
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      id = e.pointerId;
+      lastX = e.clientX;
+      moved = 0;
+      railRow.drag = true;
+      railRow.fling = 0;
+      rail.setPointerCapture(id);
+      rail.classList.add('is-dragging');
+    });
+    rail.addEventListener('pointermove', function (e) {
+      if (id === null || e.pointerId !== id) return;
+      var dx = e.clientX - lastX;
+      lastX = e.clientX;
+      moved += Math.abs(dx);
+      railRow.offset -= dx;                       // el contenido sigue al cursor
+      railRow.fling = railRow.fling * 0.6 + dx * 0.4;
+    });
+    function end(e) {
+      if (id === null || (e && e.pointerId !== id)) return;
+      try { rail.releasePointerCapture(id); } catch (err) {}
+      id = null;
+      railRow.drag = false;
+      rail.classList.remove('is-dragging');
+      // si fue un arrastre de verdad, que no se dispare el click de la tarjeta
+      if (moved > 6) {
+        rail.addEventListener('click', function swallow(ev) {
+          ev.stopPropagation(); ev.preventDefault();
+          rail.removeEventListener('click', swallow, true);
+        }, true);
+      }
+    }
+    rail.addEventListener('pointerup', end);
+    rail.addEventListener('pointercancel', end);
+  })();
+
   /* ---------------- Las piezas no se bajan con el botón derecho ---------------- */
   var NO_SAVE = 'img,video,.gthumb,.tile,.lightbox,.reel,.client';
   document.addEventListener('contextmenu', function (e) {
@@ -727,9 +817,8 @@
     tile.setAttribute('role', 'button');
     tile.setAttribute('tabindex', '0');
     tile.innerHTML =
-      '<img src="' + thumbOf(i) + '" alt="' + m.t + ' — ' + m.c + '" loading="lazy" decoding="async" draggable="false" />' +
-      '<span class="tile__shine" aria-hidden="true"></span>' +
-      '<div class="tile__meta"><h3>' + m.t + '</h3><span>' + (m.cat === 'irl' ? 'IRL' : 'Faceless') + ' · ' + m.c + '</span></div>';
+      '<img src="' + thumbOf(i) + '" alt="' + m.t + '" loading="lazy" decoding="async" draggable="false" />' +
+      '<span class="tile__shine" aria-hidden="true"></span>';
     grid.appendChild(tile);
   });
 
@@ -810,7 +899,6 @@
   var lb = document.getElementById('lightbox');
   var lbFrame = document.getElementById('lbFrame');
   var lbImg = document.getElementById('lbImg');
-  var lbCaption = document.getElementById('lbCaption');
   var lbGlow = document.getElementById('lbGlow');
   var flash = document.getElementById('flash');
   var current = -1;
@@ -834,8 +922,7 @@
   function fillLb(i) {
     var m = MEDIA[i];
     lbImg.src = fullOf(i);
-    lbImg.alt = m.t + ' — ' + m.c;
-    lbCaption.innerHTML = '<b>' + m.t + '</b><i>' + m.c + '</i>';
+    lbImg.alt = m.t;
     lbGlow.style.backgroundImage = 'url(' + thumbOf(i) + ')';
   }
 
@@ -1073,7 +1160,8 @@
   });
   var stage = document.querySelector('.gallery__stage');
   var gallerySection = document.querySelector('.gallery');
-  var blurTargets = [].slice.call(document.querySelectorAll('.grid,.acc'));
+  // la grilla de miniaturas quedó afuera: el desenfoque al scrollear mareaba
+  var blurTargets = [].slice.call(document.querySelectorAll('.acc'));
   var lastBlur = -1;
 
   var scrollY = window.scrollY;
@@ -1174,8 +1262,17 @@
     for (var k = 0; k < rows.length; k++) {
       var r2 = rows[k];
       if (!r2.loop) continue;
-      var push = r2 === tickerRow ? velocity * 0.5 : velocity * 0.22;
-      r2.offset += (r2.speed * dt + push) * r2.dir * (reduced ? 0 : 1);
+      if (r2.drag) {                                  // mientras se arrastra manda el mouse
+        r2.el.style.transform =
+          'translate3d(' + (-(((r2.offset % r2.loop) + r2.loop) % r2.loop)).toFixed(2) + 'px,0,0)';
+        continue;
+      }
+      r2.offset += (r2.speed * dt + velocity * (r2.push || 0)) * r2.dir * (reduced ? 0 : 1);
+      if (r2.fling) {                                 // impulso que deja el arrastre
+        r2.offset -= r2.fling;
+        r2.fling *= 0.93;
+        if (Math.abs(r2.fling) < 0.08) r2.fling = 0;
+      }
       var x = ((r2.offset % r2.loop) + r2.loop) % r2.loop;
       r2.el.style.transform = 'translate3d(' + (-x).toFixed(2) + 'px,0,0)';
     }
