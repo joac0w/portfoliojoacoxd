@@ -191,7 +191,17 @@
     { s: 'fortnite', t: 'Hiedra botánica', c: 'Fortnite', cat: 'faceless' },
     { s: 'kevs-01', t: 'Consecuencias de ser simp', c: 'Kevs', cat: 'faceless' },
     { s: 'kevs-04', t: '¿Buen jefe?', c: 'Kevs', cat: 'faceless' },
-    { s: 'spar-16', t: 'Un 39 en Metacritic', c: 'Spar', cat: 'faceless' }
+    { s: 'spar-16', t: 'Un 39 en Metacritic', c: 'Spar', cat: 'faceless' },
+    { s: 'spar-increible', t: 'Increíble', c: 'Spar', cat: 'faceless' },
+    { s: 'spar-ps1', t: '¿Era tan bueno?', c: 'Spar', cat: 'faceless' },
+    { s: 'mario-3d', t: 'Mario en 3D', c: 'Modelado 3D', cat: 'faceless' },
+    { s: 'valorant-only-head', t: 'Valorant only head', c: 'Valorant', cat: 'faceless' },
+    { s: 'tibson-iceberg', t: 'Iceberg de crisis existenciales', c: 'Tibson', cat: 'irl' },
+    { s: 'tibson-letterboxd', t: 'Mi top 50 de películas', c: 'Tibson', cat: 'irl' },
+    { s: 'tibson-warner', t: 'Netflix compra Warner', c: 'Tibson', cat: 'irl' },
+    { s: 'tierlist-aura', t: 'Tierlist de aura', c: 'Gaming', cat: 'irl' },
+    { s: 'podcast-globales', t: 'Top globales', c: 'Podcast', cat: 'irl' },
+    { s: 'vector-resell', t: 'Resell de zapatillas', c: 'Vector', cat: 'irl' }
   ];
   var thumbOf = function (i) { return 'assets/thumbs/' + MEDIA[i].s + '.webp'; };
   var fullOf = function (i) { return 'assets/full/' + MEDIA[i].s + '.webp'; };
