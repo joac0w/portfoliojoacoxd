@@ -223,6 +223,9 @@
   // Los números son de ejemplo: cambialos por los reales, y si ponés una foto en
   // assets/clients/<archivo>.webp, sumá su ruta en "img" y reemplaza a la inicial.
   // Reels: los archivos van en assets/reels/ (ver el README de esa carpeta).
+  // f = archivo dentro de assets/reels/ (sin extensión).
+  // url = link directo a un video que vive en otro lado (Cloudflare R2, Bunny,
+  //       Drive con link directo…). Si está, manda y se ignora la carpeta local.
   var REELS = [
     { f: 'reel-01' },
     { f: 'reel-02' },
@@ -230,6 +233,16 @@
     { f: 'reel-04' },
     { f: 'reel-05' }
   ];
+
+  function reelSources(r) {
+    if (r.url) {
+      var ext = (r.url.split('?')[0].split('.').pop() || '').toLowerCase();
+      var mime = ext === 'webm' ? 'video/webm' : (ext === 'ogv' ? 'video/ogg' : 'video/mp4');
+      return '<source src="' + r.url + '" type="' + mime + '">';
+    }
+    return '<source src="assets/reels/' + r.f + '.mp4" type="video/mp4">' +
+           '<source src="assets/reels/' + r.f + '.webm" type="video/webm">';
+  }
 
   var CLIENTS = [
     { n: 'RaptorGamer', s: '15.7M', img: 'assets/clients/raptorgamer.webp' },
@@ -507,8 +520,7 @@
       card.innerHTML =
         '<video class="reel__v" playsinline preload="metadata"' +
         (r.poster ? ' poster="' + r.poster + '"' : '') + '>' +
-        '<source src="assets/reels/' + r.f + '.mp4" type="video/mp4">' +
-        '<source src="assets/reels/' + r.f + '.webm" type="video/webm">' +
+        reelSources(r) +
         '</video>' +
         '<span class="reel__shade" aria-hidden="true"></span>' +
         '<button class="reel__play" type="button"><i>▶</i><span>' + t('reels.play') + '</span></button>' +
@@ -560,10 +572,11 @@
       syncVol();
 
       var fails = 0;
-      card.querySelectorAll('source').forEach(function (src) {
+      var sources = card.querySelectorAll('source');
+      sources.forEach(function (src) {
         src.addEventListener('error', function () {
           fails++;
-          if (fails >= 2) card.classList.add('has-error');
+          if (fails >= sources.length) card.classList.add('has-error');
         });
       });
       video.addEventListener('ended', function () { card.classList.remove('is-playing'); });

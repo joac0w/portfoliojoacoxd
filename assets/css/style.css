@@ -139,7 +139,8 @@ input,textarea{-webkit-user-select:text;user-select:text}
 }
 
 .cursor,.cursor-dot{
-  position:fixed;top:0;left:0;z-index:900;pointer-events:none;
+  /* por encima de todo, la portada incluida (z-index 999), si no ahí no se ve */
+  position:fixed;top:0;left:0;z-index:1200;pointer-events:none;
   border-radius:50%;mix-blend-mode:difference;
   opacity:0;transition:opacity .3s ease,width .3s var(--ease),height .3s var(--ease);
 }

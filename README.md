@@ -20,6 +20,11 @@ python3 -m http.server 8000
 
 Se publica tal cual en GitHub Pages, Netlify, Vercel o cualquier hosting estático.
 
+En **Netlify**: *Add new site* → *Deploy manually* y arrastrás la carpeta del proyecto
+(la que tiene `index.html` adentro), o *Import an existing project* para conectar el repo
+y que cada push publique solo. No hay build: el directorio a publicar es la raíz.
+Para los videos de los reels, mirá `assets/reels/README.md`.
+
 Después de tocar el HTML, el CSS, el JS o las miniaturas, regenerá el archivo único con:
 
 ```bash
@@ -94,7 +99,7 @@ ningún efecto glitch.
 | Cuántas filas se ven antes de "Ver más" | función `collapsedHeight` en `assets/js/main.js` |
 | Títulos, canal y categoría de cada pieza | array `MEDIA` en `assets/js/main.js` (`t` título, `c` canal, `cat` categoría: `faceless` o `irl`) |
 | Categorías nuevas (Finanzas, IA…) | en `index.html` sacá el `disabled` y la clase `is-soon` del chip y ponele `data-filter="finanzas"`; después usá ese mismo valor en el `cat` de las piezas |
-| Reels | poné los videos en `assets/reels/` como `reel-01.mp4` … `reel-05.mp4`; la lista está en el array `REELS` de `main.js` |
+| Reels | poné los videos en `assets/reels/` como `reel-01.mp4` … `reel-05.mp4`; la lista está en el array `REELS` de `main.js`. Si los tenés en otro hosting, poné `{ url: 'https://…/reel.mp4' }` en vez de `{ f: 'reel-01' }` |
 | Clientes del carrusel | array `CLIENTS` en `assets/js/main.js` (`n` nombre, `s` suscriptores, `img` ruta de la foto) |
 | Textos en los dos idiomas | objeto `T` al principio de `assets/js/main.js`: `T.es` y `T.en` con la misma clave. En el HTML, cada texto fijo lleva `data-i18n="clave"` (o `data-i18n-html`, `-ph` para placeholders y `-aria` para etiquetas de accesibilidad) |
 | Preguntas del embudo | bloques `.opts` en `index.html` (el `data-group` es la clave que se guarda) |
