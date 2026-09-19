@@ -290,9 +290,8 @@
     buildGallery();
     renderReels();
     renderClients();
-        moreBtn.querySelector('.more__txt').textContent = expanded ? t('more.less') : t('more.more');
+    moreBtn.querySelector('.more__txt').textContent = expanded ? t('more.less') : t('more.more');
     applyCollapse(false);
-    railState();
   }
 
   function enterSite(lang) {
@@ -334,6 +333,28 @@
   var galleryCols = document.getElementById('galleryCols');
   var columns = [];
 
+  // Reparte n miniaturas barajando el catálogo entero cada vuelta; antes de
+  // empezar una vuelta nueva la rota para no pegar dos iguales en el corte.
+  function dealDeck(n, apart) {
+    var out = [], pool = [], seed = 1337;
+    while (out.length < n) {
+      if (!pool.length) {
+        pool = shuffled(INDEXES, seed++);
+        var recent = out.slice(-apart);
+        for (var r = 0; r < pool.length && recent.length; r++) {
+          var clash = false;
+          for (var q = 0; q < apart && q < pool.length; q++) {
+            if (recent.indexOf(pool[q]) !== -1) { clash = true; break; }
+          }
+          if (!clash) break;
+          pool.push(pool.shift());
+        }
+      }
+      out.push(pool.shift());
+    }
+    return out;
+  }
+
   function buildGallery() {
     galleryCols.innerHTML = '';
     columns = [];
@@ -350,18 +371,21 @@
     var tileH = colW * 9 / 16 + gap;
     var perCol = clamp(Math.ceil((boxH + tileH * 2) / tileH), 5, 14);
 
+    // Una sola baraja para toda la galería, repartida por filas: dos miniaturas
+    // iguales nunca caen en la misma fila ni cerca, y sólo se repite una pieza
+    // cuando ya salieron todas las demás.
+    var deck = dealDeck(count * perCol, count);
+
     for (var c = 0; c < count; c++) {
       var col = document.createElement('div');
       col.className = 'gcol';
       var inner = document.createElement('div');
       inner.className = 'gcol__inner';
 
-      var pool = shuffled(INDEXES, 1337 + c * 101);
-
       // duplicado para el loop infinito
       for (var pass = 0; pass < 2; pass++) {
         for (var k = 0; k < perCol; k++) {
-          var idx = pool[k % pool.length];
+          var idx = deck[k * count + c];
           var fig = document.createElement('div');
           fig.className = 'gthumb';
           fig.dataset.i = idx;
@@ -440,7 +464,7 @@
   buildTicker();
   window.addEventListener('load', buildTicker);
 
-  // filas horizontales que mueve el bucle principal (hoy sólo la cinta)
+  // filas horizontales que mueve el bucle principal (la cinta y los clientes)
   var rows = [tickerRow];
 
   /* ---------------- Reels / shorts ---------------- */
@@ -577,8 +601,8 @@
 
   /* ---------------- Carrusel de clientes ---------------- */
   var rail = document.getElementById('clientRail');
-  var railPrev = document.getElementById('railPrev');
-  var railNext = document.getElementById('railNext');
+  // cinta continua: el bucle principal la desplaza y la repite sin cortes
+  var railRow = { el: rail, dir: -1, speed: 34, offset: 0, loop: 0 };
 
   // color promedio de una foto, para teñir el resplandor de su tarjeta
   function averageColor(img) {
@@ -599,6 +623,12 @@
 
   function renderClients() {
     rail.innerHTML = '';
+    // dos pasadas: la segunda es la copia que hace que el bucle no tenga cortes
+    for (var pass = 0; pass < 2; pass++) buildClientCards(pass);
+    measureRail();
+  }
+
+  function buildClientCards(pass) {
     CLIENTS.forEach(function (cl) {
       var name = cl.slot ? t('client.slot' + cl.slot) : cl.n;
       var subs = cl.slot ? t('client.slot' + cl.slot + 'b') : '<b>' + cl.s + '</b> ' + t('client.subs');
@@ -648,25 +678,34 @@
         });
         card.addEventListener('mouseleave', function () { card.style.transform = ''; });
       }
+      if (pass) card.setAttribute('aria-hidden', 'true');
       rail.appendChild(card);
     });
   }
-  renderClients();
 
-  function railStep() {
-    var card = rail.querySelector('.client');
-    if (!card) return 320;
-    return card.getBoundingClientRect().width + 16;
+  // el largo de una vuelta es la mitad del contenido, más el hueco del corte
+  function measureRail() {
+    var gap = parseFloat(getComputedStyle(rail).columnGap) || 0;
+    railRow.loop = (rail.scrollWidth + gap) / 2;
+    railRow.offset = 0;
   }
-  function railState() {
-    railPrev.disabled = rail.scrollLeft < 8;
-    railNext.disabled = rail.scrollLeft > rail.scrollWidth - rail.clientWidth - 8;
-  }
-  railPrev.addEventListener('click', function () { rail.scrollBy({ left: -railStep(), behavior: 'smooth' }); });
-  railNext.addEventListener('click', function () { rail.scrollBy({ left: railStep(), behavior: 'smooth' }); });
-  rail.addEventListener('scroll', railState, { passive: true });
-  window.addEventListener('resize', railState);
-  railState();
+
+  renderClients();
+  window.addEventListener('load', measureRail);
+  window.addEventListener('resize', function () {
+    clearTimeout(window.__rr);
+    window.__rr = setTimeout(measureRail, 220);
+  });
+  rows.push(railRow);
+
+  /* ---------------- Las piezas no se bajan con el botón derecho ---------------- */
+  var NO_SAVE = 'img,video,.gthumb,.tile,.lightbox,.reel,.client';
+  document.addEventListener('contextmenu', function (e) {
+    if (e.target.closest && e.target.closest(NO_SAVE)) e.preventDefault();
+  });
+  document.addEventListener('dragstart', function (e) {
+    if (e.target.closest && e.target.closest('img,video')) e.preventDefault();
+  });
 
   /* ---------------- Proyectos ---------------- */
   var grid = document.getElementById('projectGrid');
@@ -1125,7 +1164,7 @@
     for (var k = 0; k < rows.length; k++) {
       var r2 = rows[k];
       if (!r2.loop) continue;
-      var push = r2 === tickerRow ? velocity * 0.5 : velocity * 0.9;
+      var push = r2 === tickerRow ? velocity * 0.5 : velocity * 0.22;
       r2.offset += (r2.speed * dt + push) * r2.dir * (reduced ? 0 : 1);
       var x = ((r2.offset % r2.loop) + r2.loop) % r2.loop;
       r2.el.style.transform = 'translate3d(' + (-x).toFixed(2) + 'px,0,0)';

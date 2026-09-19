@@ -44,6 +44,8 @@
 
 *,*::before,*::after{box-sizing:border-box}
 
+img,video{-webkit-user-drag:none;-webkit-touch-callout:none}
+
 html{
   scroll-behavior:smooth;
   scroll-padding-top:110px;
@@ -78,9 +80,16 @@ input,textarea{-webkit-user-select:text;user-select:text}
 
 /* ---------------- Portada: carga + idioma ---------------- */
 .gate{
+  /* la portada es siempre oscura: redefine los tokens para sus hijos */
+  --page:#050505;
+  --fg:#f4f4f5;
+  --muted:#8b8b92;
+  --line:rgba(255,255,255,.12);
+  --line-soft:rgba(255,255,255,.07);
+  --glass:rgba(255,255,255,.05);
   position:fixed;inset:0;z-index:999;
   display:grid;place-items:center;
-  background:var(--page);
+  background:#050505;
   transition:opacity .8s var(--ease),visibility .8s var(--ease),filter .8s var(--ease);
 }
 .gate.is-done{opacity:0;visibility:hidden;filter:blur(14px)}
@@ -139,6 +148,13 @@ input,textarea{-webkit-user-select:text;user-select:text}
 .gate__btn:hover span{color:#4a4a52}
 
 /* ---------------- Cursor ---------------- */
+/* se esconde el puntero del sistema: en la página sólo se ve el punto con el aro */
+/* el de la página se esconde abajo de 760px, así que ahí vuelve el del sistema */
+@media (hover:hover) and (pointer:fine) and (min-width:761px){
+  html,body{cursor:none}
+  body *{cursor:none !important}
+}
+
 .cursor,.cursor-dot{
   position:fixed;top:0;left:0;z-index:900;pointer-events:none;
   border-radius:50%;mix-blend-mode:difference;
@@ -659,15 +675,15 @@ input,textarea{-webkit-user-select:text;user-select:text}
 /* el FAQ vive en una columna angosta: entra en una línea */
 .faq .stitle{font-size:clamp(30px,5.6vw,76px)}
 
-.rail{position:relative;padding:0}
+.rail{position:relative;padding:0;overflow:hidden}
+/* cinta continua: el JS la desplaza y la repite sin cortes */
 .rail__track{
   display:flex;gap:clamp(14px,1.8vw,24px);
-  overflow-x:auto;scroll-behavior:smooth;scroll-snap-type:x mandatory;
-  padding:54px clamp(52px,7vw,120px) 58px;
+  width:max-content;
+  padding:54px 0 58px;
   perspective:900px;
-  scrollbar-width:none;-ms-overflow-style:none;
+  will-change:transform;
 }
-.rail__track::-webkit-scrollbar{display:none}
 
 /* desvanecido con blur a los costados */
 .rail::before,.rail::after{
@@ -690,7 +706,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
 }
 
 .client{
-  position:relative;flex:0 0 auto;scroll-snap-align:center;cursor:pointer;
+  position:relative;flex:0 0 auto;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   gap:clamp(12px,1.4vw,18px);
   width:clamp(206px,23vw,268px);aspect-ratio:1/1.04;
@@ -763,20 +779,6 @@ input,textarea{-webkit-user-select:text;user-select:text}
 .client__subs{font-size:clamp(13px,1.15vw,15.5px);font-weight:300;color:rgba(255,255,255,.72)}
 .client__subs b{font-weight:600;color:#fff}
 .client.is-slot .client__pic{background:linear-gradient(145deg,#2a2a33,#15151a);font-size:44px;font-weight:300}
-
-.rail__arrow{
-  position:absolute;top:50%;z-index:3;transform:translateY(-50%);
-  width:48px;height:48px;border-radius:50%;display:grid;place-items:center;
-  border:1px solid rgba(255,255,255,.28);
-  background:rgba(10,10,14,.8);backdrop-filter:blur(14px);
-  box-shadow:0 12px 32px rgba(0,0,0,.6);
-  font-size:22px;color:var(--fg);
-  transition:background .3s ease,transform .3s var(--ease),opacity .3s ease,color .3s ease;
-}
-.rail__arrow:hover{background:#fff;color:#0a0a0c;border-color:#fff;transform:translateY(-50%) scale(1.08)}
-.rail__arrow:disabled{opacity:.25;cursor:default}
-.rail__arrow--prev{left:clamp(10px,2vw,38px)}
-.rail__arrow--next{right:clamp(10px,2vw,38px)}
 
 /* FAQ */
 .acc{display:grid;gap:9px}
@@ -1196,10 +1198,8 @@ input,textarea{-webkit-user-select:text;user-select:text}
 [data-theme="light"] .reel__up{background:rgba(255,255,255,.78);border-color:rgba(10,10,20,.14);color:#0a0a0c}
 [data-theme="light"] .reel:hover .reel__play{background:#0a0a0c;color:#fff}
 [data-theme="light"] .reel__up:hover{background:#0a0a0c;color:#fff}
-[data-theme="light"] .cf__arrow,
-[data-theme="light"] .rail__arrow{background:rgba(255,255,255,.82);border-color:rgba(10,10,20,.16);color:#0a0a0c}
-[data-theme="light"] .cf__arrow:hover,
-[data-theme="light"] .rail__arrow:hover{background:#0a0a0c;color:#fff;border-color:#0a0a0c}
+[data-theme="light"] .cf__arrow{background:rgba(255,255,255,.82);border-color:rgba(10,10,20,.16);color:#0a0a0c}
+[data-theme="light"] .cf__arrow:hover{background:#0a0a0c;color:#fff;border-color:#0a0a0c}
 [data-theme="light"] .client__veil{
   background:
     radial-gradient(85% 60% at 50% 12%,rgba(255,255,255,.2),transparent 62%),
@@ -1277,13 +1277,9 @@ input,textarea{-webkit-user-select:text;user-select:text}
   .cf__arrow--prev{left:2px}
   .cf__arrow--next{right:2px}
   .rail{padding:0}
-  .rail__track{padding-left:40px;padding-right:40px}
   .rail::before,.rail::after{width:72px}
   .client{width:min(60vw,208px)}
   .client__pic{width:74px}
-  .rail__arrow{width:40px;height:40px;font-size:20px}
-  .rail__arrow--prev{left:0}
-  .rail__arrow--next{right:0}
   .social{width:min(92vw,330px);padding:12px 18px 12px 12px}
   .contact{padding-top:clamp(120px,18vh,180px)}
   .tools{gap:10px}
@@ -1471,9 +1467,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
   </div>
 
   <div class="rail reveal">
-    <button class="rail__arrow rail__arrow--prev" id="railPrev" data-i18n-aria="rail.prev" aria-label="Anterior">‹</button>
     <div class="rail__track" id="clientRail"></div>
-    <button class="rail__arrow rail__arrow--next" id="railNext" data-i18n-aria="rail.next" aria-label="Siguiente">›</button>
   </div>
 </section>
 
@@ -1930,9 +1924,8 @@ input,textarea{-webkit-user-select:text;user-select:text}
     buildGallery();
     renderReels();
     renderClients();
-        moreBtn.querySelector('.more__txt').textContent = expanded ? t('more.less') : t('more.more');
+    moreBtn.querySelector('.more__txt').textContent = expanded ? t('more.less') : t('more.more');
     applyCollapse(false);
-    railState();
   }
 
   function enterSite(lang) {
@@ -1974,6 +1967,28 @@ input,textarea{-webkit-user-select:text;user-select:text}
   var galleryCols = document.getElementById('galleryCols');
   var columns = [];
 
+  // Reparte n miniaturas barajando el catálogo entero cada vuelta; antes de
+  // empezar una vuelta nueva la rota para no pegar dos iguales en el corte.
+  function dealDeck(n, apart) {
+    var out = [], pool = [], seed = 1337;
+    while (out.length < n) {
+      if (!pool.length) {
+        pool = shuffled(INDEXES, seed++);
+        var recent = out.slice(-apart);
+        for (var r = 0; r < pool.length && recent.length; r++) {
+          var clash = false;
+          for (var q = 0; q < apart && q < pool.length; q++) {
+            if (recent.indexOf(pool[q]) !== -1) { clash = true; break; }
+          }
+          if (!clash) break;
+          pool.push(pool.shift());
+        }
+      }
+      out.push(pool.shift());
+    }
+    return out;
+  }
+
   function buildGallery() {
     galleryCols.innerHTML = '';
     columns = [];
@@ -1990,18 +2005,21 @@ input,textarea{-webkit-user-select:text;user-select:text}
     var tileH = colW * 9 / 16 + gap;
     var perCol = clamp(Math.ceil((boxH + tileH * 2) / tileH), 5, 14);
 
+    // Una sola baraja para toda la galería, repartida por filas: dos miniaturas
+    // iguales nunca caen en la misma fila ni cerca, y sólo se repite una pieza
+    // cuando ya salieron todas las demás.
+    var deck = dealDeck(count * perCol, count);
+
     for (var c = 0; c < count; c++) {
       var col = document.createElement('div');
       col.className = 'gcol';
       var inner = document.createElement('div');
       inner.className = 'gcol__inner';
 
-      var pool = shuffled(INDEXES, 1337 + c * 101);
-
       // duplicado para el loop infinito
       for (var pass = 0; pass < 2; pass++) {
         for (var k = 0; k < perCol; k++) {
-          var idx = pool[k % pool.length];
+          var idx = deck[k * count + c];
           var fig = document.createElement('div');
           fig.className = 'gthumb';
           fig.dataset.i = idx;
@@ -2080,7 +2098,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
   buildTicker();
   window.addEventListener('load', buildTicker);
 
-  // filas horizontales que mueve el bucle principal (hoy sólo la cinta)
+  // filas horizontales que mueve el bucle principal (la cinta y los clientes)
   var rows = [tickerRow];
 
   /* ---------------- Reels / shorts ---------------- */
@@ -2217,8 +2235,8 @@ input,textarea{-webkit-user-select:text;user-select:text}
 
   /* ---------------- Carrusel de clientes ---------------- */
   var rail = document.getElementById('clientRail');
-  var railPrev = document.getElementById('railPrev');
-  var railNext = document.getElementById('railNext');
+  // cinta continua: el bucle principal la desplaza y la repite sin cortes
+  var railRow = { el: rail, dir: -1, speed: 34, offset: 0, loop: 0 };
 
   // color promedio de una foto, para teñir el resplandor de su tarjeta
   function averageColor(img) {
@@ -2239,6 +2257,12 @@ input,textarea{-webkit-user-select:text;user-select:text}
 
   function renderClients() {
     rail.innerHTML = '';
+    // dos pasadas: la segunda es la copia que hace que el bucle no tenga cortes
+    for (var pass = 0; pass < 2; pass++) buildClientCards(pass);
+    measureRail();
+  }
+
+  function buildClientCards(pass) {
     CLIENTS.forEach(function (cl) {
       var name = cl.slot ? t('client.slot' + cl.slot) : cl.n;
       var subs = cl.slot ? t('client.slot' + cl.slot + 'b') : '<b>' + cl.s + '</b> ' + t('client.subs');
@@ -2288,25 +2312,34 @@ input,textarea{-webkit-user-select:text;user-select:text}
         });
         card.addEventListener('mouseleave', function () { card.style.transform = ''; });
       }
+      if (pass) card.setAttribute('aria-hidden', 'true');
       rail.appendChild(card);
     });
   }
-  renderClients();
 
-  function railStep() {
-    var card = rail.querySelector('.client');
-    if (!card) return 320;
-    return card.getBoundingClientRect().width + 16;
+  // el largo de una vuelta es la mitad del contenido, más el hueco del corte
+  function measureRail() {
+    var gap = parseFloat(getComputedStyle(rail).columnGap) || 0;
+    railRow.loop = (rail.scrollWidth + gap) / 2;
+    railRow.offset = 0;
   }
-  function railState() {
-    railPrev.disabled = rail.scrollLeft < 8;
-    railNext.disabled = rail.scrollLeft > rail.scrollWidth - rail.clientWidth - 8;
-  }
-  railPrev.addEventListener('click', function () { rail.scrollBy({ left: -railStep(), behavior: 'smooth' }); });
-  railNext.addEventListener('click', function () { rail.scrollBy({ left: railStep(), behavior: 'smooth' }); });
-  rail.addEventListener('scroll', railState, { passive: true });
-  window.addEventListener('resize', railState);
-  railState();
+
+  renderClients();
+  window.addEventListener('load', measureRail);
+  window.addEventListener('resize', function () {
+    clearTimeout(window.__rr);
+    window.__rr = setTimeout(measureRail, 220);
+  });
+  rows.push(railRow);
+
+  /* ---------------- Las piezas no se bajan con el botón derecho ---------------- */
+  var NO_SAVE = 'img,video,.gthumb,.tile,.lightbox,.reel,.client';
+  document.addEventListener('contextmenu', function (e) {
+    if (e.target.closest && e.target.closest(NO_SAVE)) e.preventDefault();
+  });
+  document.addEventListener('dragstart', function (e) {
+    if (e.target.closest && e.target.closest('img,video')) e.preventDefault();
+  });
 
   /* ---------------- Proyectos ---------------- */
   var grid = document.getElementById('projectGrid');
@@ -2765,7 +2798,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
     for (var k = 0; k < rows.length; k++) {
       var r2 = rows[k];
       if (!r2.loop) continue;
-      var push = r2 === tickerRow ? velocity * 0.5 : velocity * 0.9;
+      var push = r2 === tickerRow ? velocity * 0.5 : velocity * 0.22;
       r2.offset += (r2.speed * dt + push) * r2.dir * (reduced ? 0 : 1);
       var x = ((r2.offset % r2.loop) + r2.loop) % r2.loop;
       r2.el.style.transform = 'translate3d(' + (-x).toFixed(2) + 'px,0,0)';
