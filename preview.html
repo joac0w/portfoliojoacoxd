@@ -1038,18 +1038,6 @@ input,textarea{-webkit-user-select:text;user-select:text}
 .reel.is-playing .reel__play{opacity:0;pointer-events:none}
 
 /* subir un archivo para verlo en el momento */
-.reel__up{
-  position:absolute;right:clamp(12px,1.4vw,18px);bottom:clamp(12px,1.4vw,18px);z-index:3;
-  display:grid;place-items:center;width:38px;height:38px;border-radius:50%;
-  border:1px solid rgba(255,255,255,.22);
-  background:rgba(12,12,16,.55);backdrop-filter:blur(10px);
-  color:#fff;cursor:pointer;
-  transition:background .3s ease,color .3s ease,transform .3s var(--ease),border-color .3s ease;
-}
-.reel__up svg{width:17px;height:17px}
-.reel__up:hover{background:#fff;color:#0a0a0c;border-color:transparent;transform:scale(1.06)}
-.reel.is-playing .reel__up{opacity:0;pointer-events:none}
-.reel.has-local .reel__missing{display:none}
 
 /* volumen del reel: sólo en el del medio y si hay video */
 .reel__vol{
@@ -1211,14 +1199,12 @@ input,textarea{-webkit-user-select:text;user-select:text}
 [data-theme="light"] .reel.is-active{box-shadow:0 34px 80px rgba(10,10,30,.24),0 0 50px rgba(10,10,30,.1);border-color:rgba(10,10,20,.22)}
 [data-theme="light"] .reel__missing{background:linear-gradient(160deg,#e7e7ec,#dcdce3);color:#6a6a74}
 [data-theme="light"] .reel__play,
-[data-theme="light"] .reel__vol,
-[data-theme="light"] .reel__up{background:rgba(255,255,255,.78);border-color:rgba(10,10,20,.14);color:#0a0a0c}
+[data-theme="light"] .reel__vol{background:rgba(255,255,255,.78);border-color:rgba(10,10,20,.14);color:#0a0a0c}
 [data-theme="light"] .reel__vol-range{background:rgba(10,10,20,.26)}
 [data-theme="light"] .reel__vol-range::-webkit-slider-thumb{background:#0a0a0c}
 [data-theme="light"] .reel__vol-range::-moz-range-thumb{background:#0a0a0c}
 [data-theme="light"] .reel__vol-range::-moz-range-track{background:rgba(10,10,20,.26)}
 [data-theme="light"] .reel:hover .reel__play{background:#0a0a0c;color:#fff}
-[data-theme="light"] .reel__up:hover{background:#0a0a0c;color:#fff}
 [data-theme="light"] .cf__arrow{background:rgba(255,255,255,.82);border-color:rgba(10,10,20,.16);color:#0a0a0c}
 [data-theme="light"] .cf__arrow:hover{background:#0a0a0c;color:#fff;border-color:#0a0a0c}
 [data-theme="light"] .client__veil{
@@ -1654,7 +1640,6 @@ input,textarea{-webkit-user-select:text;user-select:text}
       'reels.t1': 'edición', 'reels.t2': 'reels/shorts',
       'reels.play': 'Play', 'reels.missing': 'Falta el archivo.\nGuardalo en assets/reels/',
       'reels.sub': 'Cortes verticales pensados para que se miren hasta el final.',
-      'reels.upload': 'Subir video', 'reels.uploaded': 'Vista previa local',
       'reels.vol': 'Volumen', 'reels.mute': 'Silenciar',
       'clients.t1': 'mis', 'clients.t2': 'clientes',
       'clients.sub': 'Clientes que han confiado o siguen confiando en mi trabajo.',
@@ -1720,7 +1705,6 @@ input,textarea{-webkit-user-select:text;user-select:text}
       'reels.t1': 'reels/shorts', 'reels.t2': 'editing',
       'reels.play': 'Play', 'reels.missing': 'File missing.\nDrop it in assets/reels/',
       'reels.sub': 'Vertical cuts built to be watched to the end.',
-      'reels.upload': 'Upload video', 'reels.uploaded': 'Local preview',
       'reels.vol': 'Volume', 'reels.mute': 'Mute',
       'clients.t1': 'my', 'clients.t2': 'clients',
       'clients.sub': 'Clients who trusted my work, and the ones who still do.',
@@ -2217,11 +2201,6 @@ input,textarea{-webkit-user-select:text;user-select:text}
         '</video>' +
         '<span class="reel__shade" aria-hidden="true"></span>' +
         '<button class="reel__play" type="button"><i>▶</i><span>' + t('reels.play') + '</span></button>' +
-        '<label class="reel__up" title="' + t('reels.upload') + '">' +
-        '<input type="file" accept="video/*" hidden />' +
-        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' +
-        '<path d="M12 16V4.8"/><path d="m7.6 9.2 4.4-4.4 4.4 4.4"/><path d="M4.4 15.2v2.6a2.2 2.2 0 0 0 2.2 2.2h10.8a2.2 2.2 0 0 0 2.2-2.2v-2.6"/>' +
-        '</svg></label>' +
         '<div class="reel__vol">' +
         '<button class="reel__vol-btn" type="button" aria-label="' + t('reels.mute') + '">' +
         '<svg class="reel__vol-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' +
@@ -2276,28 +2255,8 @@ input,textarea{-webkit-user-select:text;user-select:text}
       video.addEventListener('pause', function () { card.classList.remove('is-playing'); });
       video.addEventListener('play', function () { card.classList.add('is-playing'); });
 
-      // subir un archivo desde la compu para verlo acá mismo
-      var up = card.querySelector('.reel__up input');
-      up.addEventListener('click', function (e) { e.stopPropagation(); });
-      up.addEventListener('change', function () {
-        var file = up.files && up.files[0];
-        if (!file) return;
-        if (card.dataset.url) URL.revokeObjectURL(card.dataset.url);
-        var url = URL.createObjectURL(file);
-        card.dataset.url = url;
-        card.classList.remove('has-error');
-        card.classList.add('has-local');
-        video.querySelectorAll('source').forEach(function (s) { s.remove(); });
-        video.src = url;
-        video.load();
-        setReel(i);
-        video.muted = false;
-        var pr = video.play();
-        if (pr && pr.catch) pr.catch(function () { video.muted = true; video.play(); });
-      });
-
       card.addEventListener('click', function (e) {
-        if (e.target.closest('.reel__up,.reel__vol')) return;   // subir y volumen no centran ni reproducen
+        if (e.target.closest('.reel__vol')) return;        // el volumen no centra ni reproduce
         if (i !== reelActive) { setReel(i); return; }      // primero se centra
         if (card.classList.contains('has-error')) return;
         if (video.paused) {

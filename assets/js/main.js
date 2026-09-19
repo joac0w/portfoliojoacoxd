@@ -47,7 +47,6 @@
       'reels.t1': 'edición', 'reels.t2': 'reels/shorts',
       'reels.play': 'Play', 'reels.missing': 'Falta el archivo.\nGuardalo en assets/reels/',
       'reels.sub': 'Cortes verticales pensados para que se miren hasta el final.',
-      'reels.upload': 'Subir video', 'reels.uploaded': 'Vista previa local',
       'reels.vol': 'Volumen', 'reels.mute': 'Silenciar',
       'clients.t1': 'mis', 'clients.t2': 'clientes',
       'clients.sub': 'Clientes que han confiado o siguen confiando en mi trabajo.',
@@ -113,7 +112,6 @@
       'reels.t1': 'reels/shorts', 'reels.t2': 'editing',
       'reels.play': 'Play', 'reels.missing': 'File missing.\nDrop it in assets/reels/',
       'reels.sub': 'Vertical cuts built to be watched to the end.',
-      'reels.upload': 'Upload video', 'reels.uploaded': 'Local preview',
       'reels.vol': 'Volume', 'reels.mute': 'Mute',
       'clients.t1': 'my', 'clients.t2': 'clients',
       'clients.sub': 'Clients who trusted my work, and the ones who still do.',
@@ -524,11 +522,6 @@
         '</video>' +
         '<span class="reel__shade" aria-hidden="true"></span>' +
         '<button class="reel__play" type="button"><i>▶</i><span>' + t('reels.play') + '</span></button>' +
-        '<label class="reel__up" title="' + t('reels.upload') + '">' +
-        '<input type="file" accept="video/*" hidden />' +
-        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' +
-        '<path d="M12 16V4.8"/><path d="m7.6 9.2 4.4-4.4 4.4 4.4"/><path d="M4.4 15.2v2.6a2.2 2.2 0 0 0 2.2 2.2h10.8a2.2 2.2 0 0 0 2.2-2.2v-2.6"/>' +
-        '</svg></label>' +
         '<div class="reel__vol">' +
         '<button class="reel__vol-btn" type="button" aria-label="' + t('reels.mute') + '">' +
         '<svg class="reel__vol-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' +
@@ -583,28 +576,8 @@
       video.addEventListener('pause', function () { card.classList.remove('is-playing'); });
       video.addEventListener('play', function () { card.classList.add('is-playing'); });
 
-      // subir un archivo desde la compu para verlo acá mismo
-      var up = card.querySelector('.reel__up input');
-      up.addEventListener('click', function (e) { e.stopPropagation(); });
-      up.addEventListener('change', function () {
-        var file = up.files && up.files[0];
-        if (!file) return;
-        if (card.dataset.url) URL.revokeObjectURL(card.dataset.url);
-        var url = URL.createObjectURL(file);
-        card.dataset.url = url;
-        card.classList.remove('has-error');
-        card.classList.add('has-local');
-        video.querySelectorAll('source').forEach(function (s) { s.remove(); });
-        video.src = url;
-        video.load();
-        setReel(i);
-        video.muted = false;
-        var pr = video.play();
-        if (pr && pr.catch) pr.catch(function () { video.muted = true; video.play(); });
-      });
-
       card.addEventListener('click', function (e) {
-        if (e.target.closest('.reel__up,.reel__vol')) return;   // subir y volumen no centran ni reproducen
+        if (e.target.closest('.reel__vol')) return;        // el volumen no centra ni reproduce
         if (i !== reelActive) { setReel(i); return; }      // primero se centra
         if (card.classList.contains('has-error')) return;
         if (video.paused) {
