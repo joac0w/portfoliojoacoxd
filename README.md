@@ -83,7 +83,8 @@ ningún efecto glitch.
 | Qué | Dónde |
 | --- | --- |
 | Nombre / wordmark (`joaco`) | `index.html`, buscá `joaco` (nav, preloader, hero, footer) |
-| Logo de la cara | reemplazá `assets/brand/joaco-logo.webp` |
+| Logo de la cara (fondos claros) | reemplazá `assets/brand/joaco-logo.webp` |
+| Logo de la cara (fondos oscuros) | reemplazá `assets/brand/joaco-logo-dark.webp` (versión rellena, se usa sola cuando el fondo es negro) |
 | Íconos de herramientas | reemplazá los SVG de `assets/logos/` por los oficiales (mismo nombre) |
 | Horarios y días de la agenda | `SLOTS` en `assets/js/main.js` (los fines de semana y los días pasados ya se bloquean solos) |
 | Textos, títulos y FAQ | `index.html` |

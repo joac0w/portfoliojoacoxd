@@ -30,7 +30,10 @@ new = ("  var EMBED = {\n" +
 js = js.replace(old, new)
 
 # logo e iconos de herramientas -> data URIs
-html = html.replace("assets/brand/joaco-logo.webp", data_uri(f"{ROOT}/assets/brand/joaco-logo.webp"))
+for _brand in sorted(os.listdir(f"{ROOT}/assets/brand")):
+    _uri = data_uri(f"{ROOT}/assets/brand/{_brand}")
+    html = html.replace(f"assets/brand/{_brand}", _uri)
+    css = css.replace(f"../brand/{_brand}", _uri)
 MIME = {".svg": "image/svg+xml", ".webp": "image/webp", ".png": "image/png", ".jpg": "image/jpeg"}
 for name in sorted(os.listdir(f"{ROOT}/assets/logos")):
     raw = open(f"{ROOT}/assets/logos/{name}", "rb").read()

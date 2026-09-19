@@ -74,7 +74,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
 }
 .gate__mark{
   width:clamp(64px,9vw,104px);height:auto;
-  filter:invert(1);
+  content:url(../brand/joaco-logo-dark.webp);
   animation:gateFloat 6s ease-in-out infinite;
 }
 @keyframes gateFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
@@ -161,7 +161,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
 .nav--light.is-stuck{background:rgba(255,255,255,.72);border-bottom-color:rgba(10,10,20,.08)}
 .nav--light .nav__burger{background:rgba(255,255,255,.72);border-color:rgba(10,10,20,.14)}
 .nav--light .nav__burger span{background:#0a0a0c}
-.nav:not(.nav--light) .nav__mark{filter:invert(1);mix-blend-mode:screen}
+.nav:not(.nav--light) .nav__mark{content:url(../brand/joaco-logo-dark.webp);filter:none;mix-blend-mode:normal}
 .floating-cta.floating-cta--light{background:#0a0a0c;color:#fff;border-color:#0a0a0c;box-shadow:0 12px 30px rgba(10,10,30,.22)}
 .floating-cta.floating-cta--light .dot{background:#fff}
 .floating-cta.floating-cta--light:hover{background:#fff;color:#0a0a0c;border-color:rgba(10,10,20,.16)}
@@ -1099,7 +1099,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
 }
 [data-theme="light"] .hero__word-txt{text-shadow:0 .1em .34em rgba(0,0,0,.55)}
 [data-theme="light"] .hero__mark,
-[data-theme="light"] .contact__mark{filter:invert(1) drop-shadow(0 18px 26px rgba(0,0,0,.5))}
+[data-theme="light"] .contact__mark{content:url(../brand/joaco-logo-dark.webp);filter:drop-shadow(0 18px 26px rgba(0,0,0,.5))}
 [data-theme="light"] .hero__tagline{color:#f0f0f4}
 [data-theme="light"] .hero__sub,
 [data-theme="light"] .contact__sub{color:#9a9aa6}
@@ -1111,11 +1111,11 @@ input,textarea{-webkit-user-select:text;user-select:text}
 [data-theme="light"] .nav--light.is-stuck{background:rgba(12,12,16,.6);border-bottom-color:rgba(255,255,255,.08)}
 [data-theme="light"] .nav--light .nav__burger{background:rgba(16,16,20,.6);border-color:rgba(255,255,255,.16)}
 [data-theme="light"] .nav--light .nav__burger span{background:#f4f4f5}
-[data-theme="light"] .nav--light .nav__mark{filter:invert(1);mix-blend-mode:screen}
+[data-theme="light"] .nav--light .nav__mark{content:url(../brand/joaco-logo-dark.webp);filter:none;mix-blend-mode:normal}
 [data-theme="light"] .nav:not(.nav--light) .pill{background:rgba(255,255,255,.72);border-color:rgba(10,10,20,.14);color:#0a0a0c}
 [data-theme="light"] .nav:not(.nav--light) .pill:hover{background:#0a0a0c;color:#fff;border-color:#0a0a0c}
 [data-theme="light"] .nav:not(.nav--light).is-stuck{background:rgba(255,255,255,.7);border-bottom-color:rgba(10,10,20,.08)}
-[data-theme="light"] .nav:not(.nav--light) .nav__mark{filter:none;mix-blend-mode:multiply}
+[data-theme="light"] .nav:not(.nav--light) .nav__mark{content:url(../brand/joaco-logo.webp);filter:none;mix-blend-mode:multiply}
 [data-theme="light"] .nav:not(.nav--light) .nav__links a.is-active{background:rgba(10,10,20,.12);border-color:rgba(10,10,20,.3)}
 [data-theme="light"] .nav:not(.nav--light) .nav__burger{background:rgba(255,255,255,.72);border-color:rgba(10,10,20,.14)}
 [data-theme="light"] .nav:not(.nav--light) .nav__burger span{background:#0a0a0c}
